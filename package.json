@@ -1,7 +1,7 @@
 {
-  "name": "@blockcode/gui-esp32",
+  "name": "@blockcode/gui-iotbit",
   "private": "true",
-  "version": "0.1.5",
+  "version": "0.1.0",
   "type": "module",
   "module": "dist/index.js",
   "exports": {
@@ -12,10 +12,8 @@
       "import": "./dist/info.js"
     }
   },
-  "firmwares": {
-    "iotboard": {
-      "download": "https://firmware.blockcode.fun/iotboard"
-    }
+  "firmware": {
+    "download": "https://firmware.blockcode.fun/iotbit"
   },
   "dependencies": {
     "@preact/signals": "^2.3.2",

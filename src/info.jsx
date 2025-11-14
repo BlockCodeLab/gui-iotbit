@@ -1,48 +1,48 @@
 import { addLocalesMessages, Text } from '@blockcode/core';
 import { version } from '../package.json';
-import featureImage from './feature.png';
-
-addLocalesMessages({
-  en: {
-    'esp32.name': 'ESP32 Series',
-    'esp32.description': 'ESP32 series programming via blocks.',
-    'esp32.collaborator': 'Espressif',
-  },
-  'zh-Hans': {
-    'esp32.name': 'ESP32 系列',
-    'esp32.description': '用积木为 ESP32 系列主控板編程。',
-    'esp32.collaborator': '乐鑫科技',
-  },
-  'zh-Hant': {
-    'esp32.name': 'ESP32 系列',
-    'esp32.description': '用積木為 ESP32 系列主控板編程。',
-    'esp32.collaborator': 'Espressif',
-  },
-});
+import featureImage from './feature.svg';
 
 export default {
   version,
   preview: true,
-  sortIndex: 102,
+  sortIndex: 104,
   image: featureImage,
   name: (
     <Text
-      id="esp32.name"
-      defaultMessage="ESP32 Series"
+      id="iotbit.name"
+      defaultMessage="iot:bit"
     />
   ),
   description: (
     <Text
-      id="esp32.description"
-      defaultMessage="ESP32 series programming via blocks."
+      id="iotbit.description"
+      defaultMessage="A board for mastering IoT."
     />
   ),
   collaborator: (
     <Text
-      id="esp32.collaborator"
-      defaultMessage="Espressif"
+      id="iotbit.collaborator"
+      defaultMessage="Emakefun"
     />
   ),
   blocksRequired: true,
   micropythonRequired: true,
 };
+
+addLocalesMessages({
+  en: {
+    'iotbit.name': 'iot:bit',
+    'iotbit.description': 'A board for mastering IoT.',
+    'iotbit.collaborator': 'Emakefun',
+  },
+  'zh-Hans': {
+    'iotbit.name': '物联板 iot:bit',
+    'iotbit.description': '兼容掌控板的物联网开发板。',
+    'iotbit.collaborator': '易创空间',
+  },
+  'zh-Hant': {
+    'iotbit.name': 'iot:bit',
+    'iotbit.description': '玩轉物聯網的小開發板。',
+    'iotbit.collaborator': 'Emakefun',
+  },
+});

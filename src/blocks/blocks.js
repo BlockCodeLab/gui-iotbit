@@ -1,35 +1,38 @@
 import getPinsBlocks from './pins';
-import getTextBlocks from './text';
-import getSerialBlocks from './serial';
+import getDisplayBlocks from './display';
+import getSoundBlocks from './sound';
 import getEventsBlocks from './events';
 import getControlBlocks from './control';
 import getNetworkBlocks from './network';
-import getProtocolsBlocks from './protocols';
+import getSensingBlocks from './sensing';
 import getOperatorsBlocks from './operators';
 import getDataBlocks from './data';
+import getMyBlocks from './procedures';
 
-export { ESP32Generator } from './generator';
+export { IotBitGenerator } from './generator';
 
-export function buildBlocks(boardType) {
-  const pinsBlocks = getPinsBlocks(boardType);
-  const textBlocks = getTextBlocks();
-  const serialBlocks = getSerialBlocks();
-  const eventsBlocks = getEventsBlocks(boardType);
+export function buildBlocks() {
+  const pinsBlocks = getPinsBlocks();
+  const displayBlocks = getDisplayBlocks();
+  const soundBlocks = getSoundBlocks();
+  const eventsBlocks = getEventsBlocks();
   const controlBlocks = getControlBlocks();
   const networkBlocks = getNetworkBlocks();
-  const protocolsBlocks = getProtocolsBlocks();
+  const sensingBlocks = getSensingBlocks();
   const operatorsBlocks = getOperatorsBlocks();
   const dataBlocks = getDataBlocks();
+  const myBlocks = getMyBlocks();
 
   return [
     pinsBlocks,
-    textBlocks,
-    serialBlocks,
+    displayBlocks,
+    soundBlocks,
     eventsBlocks,
     controlBlocks,
     networkBlocks,
-    protocolsBlocks,
+    sensingBlocks,
     operatorsBlocks,
     dataBlocks,
+    myBlocks,
   ];
 }

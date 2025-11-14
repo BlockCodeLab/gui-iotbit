@@ -1,0 +1,75 @@
+.toolbar-wrapper {
+  height: var(--tool-bar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: var(--space) 0;
+}
+
+.green-flag,
+.stop {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.375rem;
+  border-radius: 0.25rem;
+  user-select: none;
+  cursor: pointer;
+  border: 0;
+}
+
+.green-flag:hover,
+.stop:hover {
+  background: var(--theme-light-transparent);
+}
+
+.green-flag.actived {
+  background: var(--theme-transparent);
+}
+
+.stop {
+  opacity: 0.5;
+}
+
+.stop.actived {
+  opacity: 1;
+}
+
+.green-flag.disabled,
+.stop.disabled {
+  opacity: 0.5;
+}
+
+.toolbar-button {
+  width: calc(2rem + 2px);
+  height: calc(2rem + 2px);
+  padding: 0.375rem !important;
+}
+
+.space {
+  margin-left: 0.2rem;
+}
+
+.toolbar-buttons-group {
+  display: flex;
+}
+
+.group-button-first {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.group-button {
+  border-left: none;
+  border-radius: 0;
+}
+
+.group-button-last {
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.group-button-toggled-off {
+  filter: saturate(0);
+}

@@ -11,7 +11,7 @@ export default () => ({
     {
       // 等待
       id: 'wait',
-      text: translate('esp32.blocks.wait', 'wait %1 milliseconds'),
+      text: translate('iotbit.blocks.wait', 'wait %1 milliseconds'),
       inputs: {
         MS: {
           type: 'integer',
@@ -59,7 +59,7 @@ export default () => ({
     {
       // 否则，如果
       id: 'elseif',
-      text: translate('esp32.blocks.elseif', 'else if %1 then'),
+      text: translate('iotbit.blocks.elseif', 'else if %1 then'),
       substack: true,
       inputs: {
         CONDITION: {
@@ -80,7 +80,7 @@ export default () => ({
     {
       // 否则
       id: 'else',
-      text: translate('esp32.blocks.else', 'else'),
+      text: translate('iotbit.blocks.else', 'else'),
       substack: true,
       mpy(block) {
         const branchCode = this.statementToCode(block, 'SUBSTACK') || this.PASS;
@@ -118,7 +118,7 @@ export default () => ({
     {
       // continue
       id: 'continue',
-      text: translate('esp32.blocks.continue', 'continue'),
+      text: translate('iotbit.blocks.continue', 'continue'),
       end: true,
       mpy(block) {
         return 'continue\n';
@@ -127,30 +127,10 @@ export default () => ({
     {
       // break
       id: 'break',
-      text: translate('esp32.blocks.break', 'break'),
+      text: translate('iotbit.blocks.break', 'break'),
       end: true,
       mpy(block) {
         return 'break\n';
-      },
-    },
-    '---',
-    {
-      // 运行时长
-      id: 'runtime',
-      text: translate('esp32.blocks.runtime', 'run time %1'),
-      output: 'number',
-      inputs: {
-        UNIT: {
-          menu: [
-            [translate('esp32.blocks.runtimeMilliseconds', 'milliseconds'), 'MS'],
-            [translate('esp32.blocks.runtimeSeconds', 'seconds'), 'SEC'],
-          ],
-        },
-      },
-      mpy(block) {
-        const unit = block.getFieldValue('UNIT');
-        const code = `(_times__${unit === 'SEC' ? '/1000' : ''})`;
-        return [code, this.ORDER_ATOMIC];
       },
     },
   ],

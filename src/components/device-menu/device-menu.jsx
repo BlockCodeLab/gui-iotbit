@@ -3,11 +3,9 @@ import { nanoid, classNames } from '@blockcode/utils';
 import { useProjectContext, setAlert, delAlert } from '@blockcode/core';
 import { MPYUtils } from '@blockcode/board';
 import { sleepMs } from '@blockcode/utils';
-import { ESP32Boards } from '../../lib/boards';
 import deviceFilters from './device-filters.yaml';
 
 import { Spinner, Text, MenuSection, MenuItem } from '@blockcode/core';
-import { BoardsSection } from './boards-section';
 import { FirmwareSection } from './firmware-section';
 import styles from './device-menu.module.css';
 
@@ -111,33 +109,29 @@ export function DeviceMenu({ itemClassName }) {
   return (
     <>
       <MenuSection>
-        {meta.value.boardType === ESP32Boards.ESP32_IOT_BOARD && (
-          <MenuItem
-            disabled={downloadAlertId}
-            className={classNames(itemClassName, styles.blankCheckItem)}
-            label={
-              <Text
-                id="esp32.menubar.device.downloadBle"
-                defaultMessage="Download program via Bluetooth (BLE)"
-              />
-            }
-            onClick={handleDownloadBLE}
-          />
-        )}
+        <MenuItem
+          disabled={true || downloadAlertId}
+          className={classNames(itemClassName, styles.blankCheckItem)}
+          label={
+            <Text
+              id="iotbit.menubar.device.downloadBle"
+              defaultMessage="Download program via Bluetooth (BLE)"
+            />
+          }
+          onClick={handleDownloadBLE}
+        />
         <MenuItem
           disabled={downloadAlertId}
           className={classNames(itemClassName, styles.blankCheckItem)}
           label={
             <Text
-              id="esp32.menubar.device.download"
+              id="iotbit.menubar.device.download"
               defaultMessage="Download program via Serial Port"
             />
           }
           onClick={handleDownload}
         />
       </MenuSection>
-
-      <BoardsSection itemClassName={itemClassName} />
 
       <FirmwareSection itemClassName={itemClassName} />
     </>

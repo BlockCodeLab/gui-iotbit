@@ -2,7 +2,7 @@ import { translate, themeColors } from '@blockcode/core';
 
 export default () => ({
   id: 'network',
-  name: translate('esp32.blocks.network', 'Network'),
+  name: translate('iotbit.blocks.network', 'Network'),
   themeColor: '#28A0DC',
   inputColor: '#42A8DB',
   otherColor: '#1386BF',
@@ -10,7 +10,7 @@ export default () => ({
   blocks: [
     {
       id: 'connectwifi',
-      text: translate('esp32.blocks.connectWifi', 'connect wifi ssid: %1 password: %2'),
+      text: translate('iotbit.blocks.connectWifi', 'connect wifi ssid: %1 password: %2'),
       inputs: {
         SSID: {
           type: 'string',
@@ -41,7 +41,7 @@ export default () => ({
     },
     {
       id: 'disconnect',
-      text: translate('esp32.blocks.disconnectWifi', 'disconnect wifi'),
+      text: translate('iotbit.blocks.disconnectWifi', 'disconnect wifi'),
       mpy(block) {
         this.definitions_['import_network'] = 'import network';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
@@ -53,7 +53,7 @@ export default () => ({
     },
     {
       id: 'isconnected',
-      text: translate('esp32.blocks.isWifiConnected', 'wifi is connected?'),
+      text: translate('iotbit.blocks.isWifiConnected', 'wifi is connected?'),
       output: 'boolean',
       mpy(block) {
         this.definitions_['import_network'] = 'import network';
@@ -64,7 +64,7 @@ export default () => ({
     '---',
     {
       id: 'wifiscan',
-      text: translate('esp32.blocks.wifiScan', 'start scan wifi'),
+      text: translate('iotbit.blocks.wifiScan', 'start scan wifi'),
       mpy(block) {
         this.definitions_['import_threading'] = 'import _thread as threading';
         this.definitions_['import_network'] = 'import network';
@@ -78,7 +78,7 @@ export default () => ({
     },
     {
       id: 'wifiitem',
-      text: translate('esp32.blocks.wifiItem', '%2 of item %1 of available wifi'),
+      text: translate('iotbit.blocks.wifiItem', '%2 of item %1 of available wifi'),
       output: 'number',
       inputs: {
         INDEX: {
@@ -87,10 +87,10 @@ export default () => ({
         },
         ITEM: {
           menu: [
-            [translate('esp32.blocks.wifiItemSsid', 'ssid'), 'SSID'],
-            [translate('esp32.blocks.wifiItemMac', 'mac'), 'MAC'],
-            [translate('esp32.blocks.wifiItemRssi', 'rssi'), 'RSSI'],
-            [translate('esp32.blocks.wifiItemSecurity', 'security'), 'SECURITY'],
+            [translate('iotbit.blocks.wifiItemSsid', 'ssid'), 'SSID'],
+            [translate('iotbit.blocks.wifiItemMac', 'mac'), 'MAC'],
+            [translate('iotbit.blocks.wifiItemRssi', 'rssi'), 'RSSI'],
+            [translate('iotbit.blocks.wifiItemSecurity', 'security'), 'SECURITY'],
           ],
         },
       },
@@ -120,7 +120,7 @@ export default () => ({
     },
     {
       id: 'wificounts',
-      text: translate('esp32.blocks.wifiCounts', 'available wifi counts'),
+      text: translate('iotbit.blocks.wifiCounts', 'available wifi counts'),
       output: 'number',
       mpy(block) {
         this.definitions_['import_network'] = 'import network';
@@ -132,7 +132,7 @@ export default () => ({
     '---',
     {
       id: 'startap',
-      text: translate('esp32.blocks.startap', 'start ap ssid: %1'),
+      text: translate('iotbit.blocks.startap', 'start ap ssid: %1'),
       inputs: {
         SSID: {
           type: 'string',
@@ -151,7 +151,7 @@ export default () => ({
     },
     {
       id: 'stopap',
-      text: translate('esp32.blocks.stopap', 'stop ap'),
+      text: translate('iotbit.blocks.stopap', 'stop ap'),
       mpy(block) {
         this.definitions_['import_network'] = 'import network';
         this.definitions_['ap'] = 'ap = network.WLAN(network.AP_IF)';
@@ -161,11 +161,11 @@ export default () => ({
     '---',
     {
       id: 'espnowsend',
-      text: translate('esp32.blocks.espnowSend', 'send %1 to %2 via esp-now'),
+      text: translate('iotbit.blocks.espnowSend', 'send %1 to %2 via esp-now'),
       inputs: {
         MESSAGE: {
           type: 'string',
-          defaultValue: translate('esp32.blocks.espnowMsgText', 'message'),
+          defaultValue: translate('iotbit.blocks.espnowMsgText', 'message'),
         },
         MAC: {
           type: 'string',
@@ -197,7 +197,7 @@ export default () => ({
     },
     {
       id: 'espnowrecv',
-      text: translate('esp32.blocks.espnowRecv', 'wait for esp-now incoming'),
+      text: translate('iotbit.blocks.espnowRecv', 'wait for esp-now incoming'),
       mpy(block) {
         this.definitions_['import_network'] = 'import network';
         this.definitions_['import_aioespnow'] = 'from aioespnow import AIOESPNow';
@@ -209,13 +209,13 @@ export default () => ({
     },
     {
       id: 'espnowmsg',
-      text: translate('esp32.blocks.espnowMsg', '%1 of incoming'),
+      text: translate('iotbit.blocks.espnowMsg', '%1 of incoming'),
       output: 'string',
       inputs: {
         TYPE: {
           menu: [
-            [translate('esp32.blocks.espnowMsgText', 'message'), 'MESSAGE'],
-            [translate('esp32.blocks.espnowMsgMac', 'mac'), 'MAC'],
+            [translate('iotbit.blocks.espnowMsgText', 'message'), 'MESSAGE'],
+            [translate('iotbit.blocks.espnowMsgMac', 'mac'), 'MAC'],
           ],
         },
       },
@@ -232,19 +232,26 @@ export default () => ({
     '---',
     {
       id: 'espnowwhen',
-      text: translate('esp32.blocks.espnowWhen', 'when esp-now [MSG] incoming'),
+      text: translate('iotbit.blocks.espnowWhen', 'when esp-now %1 incoming'),
       hat: true,
       inputs: {
-        MSG: {
+        MESSAGE: {
           type: 'string',
-          defaultValue: translate('esp32.blocks.espnowMsgText', 'message'),
+          defaultValue: translate('iotbit.blocks.espnowMsgText', 'message'),
         },
+      },
+      mpy(block) {
+        const msg = this.valueToCode(block, 'MESSAGE', this.ORDER_NONE);
+        this.definitions_['import_network'] = 'import network';
+        this.definitions_['import_aioespnow'] = 'from aioespnow import AIOESPNow';
+        this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
+        this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
       },
     },
     '---',
     {
       id: 'espnowrepeat',
-      text: translate('esp32.blocks.espnowRepeat', 'repeat wait for esp-now incoming'),
+      text: translate('iotbit.blocks.espnowRepeat', 'repeat wait for esp-now incoming'),
       repeat: true,
       end: true,
       mpy(block) {

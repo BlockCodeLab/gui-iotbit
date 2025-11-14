@@ -1,0 +1,21 @@
+.sidedock-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.stage-wrapper {
+  display: flex;
+}
+
+.selector-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  margin-top: var(--space);
+  width: calc(360px + 2px);
+}
+
+.selector-wrapper.small {
+  width: calc(288px + 2px);
+}

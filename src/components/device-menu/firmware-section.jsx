@@ -1,10 +1,9 @@
-import { useEffect, useMemo } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 import { nanoid, classNames, sleep, arrayBufferToBinaryString, getBinaryCache, setBinaryCache } from '@blockcode/utils';
-import { useProjectContext, setAlert, delAlert, openPromptModal } from '@blockcode/core';
+import { setAlert, delAlert, openPromptModal } from '@blockcode/core';
 import { ESPTool } from '@blockcode/board';
-import { ESP32Boards } from '../../lib/boards';
-import { firmwares } from '../../../package.json';
+import { firmware } from '../../../package.json';
 import deviceFilters from './device-filters.yaml';
 
 import { Text, Spinner, MenuSection, MenuItem } from '@blockcode/core';
@@ -22,7 +21,7 @@ const uploadingAlert = (progress) => {
       icon: <Spinner level="success" />,
       message: (
         <Text
-          id="esp32.menubar.device.restoring"
+          id="iotbit.menubar.device.restoring"
           defaultMessage="Firmware restoring...{progress}%"
           progress={progress}
         />
@@ -34,7 +33,7 @@ const uploadingAlert = (progress) => {
       icon: <Spinner level="success" />,
       message: (
         <Text
-          id="esp32.menubar.device.recovering"
+          id="iotbit.menubar.device.recovering"
           defaultMessage="Recovering..."
         />
       ),
@@ -117,7 +116,7 @@ const uploadData = async (esploader, data) => {
     icon: <Spinner level="success" />,
     message: (
       <Text
-        id="esp32.menubar.device.erasing"
+        id="iotbit.menubar.device.erasing"
         defaultMessage="Erasing..."
       />
     ),
@@ -137,7 +136,7 @@ const uploadData = async (esploader, data) => {
       icon: null,
       message: (
         <Text
-          id="esp32.menubar.device.restoreDone"
+          id="iotbit.menubar.device.restoreDone"
           defaultMessage="Firmware resotre completed!"
         />
       ),
@@ -164,17 +163,14 @@ const uploadFirmware = async (firmwareCache) => {
   if (!esploader) return;
 
   // 从缓存中升级到最新固件
-  if (firmwareCache) {
-    const data = await getBinaryCache(firmwareCache);
-    if (data) {
-      uploadData(esploader, [
-        {
-          data: data.binaryString,
-          address: 0,
-        },
-      ]);
-    }
-    return;
+  const data = await getBinaryCache(firmwareCache);
+  if (data) {
+    uploadData(esploader, [
+      {
+        data: data.binaryString,
+        address: 0,
+      },
+    ]);
   }
 
   // 用户自选固件
@@ -199,63 +195,39 @@ const uploadFirmware = async (firmwareCache) => {
 };
 
 export function FirmwareSection({ itemClassName }) {
-  const { meta } = useProjectContext();
-
   const readyForUpdate = useSignal(false);
 
   const firmwareJson = useSignal(null);
 
-  const cacheName = useMemo(() => {
-    if (meta.value.boardType === ESP32Boards.ESP32_IOT_BOARD) {
-      return 'iotboardFirmware';
-    }
-  }, [meta.value.boardType]);
-
-  const firmwareLabel = useMemo(() => {
-    if (meta.value.boardType === ESP32Boards.ESP32_IOT_BOARD) {
-      return (
-        <Text
-          id="esp32.menubar.device.iotboardFirmware"
-          defaultMessage="Restore IOT Board firmware"
-        />
-      );
-    }
-  }, [meta.value.boardType]);
-
   useEffect(() => (alertId = null), []);
 
   useEffect(async () => {
-    if (!cacheName) return;
     readyForUpdate.value = false;
-    const baseUrl = firmwares.iotboard.download;
+    const baseUrl = firmware.download;
     if (!firmwareJson.value) {
       firmwareJson.value = await fetch(`${baseUrl}/version.json`).then((res) => res.json());
     }
     const downloadUrl = `${baseUrl}/${firmwareJson.value.download}`.replaceAll('{version}', firmwareJson.value.version);
     const firmwareHash = firmwareJson.value.hash;
-    getFirmwareCache(cacheName, downloadUrl, firmwareHash, firmwareJson.value.version, readyForUpdate);
-  }, [cacheName]);
+    getFirmwareCache('iotbitFirmware', downloadUrl, firmwareHash, firmwareJson.value.version, readyForUpdate);
+  }, []);
 
   return (
     <MenuSection>
       <MenuItem
-        disabled={alertId || (firmwareLabel && !readyForUpdate.value)}
+        disabled={alertId || !readyForUpdate.value}
         className={classNames(itemClassName, styles.blankCheckItem)}
-        onClick={() => uploadFirmware(cacheName)}
+        onClick={() => uploadFirmware('iotbitFirmware')}
       >
-        {firmwareLabel ? (
-          readyForUpdate.value ? (
-            firmwareLabel
-          ) : (
-            <Text
-              id="esp32.menubar.device.caching"
-              defaultMessage="Caching latest firmware..."
-            />
-          )
+        {readyForUpdate.value ? (
+          <Text
+            id="iotbit.menubar.device.iotbitFirmware"
+            defaultMessage="Restore iot:bit firmware"
+          />
         ) : (
           <Text
-            id="esp32.menubar.device.firmware"
-            defaultMessage="Restore firmware"
+            id="iotbit.menubar.device.caching"
+            defaultMessage="Caching latest firmware..."
           />
         )}
       </MenuItem>

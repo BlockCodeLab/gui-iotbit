@@ -1,134 +1,143 @@
-esp32.menubar.device: ESP32
-esp32.menubar.device.esp32: ESP32
-esp32.menubar.device.esp32s3: ESP32-S3
-esp32.menubar.device.esp32c3: ESP32-C3
-esp32.menubar.device.esp32c6: ESP32-C6
-esp32.menubar.device.esp32IotBoard: ESP32 IOT Board
+iotbit.menubar.device: iot:bit
 
-esp32.menubar.device.sync: 同步程式
+iotbit.menubar.device.sync: 同步程式
 
-esp32.menubar.device.download: 通過 USB 下載程式
-esp32.menubar.device.downloadBle: 通過藍牙下載程式
-esp32.menubar.device.iotboardFirmware: 還原 IOT Borad 出廠固件
-esp32.menubar.device.firmware: 還原固件
-esp32.menubar.device.erasing: 正在清除…
-esp32.menubar.device.restoring: 正在還原固件…{progress}%
-esp32.menubar.device.recovering: 恢復設備…
-esp32.menubar.device.restoreDone: 還原固件完成，請按下 RESET 鍵。
-esp32.menubar.device.caching: 正在緩存最新固件…
+iotbit.menubar.device.download: 通過 USB 下載程式
+iotbit.menubar.device.downloadBle: 通過藍牙下載程式
+iotbit.menubar.device.iotboardFirmware: 還原 IOT Borad 出廠固件
+iotbit.menubar.device.firmware: 還原固件
+iotbit.menubar.device.erasing: 正在清除…
+iotbit.menubar.device.restoring: 正在還原固件…{progress}%
+iotbit.menubar.device.recovering: 恢復設備…
+iotbit.menubar.device.restoreDone: 還原固件完成，請按下 RESET 鍵。
+iotbit.menubar.device.caching: 正在緩存最新固件…
 
-esp32.extension.tags.controllers: 輸入模組
-esp32.extension.tags.sensors: 傳感器
-esp32.extension.tags.actuators: 執行器
-esp32.extension.tags.displays: 顯示模組
-esp32.extension.tags.modules: 智能模組
-esp32.extension.tags.communication: 通訊
-esp32.extension.tags.data: 數據
-esp32.extension.tags.kits: 套件
+iotbit.extension.tags.controllers: 輸入模組
+iotbit.extension.tags.sensors: 傳感器
+iotbit.extension.tags.actuators: 執行器
+iotbit.extension.tags.displays: 顯示模組
+iotbit.extension.tags.modules: 智能模組
+iotbit.extension.tags.communication: 通訊
+iotbit.extension.tags.data: 數據
+iotbit.extension.tags.kits: 套件
 
-esp32.blocks.wait: 等待 %1 毫秒
-esp32.blocks.break: 跳出重複
-esp32.blocks.continue: 跳到下一次
-esp32.blocks.elseif: 否則，如果 %1 那麼
-esp32.blocks.else: 否則
-esp32.blocks.runtime: 運行時長 %1
-esp32.blocks.runtimeMilliseconds: 毫秒
-esp32.blocks.runtimeSeconds: 秒
-esp32.blocks.dataConvert: 將 %1 轉為 %2
-esp32.blocks.dataConvert.int: 整數
-esp32.blocks.dataConvert.float: 浮點數
-esp32.blocks.dataConvert.string: 字符串
-esp32.blocks.dataConvert.list: 列表
-esp32.blocks.dataLengthOf: "%1 長度"
-esp32.blocks.dataConstrain: 約束 %1 在 %2 和 %3 之間
-esp32.blocks.dataMap: 映射 %1 從 %2 - %3 到 %4 - %5
-esp32.blocks.whenstart: 當 {name} 開始
-esp32.blocks.timerset: "將定時器 # %1 間隔設為每 %2 毫秒"
-esp32.blocks.timeroff: "關閉定時器 # %1"
-esp32.blocks.operatorLarger: "%1 和 %2 之中最大"
-esp32.blocks.operatorSmaller: "%1 和 %2 之中最小"
-esp32.blocks.pin: 引腳
-esp32.blocks.setmode: 將引腳 %1 設為 %2 模式
-esp32.blocks.inputMode: 輸入
-esp32.blocks.ouputMode: 輸出
-esp32.blocks.inputPullUpMode: 上拉輸入
-esp32.blocks.inputPullDownMode: 下拉輸入
-esp32.blocks.setdigital: 將引腳 %1 設為 %2
-esp32.blocks.digitalHigh: 高電平
-esp32.blocks.digitalLow: 低電平
-esp32.blocks.setpwmfreq: 將引腳 %1 PWM 頻率設為 %2
-esp32.blocks.setpwm: 將引腳 %1 PWM 設為 %2
-esp32.blocks.setanalog: 將引腳 %1 模擬值設為 %2
-esp32.blocks.isDigitalHigh: 引腳 %1 是高電平？
-esp32.blocks.analogValue: 引腳 %1 模擬值
-esp32.blocks.attachinterrupt: 將引腳 %1 中斷模式設為 %2
-esp32.blocks.interruptRising: 電平上升
-esp32.blocks.interruptFalling: 電平下降
-esp32.blocks.interruptChange: 電平改變
-esp32.blocks.interruptHigh: 高電平
-esp32.blocks.interruptLow: 低電平
-esp32.blocks.detachinterrupt: 取消引腳 %1 中斷
-esp32.blocks.network: 網絡通訊
-esp32.blocks.protocols: 數據協議
-esp32.blocks.serial: 串口
-esp32.blocks.serialBaudrate: 將波特率設為 %1
-esp32.blocks.serialTimeout: 將超時設為 %1 毫秒
-esp32.blocks.serialPrint: 用 %2 模式打印 %1
-esp32.blocks.serialPrintWarp: 換行
-esp32.blocks.serialPrintNoWarp: 不換行
-esp32.blocks.serialPrintHEX: 16進制
-esp32.blocks.serialPrintNumber: 打印 %1
-esp32.blocks.serialAvailable: 存在可讀取數據?
-esp32.blocks.serialAvailableLength: 可讀取數據長度
-esp32.blocks.serialReadString: 讀取文本
-esp32.blocks.serialReadStringUntil: 讀取文本直到 %1
-esp32.blocks.serialReadParse: 讀取 %1
-esp32.blocks.serialReadParseInteger: 整數
-esp32.blocks.serialReadParseFloat: 浮點數
-esp32.blocks.serialRead: 讀取 1 個字節
-esp32.blocks.serialReadBytes: 讀取 %1 個字節
-esp32.blocks.text: 文本
-esp32.blocks.textEquals: "%1 和 %2 相同（忽視大小寫）？"
-esp32.blocks.textRemove: 刪除 %3 從第 %1 個到第 %2 個字符
-esp32.blocks.textReplace: 將 %2 中的 %1 替換為 %3
-esp32.blocks.textReplaceLetter: 將 %2 中的第 %1 個字符替換為 %3
-esp32.blocks.textSubstring: 截取 %1 從第 %2 個到第 %3 個字符
-esp32.blocks.textWith: "%1 %2 %3?"
-esp32.blocks.textStartsWith: 開始於
-esp32.blocks.textEndsWith: 結束於
-esp32.blocks.textCase: 將 %2 字母轉為 %1
-esp32.blocks.textLowerCase: 小寫
-esp32.blocks.textUpperCase: 大寫
-esp32.blocks.textTrim: 清除 %1 前後空白字符
-esp32.blocks.textConvert: 將 %1 轉為 %2
-esp32.blocks.textConvertFrom: 將 %1 轉為文本
-esp32.blocks.connectWifi: "連接 Wi-Fi 網絡 SSID: %1 密碼: %2"
-esp32.blocks.disconnectWifi: 斷開 Wi-Fi 網絡
-esp32.blocks.isWifiConnected: Wi-Fi 網絡已連接？
-esp32.blocks.wifiScan: 開始掃描 Wi-Fi
-esp32.blocks.wifiItem: 第 %1 個可用 Wi-Fi 的 %2
-esp32.blocks.wifiItemSsid: SSID
-esp32.blocks.wifiItemMac: MAC
-esp32.blocks.wifiItemRssi: RSSI
-esp32.blocks.wifiItemSecurity: 加密類型
-esp32.blocks.wifiCounts: 可用 Wi-Fi 數量
-esp32.blocks.startap: "開啟 AP SSID: %1"
-esp32.blocks.stopap: 關閉 AP
-esp32.blocks.espnowSend: 發送 ESP-Now %1 到 %2
-esp32.blocks.espnowRecv: 等待 ESP-Now 接收消息
-esp32.blocks.espnowMsg: 接收到 %1
-esp32.blocks.espnowMsgText: 消息
-esp32.blocks.espnowMsgMac: MAC
-esp32.blocks.espnowRepeat: 重複等待 ESP-Now 接收消息
-esp32.blocks.espnowWhen: 當 ESP-Now 收到 %1
-esp32.blocks.spiInit: 初始化SPI %1 頻率:%2Hz
-esp32.blocks.spiHSPI: HSPI
-esp32.blocks.spiVSPI: VSPI
-esp32.blocks.spiWrite: SPI %1 寫入 %2
-esp32.blocks.spiRead: SPI %1 讀取 %2 位元組
-esp32.blocks.i2cInit: 初始化I2C SDA:%1 SCL:%2 頻率:%3Hz
-esp32.blocks.i2cScan: I2C掃描設備
-esp32.blocks.i2cWrite: I2C寫入到 %1:%2
-esp32.blocks.i2cRead: I2C從 %1 讀取 %2 位元組
-esp32.blocks.i2sInit: 初始化I2S BCK:%1 WS:%2 DATA:%3 速率:%4Hz
-esp32.blocks.i2sPlay: I2S播放 %1
+iotbit.emu.greenFlag: 運行
+iotbit.emu.stop: 停止
+iotbit.emu.smallStage: 縮小舞臺
+iotbit.emu.largeStage: 放大舞臺
+
+iotbit.blocks.wait: 等待 %1 毫秒
+iotbit.blocks.break: 跳出重複
+iotbit.blocks.continue: 跳到下一次
+iotbit.blocks.elseif: 否則，如果 %1 那麼
+iotbit.blocks.else: 否則
+iotbit.blocks.runtime: 運行時長 %1
+iotbit.blocks.runtimeMilliseconds: 毫秒
+iotbit.blocks.runtimeSeconds: 秒
+iotbit.blocks.dataConvert: 將 %1 轉為 %2
+iotbit.blocks.dataConvert.int: 整數
+iotbit.blocks.dataConvert.float: 浮點數
+iotbit.blocks.dataConvert.string: 字符串
+iotbit.blocks.dataConvert.list: 列表
+iotbit.blocks.dataLengthOf: "%1 長度"
+iotbit.blocks.dataConstrain: 約束 %1 在 %2 和 %3 之間
+iotbit.blocks.dataMap: 映射 %1 從 %2 - %3 到 %4 - %5
+iotbit.blocks.whenstart: 當 iot:bit 開始
+iotbit.blocks.timerset: "將定時器 # %1 間隔設為每 %2 毫秒"
+iotbit.blocks.timeroff: "關閉定時器 # %1"
+iotbit.blocks.operatorLarger: "%1 和 %2 之中最大"
+iotbit.blocks.operatorSmaller: "%1 和 %2 之中最小"
+iotbit.blocks.pin: 引腳
+iotbit.blocks.setmode: 將引腳 %1 設為 %2 模式
+iotbit.blocks.inputMode: 輸入
+iotbit.blocks.ouputMode: 輸出
+iotbit.blocks.inputPullUpMode: 上拉輸入
+iotbit.blocks.inputPullDownMode: 下拉輸入
+iotbit.blocks.setdigital: 將引腳 %1 設為 %2
+iotbit.blocks.digitalHigh: 高電平
+iotbit.blocks.digitalLow: 低電平
+iotbit.blocks.setpwmfreq: 將引腳 %1 PWM 頻率設為 %2
+iotbit.blocks.setpwm: 將引腳 %1 PWM 設為 %2
+iotbit.blocks.setanalog: 將引腳 %1 模擬值設為 %2
+iotbit.blocks.isDigitalHigh: 引腳 %1 是高電平？
+iotbit.blocks.analogValue: 引腳 %1 模擬值
+iotbit.blocks.attachinterrupt: 將引腳 %1 中斷模式設為 %2
+iotbit.blocks.interruptRising: 電平上升
+iotbit.blocks.interruptFalling: 電平下降
+iotbit.blocks.interruptChange: 電平改變
+iotbit.blocks.interruptHigh: 高電平
+iotbit.blocks.interruptLow: 低電平
+iotbit.blocks.detachinterrupt: 取消引腳 %1 中斷
+iotbit.blocks.network: 網絡通訊
+iotbit.blocks.sensing: 偵測
+iotbit.blocks.display: 顯示
+iotbit.blocks.sound: 聲音
+iotbit.blocks.text: 文本
+iotbit.blocks.textEquals: "%1 和 %2 相同（忽視大小寫）？"
+iotbit.blocks.textRemove: 刪除 %3 從第 %1 個到第 %2 個字符
+iotbit.blocks.textReplace: 將 %2 中的 %1 替換為 %3
+iotbit.blocks.textReplaceLetter: 將 %2 中的第 %1 個字符替換為 %3
+iotbit.blocks.textSubstring: 截取 %1 從第 %2 個到第 %3 個字符
+iotbit.blocks.textWith: "%1 %2 %3?"
+iotbit.blocks.textStartsWith: 開始於
+iotbit.blocks.textEndsWith: 結束於
+iotbit.blocks.textCase: 將 %2 字母轉為 %1
+iotbit.blocks.textLowerCase: 小寫
+iotbit.blocks.textUpperCase: 大寫
+iotbit.blocks.textTrim: 清除 %1 前後空白字符
+iotbit.blocks.textConvert: 將 %1 轉為 %2
+iotbit.blocks.textConvertFrom: 將 %1 轉為文本
+iotbit.blocks.connectWifi: "連接 Wi-Fi 網絡 SSID: %1 密碼: %2"
+iotbit.blocks.disconnectWifi: 斷開 Wi-Fi 網絡
+iotbit.blocks.isWifiConnected: Wi-Fi 網絡已連接？
+iotbit.blocks.wifiScan: 開始掃描 Wi-Fi
+iotbit.blocks.wifiItem: 第 %1 個可用 Wi-Fi 的 %2
+iotbit.blocks.wifiItemSsid: SSID
+iotbit.blocks.wifiItemMac: MAC
+iotbit.blocks.wifiItemRssi: RSSI
+iotbit.blocks.wifiItemSecurity: 加密類型
+iotbit.blocks.wifiCounts: 可用 Wi-Fi 數量
+iotbit.blocks.startap: "開啟 AP SSID: %1"
+iotbit.blocks.stopap: 關閉 AP
+iotbit.blocks.espnowSend: 發送 ESP-Now %1 到 %2
+iotbit.blocks.espnowRecv: 等待 ESP-Now 接收消息
+iotbit.blocks.espnowMsg: 接受到 %1
+iotbit.blocks.espnowMsgText: 消息
+iotbit.blocks.espnowMsgMac: MAC
+iotbit.blocks.espnowRepeat: 重複等待 ESP-Now 接收消息
+iotbit.blocks.espnowWhen: 當 ESP-Now 收到 %1
+iotbit.blocks.spiInit: 初始化SPI %1 頻率:%2Hz
+iotbit.blocks.spiHSPI: HSPI
+iotbit.blocks.spiVSPI: VSPI
+iotbit.blocks.spiWrite: SPI %1 寫入 %2
+iotbit.blocks.spiRead: SPI %1 讀取 %2 位元組
+iotbit.blocks.i2cInit: 初始化I2C SDA:%1 SCL:%2 頻率:%3Hz
+iotbit.blocks.i2cScan: I2C掃描設備
+iotbit.blocks.i2cWrite: I2C寫入到 %1:%2
+iotbit.blocks.i2cRead: I2C從 %1 讀取 %2 位元組
+iotbit.blocks.i2sInit: 初始化I2S BCK:%1 WS:%2 DATA:%3 速率:%4Hz
+iotbit.blocks.i2sPlay: I2S播放 %1
+iotbit.blocks.playNote: 演奏音符 %1 %2 拍
+iotbit.blocks.playMusic: 播放 %1
+iotbit.blocks.stopMusic: 停止播放
+iotbit.blocks.musicDadadadum: 開場
+iotbit.blocks.musicEntertainer: 娛樂
+iotbit.blocks.musicPrelude: 前奏
+iotbit.blocks.musicOde: 頌歌
+iotbit.blocks.musicNyan: 初音
+iotbit.blocks.musicRingtone: 鈴聲
+iotbit.blocks.musicFunk: 恐慌
+iotbit.blocks.musicBlues: 藍調
+iotbit.blocks.musicBirthday: 生日
+iotbit.blocks.musicWedding: 婚禮
+iotbit.blocks.musicFuneral: 葬禮
+iotbit.blocks.musicPunchline: 笑點
+iotbit.blocks.musicPython: 貪吃蛇
+iotbit.blocks.musicBaddy: 壞人
+iotbit.blocks.musicChase: 追逐
+iotbit.blocks.musicBaDing: 獎勵
+iotbit.blocks.musicWawawawaa: 退場
+iotbit.blocks.musicJumpUp: 跳起來
+iotbit.blocks.musicJumpDown: 跳下去
+iotbit.blocks.musicPowerUp: 打開電源
+iotbit.blocks.musicPowerDown: 關閉電源

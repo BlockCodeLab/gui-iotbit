@@ -4,12 +4,12 @@ import { svgAsDataUri } from '@blockcode/utils';
 import { ScratchBlocks, blocksTab, CodeReview } from '@blockcode/blocks';
 import { codeTab, terminalTab } from '@blockcode/code';
 
-import { ESP32BlocksEditor } from './components/blocks-editor/blocks-editor';
+import { Text } from '@blockcode/core';
+import { IotBitBlocksEditor } from './components/blocks-editor/blocks-editor';
 import { DeviceIcon } from './components/device-menu/device-icon';
-import { DeviceLabel } from './components/device-menu/device-label';
 import { DeviceMenu } from './components/device-menu/device-menu';
+import { Sidedock } from './components/sidedock/sidedock';
 import { defaultProject } from './lib/default-project';
-import { ESP32Boards } from './lib/boards';
 
 export default {
   onNew() {
@@ -31,7 +31,6 @@ export default {
       assets,
       meta: {
         extensions: Array.from(new Set(extensions.flat())),
-        boardType: meta.boardType ?? ESP32Boards.ESP32,
       },
     };
   },
@@ -73,7 +72,12 @@ export default {
   menuItems: [
     {
       icon: <DeviceIcon />,
-      label: <DeviceLabel />,
+      label: (
+        <Text
+          id="iotbit.menubar.device"
+          defaultMessage="iot:bit"
+        />
+      ),
       Menu: DeviceMenu,
     },
   ],
@@ -81,7 +85,7 @@ export default {
   tabs: [
     {
       ...blocksTab,
-      Content: ESP32BlocksEditor,
+      Content: IotBitBlocksEditor,
     },
     {
       ...codeTab,
@@ -90,6 +94,13 @@ export default {
     {
       ...terminalTab,
       disabled: true,
+    },
+  ],
+
+  docks: [
+    {
+      expand: 'right',
+      Content: Sidedock,
     },
   ],
 };

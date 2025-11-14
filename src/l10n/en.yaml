@@ -1,134 +1,141 @@
-esp32.menubar.device: ESP32
-esp32.menubar.device.esp32: ESP32
-esp32.menubar.device.esp32s3: ESP32-S3
-esp32.menubar.device.esp32c3: ESP32-C3
-esp32.menubar.device.esp32c6: ESP32-C6
-esp32.menubar.device.esp32IotBoard: ESP32 IOT Board
+iotbit.menubar.device: iot:bit
 
-esp32.menubar.device.sync: Sync program
+iotbit.menubar.device.sync: Sync program
 
-esp32.menubar.device.download: Download program via USB
-esp32.menubar.device.downloadBle: Download program via Bluetooth
-esp32.menubar.device.iotboardFirmware: Restore IOT Board firmware
-esp32.menubar.device.firmware: Restore firmware
-esp32.menubar.device.erasing: Erasing...
-esp32.menubar.device.restoring: Firmware restoring...{progress}%
-esp32.menubar.device.recovering: Recovering...
-esp32.menubar.device.restoreDone: Firmware resotre completed! Now press RESET key
-esp32.menubar.device.caching: Caching latest firmware...
+iotbit.menubar.device.download: Download program via USB
+iotbit.menubar.device.downloadBle: Download program via Bluetooth
+iotbit.menubar.device.iotboardFirmware: Restore IOT Board firmware
+iotbit.menubar.device.firmware: Restore firmware
+iotbit.menubar.device.erasing: Erasing...
+iotbit.menubar.device.restoring: Firmware restoring...{progress}%
+iotbit.menubar.device.recovering: Recovering...
+iotbit.menubar.device.restoreDone: Firmware resotre completed! Now press RESET key
+iotbit.menubar.device.caching: Caching latest firmware...
 
-esp32.extension.tags.controllers: Controllers
-esp32.extension.tags.sensors: Sensors
-esp32.extension.tags.actuators: Actuators
-esp32.extension.tags.displays: Displays
-esp32.extension.tags.modules: Modules
-esp32.extension.tags.communication: Communication
-esp32.extension.tags.data: Data
-esp32.extension.tags.kits: Kits
+iotbit.extension.tags.controllers: Controllers
+iotbit.extension.tags.sensors: Sensors
+iotbit.extension.tags.actuators: Actuators
+iotbit.extension.tags.displays: Displays
+iotbit.extension.tags.modules: Modules
+iotbit.extension.tags.communication: Communication
+iotbit.extension.tags.data: Data
+iotbit.extension.tags.kits: Kits
 
-esp32.blocks.wait: wait %1 milliseconds
-esp32.blocks.break: break
-esp32.blocks.continue: continue
-esp32.blocks.elseif: else if %1 then
-esp32.blocks.else: else
-esp32.blocks.runtime: run time %1
-esp32.blocks.runtimeMilliseconds: milliseconds
-esp32.blocks.runtimeSeconds: seconds
-esp32.blocks.dataConvert: convert %1 to %2
-esp32.blocks.dataConvert.int: int
-esp32.blocks.dataConvert.float: float
-esp32.blocks.dataConvert.string: str
-esp32.blocks.dataConvert.list: list
-esp32.blocks.dataLengthOf: length of %1
-esp32.blocks.dataConstrain: constrain %1 between %2 to %3
-esp32.blocks.dataMap: map %1 from %2 - %3 to %4 - %5
-esp32.blocks.whenstart: when {name} start
-esp32.blocks.timerset: "set timer # %1 per %2 milliseconds"
-esp32.blocks.timeroff: "stop timer # %1"
-esp32.blocks.operatorLarger: larger of %1 and %2
-esp32.blocks.operatorSmaller: smaller of %1 and %2
-esp32.blocks.pin: Pins
-esp32.blocks.setmode: set pin %1 mode to %2
-esp32.blocks.inputMode: input
-esp32.blocks.ouputMode: output
-esp32.blocks.inputPullUpMode: input pull-up
-esp32.blocks.inputPullDownMode: input pull-down
-esp32.blocks.setdigital: set pin %1 to %2
-esp32.blocks.digitalHigh: high
-esp32.blocks.digitalLow: low
-esp32.blocks.setpwmfreq: set pin %1 pwm frequency to %2 Hz
-esp32.blocks.setpwm: set pin %1 pwm to %2
-esp32.blocks.setanalog: set pin %1 analog to %2
-esp32.blocks.isDigitalHigh: pin %1 is high?
-esp32.blocks.analogValue: pin %1 analog value
-esp32.blocks.attachinterrupt: attach pin %1 interrupt to %2
-esp32.blocks.interruptRising: rising
-esp32.blocks.interruptFalling: falling
-esp32.blocks.interruptChange: change
-esp32.blocks.interruptHigh: high
-esp32.blocks.interruptLow: low
-esp32.blocks.detachinterrupt: detach pin %1 interrupt
-esp32.blocks.network: Network
-esp32.blocks.protocols: Protocols
-esp32.blocks.serial: Serial
-esp32.blocks.serialBaudrate: set baudrate to %1
-esp32.blocks.serialTimeout: set timeout to %1 milliseconds
-esp32.blocks.serialPrint: print %1 with %2
-esp32.blocks.serialPrintWarp: warp
-esp32.blocks.serialPrintNoWarp: no-warp
-esp32.blocks.serialPrintHEX: hex
-esp32.blocks.serialPrintNumber: print %1
-esp32.blocks.serialAvailable: available data?
-esp32.blocks.serialAvailableLength: available data length
-esp32.blocks.serialReadString: read a string
-esp32.blocks.serialReadStringUntil: read a string until %1
-esp32.blocks.serialReadParse: read a %1 number
-esp32.blocks.serialReadParseInteger: int
-esp32.blocks.serialReadParseFloat: float
-esp32.blocks.serialRead: read a byte
-esp32.blocks.serialReadBytes: read %1 bytes
-esp32.blocks.text: Text
-esp32.blocks.textEquals: "%1 equals %2 (not case-sensitive)?"
-esp32.blocks.textRemove: remove letters from %1 to %2 of %3
-esp32.blocks.textReplace: replace %1 of %2 with %3
-esp32.blocks.textReplaceLetter: replace letter %1 of %2 with %3
-esp32.blocks.textSubstring: substring of %1 from %2 to %3
-esp32.blocks.textWith: "%1 %2 with %3?"
-esp32.blocks.textStartsWith: starts
-esp32.blocks.textEndsWith: ends
-esp32.blocks.textCase: get %1 of %2
-esp32.blocks.textLowerCase: lower-case
-esp32.blocks.textUpperCase: upper-case
-esp32.blocks.textTrim: remove %1 leading and trailing whitespace
-esp32.blocks.textConvert: convert %1 to %2
-esp32.blocks.textConvertFrom: convert %1 to String
-esp32.blocks.connectWifi: "connect wi-fi ssid: %1 password: %2"
-esp32.blocks.disconnectWifi: disconnect wi-fi
-esp32.blocks.isWifiConnected: wi-fi is connected?
-esp32.blocks.wifiScan: start scan wi-fi
-esp32.blocks.wifiItem: "%2 of item %1 of available wi-fi"
-esp32.blocks.wifiItemSsid: ssid
-esp32.blocks.wifiItemMac: mac
-esp32.blocks.wifiItemRssi: rssi
-esp32.blocks.wifiItemSecurity: security
-esp32.blocks.wifiCounts: available wi-fi counts
-esp32.blocks.startap: "start ap ssid: %1"
-esp32.blocks.stopap: stop ap
-esp32.blocks.espnowSend: send esp-now %1 to %2
-esp32.blocks.espnowRecv: wait for esp-now incoming
-esp32.blocks.espnowMsg: "%1 of incoming"
-esp32.blocks.espnowMsgText: message
-esp32.blocks.espnowMsgMac: mac
-esp32.blocks.espnowRepeat: repeat wait for esp-now incoming
-esp32.blocks.espnowWhen: when esp-now [MSG] incoming
-esp32.blocks.spiInit: initialize SPI %1 freq:%2Hz
-esp32.blocks.spiHSPI: HSPI
-esp32.blocks.spiVSPI: VSPI
-esp32.blocks.spiWrite: SPI %1 write %2
-esp32.blocks.spiRead: SPI %1 read %2 bytes
-esp32.blocks.i2cInit: initialize I2C SDA:%1 SCL:%2 freq:%3Hz
-esp32.blocks.i2cScan: I2C scan devices
-esp32.blocks.i2cWrite: I2C write to %1:%2
-esp32.blocks.i2cRead: I2C read from %1 :%2 bytes
-esp32.blocks.i2sInit: initialize I2S BCK:%1 WS:%2 DATA:%3 rate:%4Hz
-esp32.blocks.i2sPlay: I2S play %1
+iotbit.emu.greenFlag: Go
+iotbit.emu.stop: Stop
+iotbit.emu.smallStage: Switch to small stage
+iotbit.emu.largeStage: Switch to large stage
+
+iotbit.blocks.wait: wait %1 milliseconds
+iotbit.blocks.break: break
+iotbit.blocks.continue: continue
+iotbit.blocks.elseif: else if %1 then
+iotbit.blocks.else: else
+iotbit.blocks.runtime: run time %1
+iotbit.blocks.runtimeMilliseconds: milliseconds
+iotbit.blocks.runtimeSeconds: seconds
+iotbit.blocks.dataConvert: convert %1 to %2
+iotbit.blocks.dataConvert.int: int
+iotbit.blocks.dataConvert.float: float
+iotbit.blocks.dataConvert.string: str
+iotbit.blocks.dataConvert.list: list
+iotbit.blocks.dataLengthOf: length of %1
+iotbit.blocks.dataConstrain: constrain %1 between %2 to %3
+iotbit.blocks.dataMap: map %1 from %2 - %3 to %4 - %5
+iotbit.blocks.whenstart: when iot:bit start
+iotbit.blocks.timerset: "set timer # %1 per %2 milliseconds"
+iotbit.blocks.timeroff: "stop timer # %1"
+iotbit.blocks.operatorLarger: larger of %1 and %2
+iotbit.blocks.operatorSmaller: smaller of %1 and %2
+iotbit.blocks.pin: Pins
+iotbit.blocks.setmode: set pin %1 mode to %2
+iotbit.blocks.inputMode: input
+iotbit.blocks.ouputMode: output
+iotbit.blocks.inputPullUpMode: input pull-up
+iotbit.blocks.inputPullDownMode: input pull-down
+iotbit.blocks.setdigital: set pin %1 to %2
+iotbit.blocks.digitalHigh: high
+iotbit.blocks.digitalLow: low
+iotbit.blocks.setpwmfreq: set pin %1 pwm frequency to %2 Hz
+iotbit.blocks.setpwm: set pin %1 pwm to %2
+iotbit.blocks.setanalog: set pin %1 analog to %2
+iotbit.blocks.isDigitalHigh: pin %1 is high?
+iotbit.blocks.analogValue: pin %1 analog value
+iotbit.blocks.attachinterrupt: attach pin %1 interrupt to %2
+iotbit.blocks.interruptRising: rising
+iotbit.blocks.interruptFalling: falling
+iotbit.blocks.interruptChange: change
+iotbit.blocks.interruptHigh: high
+iotbit.blocks.interruptLow: low
+iotbit.blocks.detachinterrupt: detach pin %1 interrupt
+iotbit.blocks.network: Network
+iotbit.blocks.display: Display
+iotbit.blocks.text: Text
+iotbit.blocks.textEquals: "%1 equals %2 (not case-sensitive)?"
+iotbit.blocks.textRemove: remove letters from %1 to %2 of %3
+iotbit.blocks.textReplace: replace %1 of %2 with %3
+iotbit.blocks.textReplaceLetter: replace letter %1 of %2 with %3
+iotbit.blocks.textSubstring: substring of %1 from %2 to %3
+iotbit.blocks.textWith: "%1 %2 with %3?"
+iotbit.blocks.textStartsWith: starts
+iotbit.blocks.textEndsWith: ends
+iotbit.blocks.textCase: get %1 of %2
+iotbit.blocks.textLowerCase: lower-case
+iotbit.blocks.textUpperCase: upper-case
+iotbit.blocks.textTrim: remove %1 leading and trailing whitespace
+iotbit.blocks.textConvert: convert %1 to %2
+iotbit.blocks.textConvertFrom: convert %1 to String
+iotbit.blocks.connectWifi: "connect wi-fi ssid: %1 password: %2"
+iotbit.blocks.disconnectWifi: disconnect wi-fi
+iotbit.blocks.isWifiConnected: wi-fi is connected?
+iotbit.blocks.wifiScan: start scan wi-fi
+iotbit.blocks.wifiItem: "%2 of item %1 of available wi-fi"
+iotbit.blocks.wifiItemSsid: ssid
+iotbit.blocks.wifiItemMac: mac
+iotbit.blocks.wifiItemRssi: rssi
+iotbit.blocks.wifiItemSecurity: security
+iotbit.blocks.wifiCounts: available wi-fi counts
+iotbit.blocks.startap: "start ap ssid: %1"
+iotbit.blocks.stopap: stop ap
+iotbit.blocks.espnowSend: send %1 to %2 via esp-now
+iotbit.blocks.espnowRecv: wait for esp-now incoming
+iotbit.blocks.espnowMsg: "%1 of incoming"
+iotbit.blocks.espnowMsgText: message
+iotbit.blocks.espnowMsgMac: mac
+iotbit.blocks.espnowRepeat: repeat wait for esp-now incoming
+iotbit.blocks.espnowWhen: when esp-now %1 incoming
+iotbit.blocks.spiInit: initialize SPI %1 freq:%2Hz
+iotbit.blocks.spiHSPI: HSPI
+iotbit.blocks.spiVSPI: VSPI
+iotbit.blocks.spiWrite: SPI %1 write %2
+iotbit.blocks.spiRead: SPI %1 read %2 bytes
+iotbit.blocks.i2cInit: initialize I2C SDA:%1 SCL:%2 freq:%3Hz
+iotbit.blocks.i2cScan: I2C scan devices
+iotbit.blocks.i2cWrite: I2C write to %1:%2
+iotbit.blocks.i2cRead: I2C read from %1 :%2 bytes
+iotbit.blocks.i2sInit: initialize I2S BCK:%1 WS:%2 DATA:%3 rate:%4Hz
+iotbit.blocks.i2sPlay: I2S play %1
+iotbit.blocks.playNote: play note %1 for %2 beats
+iotbit.blocks.playMusic: play %1
+iotbit.blocks.stopMusic: stop music
+iotbit.blocks.musicDadadadum: dadadadum
+iotbit.blocks.musicEntertainer: entertainer
+iotbit.blocks.musicPrelude: prelude
+iotbit.blocks.musicOde: ode
+iotbit.blocks.musicNyan: nyan
+iotbit.blocks.musicRingtone: ringtone
+iotbit.blocks.musicFunk: funk
+iotbit.blocks.musicBlues: blues
+iotbit.blocks.musicBirthday: birthday
+iotbit.blocks.musicWedding: wedding
+iotbit.blocks.musicFuneral: funeral
+iotbit.blocks.musicPunchline: punchline
+iotbit.blocks.musicPython: python
+iotbit.blocks.musicBaddy: baddy
+iotbit.blocks.musicChase: chase
+iotbit.blocks.musicBaDing: ba ding
+iotbit.blocks.musicWawawawaa: wawawawaa
+iotbit.blocks.musicJumpUp: jump up
+iotbit.blocks.musicJumpDown: jump down
+iotbit.blocks.musicPowerUp: power up
+iotbit.blocks.musicPowerDown: power down
