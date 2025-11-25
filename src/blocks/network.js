@@ -241,14 +241,36 @@ export default () => ({
         },
       },
       mpy(block) {
-        const msg = this.valueToCode(block, 'MESSAGE', this.ORDER_NONE);
+        const msg = this.valueToCode(block, 'MSG', this.ORDER_NONE);
         this.definitions_['import_network'] = 'import network';
         this.definitions_['import_aioespnow'] = 'from aioespnow import AIOESPNow';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
+
+        const flagName = this.getFunctionName(block.id);
+        this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()`;
+        if (!this.definitions_['espnowwhen']) {
+          let code = '';
+          code += '@_tasks__.append\n';
+          code += 'async def espnow_when():\n';
+          code += '  async for peer, msg in espnow:\n';
+          this.definitions_['espnowwhen'] = code;
+        }
+        this.definitions_['espnowwhen'] += `    if msg.decode() == ${msg}: ${flagName}.set()\n`;
+
+        let branchCode = this.statementToCode(block) || this.PASS;
+        let code = '';
+        code += 'while True:\n';
+        code += `  await ${flagName}.wait()\n`;
+        code += branchCode;
+
+        branchCode = this.prefixLines(code, this.INDENT);
+        branchCode = this.addEventTrap(branchCode, block.id);
+        code = '@_tasks__.append\n';
+        code += branchCode;
+        return code;
       },
     },
-    '---',
     {
       id: 'espnowrepeat',
       text: translate('iotbit.blocks.espnowRepeat', 'repeat wait for esp-now incoming'),
@@ -260,7 +282,7 @@ export default () => ({
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
 
-        let branchCode = this.statementToCode(block, 'SUBSTACK');
+        let branchCode = this.statementToCode(block, 'SUBSTACK') || this.PASS;
         branchCode = this.addLoopTrap(branchCode, block.id);
         let code = '';
         code += 'async for peer, msg in espnow:\n';

@@ -59,19 +59,12 @@ const downloadProgram = async (device, mainFile, assetFiles) => {
   try {
     // 开始下载
     await MPYUtils.write(device, projectFiles, downloadingAlert);
-    //device.hardReset();
-    device.exitRawRepl();
-    await sleepMs(1000);
-    device.reset();
-    await sleepMs(1000);
+    await MPYUtils.disconnect(device);
   } catch (err) {
-    console.log(err);
-    errorAlert(err);
-    removeDownloading();
-  } finally {
-    device.disconnect();
+    errorAlert(err.name);
   }
 
+  removeDownloading();
   checker.cancel();
 };
 

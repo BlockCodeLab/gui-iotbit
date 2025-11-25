@@ -3,33 +3,6 @@ export default () => ({
   skipXML: true,
   blocks: [
     {
-      // 声明变量
-      id: 'setvariableto',
-      mpy(block) {
-        const varName = this.getVariableName(block.getFieldValue('VARIABLE'));
-        const varValue = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
-        const code = `${varName} = ${varValue}`;
-
-        // 全局变量
-        const rootBlock = block.getRootBlock();
-        if (rootBlock.type === 'event_whensetup') {
-          this.definitions_[`variable_${varName}`] = code;
-          return '';
-        }
-        // 私有变量
-        return code + '\n';
-      },
-    },
-    {
-      // 设置变量
-      id: 'changevariableby',
-      mpy(block) {
-        const varName = this.getVariableName(block.getFieldValue('VARIABLE'));
-        const varValue = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
-        return `${varName} = ${varValue}\n`;
-      },
-    },
-    {
       // 获取变量
       id: 'variable',
       mpy(block) {
@@ -38,57 +11,119 @@ export default () => ({
       },
     },
     {
-      // 声明数组
-      id: 'insertatlist',
+      // 设置变量
+      id: 'setvariableto',
       mpy(block) {
-        const arrName = 'arr' + this.getVariableName(block.getFieldValue('LIST'));
-        const arrSize = this.valueToCode(block, 'INDEX', this.ORDER_NONE);
-        const code = `${arrName} = [None] * int(${arrSize})`;
-
-        // 全局变量
-        const rootBlock = block.getRootBlock();
-        if (rootBlock.type === 'event_whensetup') {
-          this.definitions_[`variable_${arrName}`] = code;
-          return '';
-        }
-        // 私有变量
-        return code + '\n';
+        const varName = this.getVariableName(block.getFieldValue('VARIABLE'));
+        const varValue = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
+        const code = `${varName} = ${varValue}\n`;
+        return code;
       },
     },
     {
-      // 设置数组项
-      id: 'replaceitemoflist',
+      // 改变变量
+      id: 'changevariableby',
       mpy(block) {
-        const arrName = 'arr' + this.getVariableName(block.getFieldValue('LIST'));
-        const arrValue = this.valueToCode(block, 'ITEM', this.ORDER_NONE);
-        const index = this.valueToCode(block, 'INDEX', this.ORDER_NONE);
-        return `${arrName}[int(${index})] = ${arrValue}\n`;
+        const varName = this.getVariableName(block.getFieldValue('VARIABLE'));
+        const varValue = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
+        return `${varName} += ${varValue}\n`;
       },
     },
     {
-      // 获取数组
+      // 获取列表
       id: 'listcontents',
       mpy(block) {
-        const arrName = 'arr' + this.getVariableName(block.getFieldValue('LIST'));
-        return [arrName, this.ORDER_ATOMIC];
+        const listName = this.getVariableName(block.getFieldValue('LIST')) + '_ls';
+        return [listName, this.ORDER_ATOMIC];
+      },
+    },
+    {
+      // 加入列表
+      id: 'addtolist',
+      mpy(block) {
+        const listName = this.getVariableName(block.getFieldValue('LIST')) + '_ls';
+        const value = this.valueToCode(block, 'ITEM', this.ORDER_NONE);
+        const code = `${listName}.append(${value})\n`;
+        return code;
+      },
+    },
+    {
+      // 删除项目
+      id: 'deleteoflist',
+      mpy(block) {
+        const listName = this.getVariableName(block.getFieldValue('LIST')) + '_ls';
+        const index = this.getAdjusted(block, 'INDEX');
+        const code = `${listName}.pop(${index})\n`;
+        return code;
+      },
+    },
+    {
+      // 删除全部项目
+      id: 'deletealloflist',
+      mpy(block) {
+        const listName = this.getVariableName(block.getFieldValue('LIST')) + '_ls';
+        const code = `${listName} = []\n`;
+        return code;
+      },
+    },
+    {
+      // 插入项目
+      id: 'insertatlist',
+      mpy(block) {
+        const listName = this.getVariableName(block.getFieldValue('LIST')) + '_ls';
+        const index = this.getAdjusted(block, 'INDEX');
+        const value = this.valueToCode(block, 'ITEM', this.ORDER_NONE);
+        const code = `${listName}.insert(${index}, ${value})\n`;
+        return code;
+      },
+    },
+    {
+      // 替换
+      id: 'replaceitemoflist',
+      mpy(block) {
+        const listName = this.getVariableName(block.getFieldValue('LIST')) + '_ls';
+        const value = this.valueToCode(block, 'ITEM', this.ORDER_NONE);
+        const index = this.getAdjusted(block, 'INDEX');
+        const code = `${listName}[${index}] = ${value}\n`;
+        return code;
       },
     },
     {
       // 获取数组项
       id: 'itemoflist',
       mpy(block) {
-        const arrName = 'arr' + this.getVariableName(block.getFieldValue('LIST'));
-        const index = this.valueToCode(block, 'INDEX', this.ORDER_NONE);
-        const code = `${arrName}[int(${index})]`;
+        const listName = this.getVariableName(block.getFieldValue('LIST')) + '_ls';
+        const index = this.getAdjusted(block, 'INDEX');
+        const code = `${listName}[${index}]`;
         return [code, this.ORDER_MEMBER];
       },
     },
     {
-      // 数组长度
+      // 查找项目
+      id: 'itemnumoflist',
+      mpy(block) {
+        const listName = this.getVariableName(block.getFieldValue('LIST')) + '_ls';
+        const value = this.valueToCode(block, 'ITEM', this.ORDER_NONE);
+        const code = `${listName}.index(${value})`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
+    },
+    {
+      // 列表长度
       id: 'lengthoflist',
       mpy(block) {
-        const arrName = 'arr' + this.getVariableName(block.getFieldValue('LIST'));
-        const code = `len(${arrName})`;
+        const listName = this.getVariableName(block.getFieldValue('LIST')) + '_ls';
+        const code = `len(${listName})`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
+    },
+    {
+      // 是否有
+      id: 'listcontainsitem',
+      mpy(block) {
+        const listName = this.getVariableName(block.getFieldValue('LIST')) + '_ls';
+        const value = this.valueToCode(block, 'ITEM', this.ORDER_NONE);
+        const code = `(${listName}.count(${value}) > 0)`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
