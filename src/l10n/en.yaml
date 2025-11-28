@@ -116,7 +116,8 @@ iotbit.blocks.i2cRead: I2C read from %1 :%2 bytes
 iotbit.blocks.i2sInit: initialize I2S BCK:%1 WS:%2 DATA:%3 rate:%4Hz
 iotbit.blocks.i2sPlay: I2S play %1
 iotbit.blocks.playNote: play note %1 for %2 beats
-iotbit.blocks.playMusic: play %1
+iotbit.blocks.playMusic: start sound %1
+iotbit.blocks.playMusicDone: play sound %1 until done
 iotbit.blocks.stopMusic: stop music
 iotbit.blocks.musicDadadadum: dadadadum
 iotbit.blocks.musicEntertainer: entertainer
@@ -139,3 +140,40 @@ iotbit.blocks.musicJumpUp: jump up
 iotbit.blocks.musicJumpDown: jump down
 iotbit.blocks.musicPowerUp: power up
 iotbit.blocks.musicPowerDown: power down
+iotbit.blocks.magneticForce: magnetic force %1
+iotbit.blocks.magneticStrength: strength
+iotbit.blocks.compassHeading: compass heading
+iotbit.blocks.calibrateCompass: calibrate compass
+iotbit.blocks.acceleration: acceleration %1
+iotbit.blocks.accelerometerRange: set accelerometer range %1
+iotbit.blocks.gyroscope: gyroscope %1
+iotbit.blocks.rotation: rotation %1
+iotbit.blocks.rotationPitch: pitch
+iotbit.blocks.rotationRoll: roll
+iotbit.blocks.rotationYaw: yaw
+iotbit.blocks.gesture: is %1 gesture?
+iotbit.blocks.gestureShake: shake
+iotbit.blocks.gestureLedsUp: leds up
+iotbit.blocks.gestureLedsDown: leds down
+iotbit.blocks.gestureScreenUp: screen up
+iotbit.blocks.gestureScreenDown: screen down
+iotbit.blocks.gestureTiltLeft: tilt left
+iotbit.blocks.gestureTiltRight: tilt right
+iotbit.blocks.gestureFreeFall: free fall
+iotbit.blocks.gesture3g: 3g
+iotbit.blocks.gesture6g: 6g
+iotbit.blocks.gesture8g: 8g
+iotbit.blocks.brightness: brightness
+iotbit.blocks.loudness: loudness
+iotbit.blocks.temperature: temperature
+iotbit.blocks.setLeds: set led %1 %2 brightness %3
+iotbit.blocks.closeLeds: close leds
+iotbit.blocks.displayText: display text %1 at x:%2 y:%3
+iotbit.blocks.displayTextLine: display text %1 at line %2
+iotbit.blocks.displayImage: display %1
+iotbit.blocks.displayClear: clear display
+iotbit.blocks.displayPixel: pixel x1:%1 y1:%2
+iotbit.blocks.displayLine: line from x1:%1 y1:%2 to x2:%3 y2%4
+iotbit.blocks.displayEllipse: ellipse with x-radius:%1 and y-radius:%2 at x:%3 y:%4
+iotbit.blocks.displayRect: rect with width:%1 height:%2 at x:%3 y:%4
+iotbit.blocks.displayFill: fill with width:%1 height:%2 at x:%3 y:%4

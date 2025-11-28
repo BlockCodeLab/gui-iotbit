@@ -91,13 +91,22 @@ export default {
       ...codeTab,
       Content: () => <CodeReview />,
     },
+    DEBUG && {
+      ...codeTab,
+      Content: () => (
+        <CodeReview
+          readOnly
+          keyName="script"
+        />
+      ),
+    },
     {
       ...terminalTab,
       disabled: true,
     },
-  ],
+  ].filter(Boolean),
 
-  docks: [
+  docks: DEBUG && [
     {
       expand: 'right',
       Content: Sidedock,

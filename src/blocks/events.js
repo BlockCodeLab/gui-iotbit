@@ -24,45 +24,43 @@ export default () => ({
         return code;
       },
     },
-    // '---',
-    // {
-    //   // 按键按下
-    //   id: 'whenkeypressed',
-    //   text: ScratchBlocks.Msg.EVENT_WHENKEYPRESSED,
-    //   hat: true,
-    //   inputs: {
-    //     KEY_OPTION: {
-    //       type: 'string',
-    //       defaultValue: 'a',
-    //       menu: [
-    //         ['a', 'a'],
-    //         ['b', 'b'],
-    //         ['a+b', 'a+b'],
-    //       ],
-    //     },
-    //   },
-    //   emu(block) {
-    //     const keyValue = block.getFieldValue('KEY_OPTION');
+    '---',
+    {
+      // 按键按下
+      id: 'whenkeypressed',
+      text: ScratchBlocks.Msg.EVENT_WHENKEYPRESSED,
+      hat: true,
+      inputs: {
+        KEY_OPTION: {
+          type: 'string',
+          defaultValue: 'a',
+          menu: [
+            ['a', 'a'],
+            ['b', 'b'],
+            ['a+b', 'ab'],
+          ],
+        },
+      },
+      mpy(block) {
+        const key = block.getFieldValue('KEY_OPTION');
 
-    //     let branchCode = this.statementToCode(block);
-    //     branchCode = this.addEventTrap(branchCode, block.id);
-    //     branchCode = branchCode.replace('(done) => {\n', '(target, done) => {\n');
+        const flagName = `${this.getFunctionName(block.id)}_flag`;
+        this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()\n`;
+        this.definitions_[flagName] += `button_${key}.on_pressed(lambda _: ${flagName}.set())`;
 
-    //     const code = `runtime.when('keypressed:${keyValue}', ${branchCode}, target);\n`;
-    //     return code;
-    //   },
-    //   mpy(block) {
-    //     const keyValue = block.getFieldValue('KEY_OPTION');
+        let branchCode = this.statementToCode(block) || this.PASS;
+        let code = '';
+        code += 'while True:\n';
+        code += `  await ${flagName}.wait()\n`;
+        code += branchCode;
 
-    //     let branchCode = this.statementToCode(block);
-    //     branchCode = this.addEventTrap(branchCode, block.id);
-    //     branchCode = branchCode.replace('():\n', '(target):\n');
-
-    //     let code = '';
-    //     code += branchCode;
-    //     return code;
-    //   },
-    // },
+        branchCode = this.prefixLines(code, this.INDENT);
+        branchCode = this.addEventTrap(branchCode, block.id);
+        code = '@_tasks__.append\n';
+        code += branchCode;
+        return code;
+      },
+    },
     '---',
     {
       // 设置定时器

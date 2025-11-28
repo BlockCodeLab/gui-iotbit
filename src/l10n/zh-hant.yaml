@@ -119,6 +119,7 @@ iotbit.blocks.i2sInit: 初始化I2S BCK:%1 WS:%2 DATA:%3 速率:%4Hz
 iotbit.blocks.i2sPlay: I2S播放 %1
 iotbit.blocks.playNote: 演奏音符 %1 %2 拍
 iotbit.blocks.playMusic: 播放 %1
+iotbit.blocks.playMusicDone: 播放 %1 直到結束
 iotbit.blocks.stopMusic: 停止播放
 iotbit.blocks.musicDadadadum: 開場
 iotbit.blocks.musicEntertainer: 娛樂
@@ -141,3 +142,40 @@ iotbit.blocks.musicJumpUp: 跳起來
 iotbit.blocks.musicJumpDown: 跳下去
 iotbit.blocks.musicPowerUp: 打開電源
 iotbit.blocks.musicPowerDown: 關閉電源
+iotbit.blocks.magneticForce: 磁力%1
+iotbit.blocks.magneticStrength: 強度
+iotbit.blocks.compassHeading: 指南針朝向
+iotbit.blocks.calibrateCompass: 校準指南針
+iotbit.blocks.acceleration: 加速度%1
+iotbit.blocks.accelerometerRange: 將加速計範圍設為%1
+iotbit.blocks.gyroscope: 陀螺儀%1
+iotbit.blocks.rotation: 旋轉%1
+iotbit.blocks.rotationPitch: 俯仰
+iotbit.blocks.rotationRoll: 橫滾
+iotbit.blocks.rotationYaw: 偏航
+iotbit.blocks.gesture: "%1 手勢？"
+iotbit.blocks.gestureShake: 震動
+iotbit.blocks.gestureLedsUp: LED 朝上
+iotbit.blocks.gestureLedsDown: LED 朝下
+iotbit.blocks.gestureScreenUp: 屏幕朝上
+iotbit.blocks.gestureScreenDown: 屏幕朝下
+iotbit.blocks.gestureTiltLeft: 向左傾斜
+iotbit.blocks.gestureTiltRight: 向右傾斜
+iotbit.blocks.gestureFreeFall: 自由落體
+iotbit.blocks.gesture3g: 3g
+iotbit.blocks.gesture6g: 6g
+iotbit.blocks.gesture8g: 8g
+iotbit.blocks.brightness: 光線強度
+iotbit.blocks.loudness: 聲音響度
+iotbit.blocks.temperature: 温度
+iotbit.blocks.setLeds: 將第 %1 個燈設為 %2 亮度 %3
+iotbit.blocks.closeLeds: 關閉所有燈
+iotbit.blocks.displayText: 在 x:%2 y:%3 顯示 %1
+iotbit.blocks.displayTextLine: 在第%2行顯示%1
+iotbit.blocks.displayImage: 顯示%1
+iotbit.blocks.displayClear: 清除屏幕
+iotbit.blocks.displayPixel: 在 x1:%1 y1:%2 畫點
+iotbit.blocks.displayLine: 從 x1:%1 y1:%2 到 x2:%3 y2%4 的畫線
+iotbit.blocks.displayEllipse: 在 x:%3 y:%4 畫橫半徑%1 縱半徑%2 的橢圓
+iotbit.blocks.displayRect: 在 x:%3 y:%4 畫寬%1 高%2 的矩形
+iotbit.blocks.displayFill: 在 x:%3 y:%4 填充寬%1 高%2 的矩形

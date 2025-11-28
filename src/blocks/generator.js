@@ -4,6 +4,6 @@ const GENERATOR_COMMENT = '# Generate by BlockCode\n';
 
 export class IotBitGenerator extends MicroPythonGenerator {
   finish(code) {
-    return GENERATOR_COMMENT + super.finish(code);
+    return GENERATOR_COMMENT + 'from iotbit import *\n' + super.finish(code);
   }
 }
