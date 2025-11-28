@@ -97,13 +97,14 @@ iotbit.blocks.wifiItemSecurity: security
 iotbit.blocks.wifiCounts: available wi-fi counts
 iotbit.blocks.startap: "start ap ssid: %1"
 iotbit.blocks.stopap: stop ap
+iotbit.blocks.espnowBroadcast: broadcast %1 via esp-now
 iotbit.blocks.espnowSend: send %1 to %2 via esp-now
 iotbit.blocks.espnowRecv: wait for esp-now incoming
 iotbit.blocks.espnowMsg: "%1 of incoming"
 iotbit.blocks.espnowMsgText: message
-iotbit.blocks.espnowMsgMac: mac
+iotbit.blocks.espnowMsgMac: mac address
 iotbit.blocks.espnowRepeat: repeat wait for esp-now incoming
-iotbit.blocks.espnowWhen: when esp-now %1 incoming
+iotbit.blocks.espnowWhen: when esp-now receive %1
 iotbit.blocks.spiInit: initialize SPI %1 freq:%2Hz
 iotbit.blocks.spiHSPI: HSPI
 iotbit.blocks.spiVSPI: VSPI

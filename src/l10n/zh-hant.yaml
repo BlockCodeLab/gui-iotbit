@@ -99,12 +99,13 @@ iotbit.blocks.wifiItemSecurity: 加密類型
 iotbit.blocks.wifiCounts: 可用 Wi-Fi 數量
 iotbit.blocks.startap: "開啟 AP SSID: %1"
 iotbit.blocks.stopap: 關閉 AP
-iotbit.blocks.espnowSend: 發送 ESP-Now %1 到 %2
+iotbit.blocks.espnowBroadcast: ESP-Now 廣播 %1
+iotbit.blocks.espnowSend: ESP-Now 發送 %1 給 %2
 iotbit.blocks.espnowRecv: 等待 ESP-Now 接收消息
-iotbit.blocks.espnowMsg: 接受到 %1
+iotbit.blocks.espnowMsg: 收到的 %1
 iotbit.blocks.espnowMsgText: 消息
-iotbit.blocks.espnowMsgMac: MAC
-iotbit.blocks.espnowRepeat: 重複等待 ESP-Now 接收消息
+iotbit.blocks.espnowMsgMac: MAC 地址
+iotbit.blocks.espnowRepeat: 等待 ESP-Now 收到消息
 iotbit.blocks.espnowWhen: 當 ESP-Now 收到 %1
 iotbit.blocks.spiInit: 初始化SPI %1 頻率:%2Hz
 iotbit.blocks.spiHSPI: HSPI

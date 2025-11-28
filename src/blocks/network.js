@@ -14,7 +14,7 @@ export default () => ({
       inputs: {
         SSID: {
           type: 'string',
-          defaultValue: 'esp32',
+          defaultValue: 'iotbit',
         },
         PASSWORD: {
           type: 'string',
@@ -165,7 +165,7 @@ export default () => ({
       inputs: {
         MESSAGE: {
           type: 'string',
-          defaultValue: translate('iotbit.blocks.espnowMsgText', 'message'),
+          defaultValue: 'hello',
         },
         MAC: {
           type: 'string',
@@ -196,17 +196,49 @@ export default () => ({
       },
     },
     {
-      id: 'espnowrecv',
-      text: translate('iotbit.blocks.espnowRecv', 'wait for esp-now incoming'),
+      id: 'espnowbroadcast',
+      text: translate('iotbit.blocks.espnowBroadcast', 'broadcast %1 via esp-now'),
+      inputs: {
+        MESSAGE: {
+          type: 'string',
+          defaultValue: 'hello',
+        },
+      },
       mpy(block) {
+        const msg = this.valueToCode(block, 'MESSAGE', this.ORDER_NONE);
+        const mac = this.valueToCode(block, 'MAC', this.ORDER_NONE);
         this.definitions_['import_network'] = 'import network';
         this.definitions_['import_aioespnow'] = 'from aioespnow import AIOESPNow';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
-        const code = `peer, msg = await espnow.arecv()\n`;
-        return code;
+
+        // espnow 发送辅助函数
+        let code = '';
+        code += 'async def espnow_asend(mac, msg):\n';
+        code += `${this.INDENT}mac_addr = bytes.fromhex(mac.replace(':', ''))\n`;
+        code += `${this.INDENT}try:\n`;
+        code += `${this.INDENT}${this.INDENT}await espnow.asend(mac_addr, msg.encode())\n`;
+        code += `${this.INDENT}except OSError as err:\n`;
+        code += `${this.INDENT}${this.INDENT}if len(err.args) > 1 and err.args[1] == 'ESP_ERR_ESPNOW_NOT_FOUND':\n`;
+        code += `${this.INDENT}${this.INDENT}${this.INDENT}espnow.add_peer(mac_addr)\n`;
+        code += `${this.INDENT}${this.INDENT}${this.INDENT}await espnow.asend(mac_addr, msg.encode())\n`;
+        this.definitions_['espnow_asend'] = code;
+
+        return `await espnow_asend(${mac}, 'ff:ff:ff:ff:ff:ff')\n`;
       },
     },
+    // {
+    //   id: 'espnowrecv',
+    //   text: translate('iotbit.blocks.espnowRecv', 'wait for esp-now incoming'),
+    //   mpy(block) {
+    //     this.definitions_['import_network'] = 'import network';
+    //     this.definitions_['import_aioespnow'] = 'from aioespnow import AIOESPNow';
+    //     this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
+    //     this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
+    //     const code = `peer, msg = await espnow.arecv()\n`;
+    //     return code;
+    //   },
+    // },
     {
       id: 'espnowmsg',
       text: translate('iotbit.blocks.espnowMsg', '%1 of incoming'),
@@ -215,7 +247,7 @@ export default () => ({
         TYPE: {
           menu: [
             [translate('iotbit.blocks.espnowMsgText', 'message'), 'MESSAGE'],
-            [translate('iotbit.blocks.espnowMsgMac', 'mac'), 'MAC'],
+            [translate('iotbit.blocks.espnowMsgMac', 'mac address'), 'MAC'],
           ],
         },
       },
@@ -232,7 +264,7 @@ export default () => ({
     '---',
     {
       id: 'espnowwhen',
-      text: translate('iotbit.blocks.espnowWhen', 'when esp-now %1 incoming'),
+      text: translate('iotbit.blocks.espnowWhen', 'when esp-now receive %1'),
       hat: true,
       inputs: {
         MESSAGE: {
@@ -247,7 +279,7 @@ export default () => ({
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
 
-        const flagName = this.getFunctionName(block.id);
+        const flagName = `${this.getFunctionName(block.id)}_flag`;
         this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()`;
         if (!this.definitions_['espnowwhen']) {
           let code = '';

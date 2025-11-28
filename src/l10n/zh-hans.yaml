@@ -99,12 +99,13 @@ iotbit.blocks.wifiItemSecurity: 加密类型
 iotbit.blocks.wifiCounts: 可用 Wi-Fi 数量
 iotbit.blocks.startap: "开启热点 SSID: %1"
 iotbit.blocks.stopap: 关闭热点
-iotbit.blocks.espnowSend: 发送 ESP-Now %1 到 %2
+iotbit.blocks.espnowBroadcast: ESP-Now 广播 %1
+iotbit.blocks.espnowSend: ESP-Now 发送 %1 给 %2
 iotbit.blocks.espnowRecv: 等待 ESP-Now 接收消息
-iotbit.blocks.espnowMsg: 接受到 %1
+iotbit.blocks.espnowMsg: 收到的 %1
 iotbit.blocks.espnowMsgText: 消息
-iotbit.blocks.espnowMsgMac: MAC
-iotbit.blocks.espnowRepeat: 重复等待 ESP-Now 接收消息
+iotbit.blocks.espnowMsgMac: MAC 地址
+iotbit.blocks.espnowRepeat: 等待 ESP-Now 收到消息
 iotbit.blocks.espnowWhen: 当 ESP-Now 收到 %1
 iotbit.blocks.spiInit: 初始化SPI %1 频率:%2Hz
 iotbit.blocks.spiHSPI: HSPI
