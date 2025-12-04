@@ -195,7 +195,7 @@ export function FirmwareSection({ itemClassName }) {
   return (
     <MenuSection>
       <MenuItem
-        disabled={alertId || !readyForUpdate.value}
+        disabled={disabled || alertId || !readyForUpdate.value}
         className={classNames(itemClassName, styles.blankCheckItem)}
         onClick={() => uploadFirmware('iotbitFirmware')}
       >

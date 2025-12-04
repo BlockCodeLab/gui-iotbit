@@ -2,8 +2,11 @@ iotbit.menubar.device: iot:bit
 
 iotbit.menubar.device.sync: Sync program
 
-iotbit.menubar.device.download: Download program via USB
-iotbit.menubar.device.downloadBle: Download program via Bluetooth
+iotbit.menubar.device.download: Download program
+iotbit.menubar.device.reset: Reset device
+iotbit.menubar.device.resetDone: Device reset successful.
+iotbit.menubar.device.connectUsb: Connect device with USB
+iotbit.menubar.device.connectBle: Connect device with Bluetooth (BLE)
 iotbit.menubar.device.iotbitFirmware: Restore iot:bit firmware (v{version})
 iotbit.menubar.device.erasing: Erasing...
 iotbit.menubar.device.restoring: Firmware restoring...{progress}%

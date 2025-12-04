@@ -4,7 +4,11 @@ iotbit.menubar.device.sync: 同步程序
 
 iotbit.menubar.device.download: 通过 USB 下载程序
 iotbit.menubar.device.downloadBle: 通过蓝牙下载程序
-iotbit.menubar.device.iotbitFirmware: 恢复 iot:bit 固件（v{version}）
+iotbit.menubar.device.reset: 复位
+iotbit.menubar.device.resetDone: 设备已复位。
+iotbit.menubar.device.connectUsb: 通过 USB 连接
+iotbit.menubar.device.connectBle: 通过蓝牙（BLE）连接
+iotbit.menubar.device.iotbitFirmware: 恢复 物联板 iot:bit 固件（v{version}）
 iotbit.menubar.device.erasing: 正在清除…
 iotbit.menubar.device.restoring: 正在恢复固件…{progress}%
 iotbit.menubar.device.recovering: 恢复设备…

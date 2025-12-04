@@ -1,8 +1,7 @@
 import { useCallback } from 'preact/hooks';
 import { nanoid, classNames } from '@blockcode/utils';
-import { useProjectContext, setAlert, delAlert } from '@blockcode/core';
+import { useAppContext, useProjectContext, setAlert, delAlert, setAppState } from '@blockcode/core';
 import { MPYUtils } from '@blockcode/board';
-import { sleepMs } from '@blockcode/utils';
 import deviceFilters from './device-filters.yaml';
 
 import { Spinner, Text, MenuSection, MenuItem } from '@blockcode/core';
@@ -44,11 +43,6 @@ const errorAlert = (err) => {
 };
 
 const downloadProgram = async (device, mainFile, assetFiles) => {
-  const checker = MPYUtils.check(device).catch(() => {
-    errorAlert();
-    removeDownloading();
-  });
-
   const projectFiles = [].concat(mainFile, assetFiles).map((file) => ({
     ...file,
     filename: file.id,
@@ -59,74 +53,130 @@ const downloadProgram = async (device, mainFile, assetFiles) => {
   try {
     // 开始下载
     await MPYUtils.write(device, projectFiles, downloadingAlert);
-    await MPYUtils.disconnect(device);
+    device.reset();
+    // await MPYUtils.disconnect(device);
   } catch (err) {
     errorAlert(err.name);
   }
 
   removeDownloading();
-  checker.cancel();
 };
 
 export function DeviceMenu({ itemClassName }) {
+  const { appState } = useAppContext();
   const { meta, file, assets } = useProjectContext();
+
+  const connectDevice = useCallback((device) => {
+    device.on('disconnect', () => setAppState('currentDevice', null));
+    MPYUtils.check(device).catch(() => {
+      errorAlert();
+      removeDownloading();
+    });
+    setAppState('currentDevice', device);
+  });
+
+  const handleConnectUSB = useCallback(async () => {
+    if (downloadAlertId) return;
+    try {
+      const device = await MPYUtils.connect(deviceFilters, {
+        baudRate: 115200,
+      });
+      connectDevice(device);
+    } catch (err) {
+      errorAlert(err.name);
+    }
+  }, []);
+
+  const handleConnectBLE = useCallback(async () => {
+    if (downloadAlertId) return;
+    try {
+      const device = await MPYUtils.connectBLE();
+      connectDevice(device);
+    } catch (err) {
+      errorAlert(err.name);
+    }
+  }, []);
 
   const handleDownload = useCallback(async () => {
     if (downloadAlertId) return;
-    let currentDevice;
-    try {
-      currentDevice = await MPYUtils.connect(deviceFilters, {
-        baudRate: 115200,
-      });
-    } catch (err) {
-      console.log(err);
-      errorAlert(err.name);
-    }
-    if (!currentDevice) return;
-    downloadProgram(currentDevice, file.value, assets.value);
+    if (!appState.value?.currentDevice) return;
+    downloadProgram(appState.value.currentDevice, file.value, assets.value);
   }, []);
 
-  const handleDownloadBLE = useCallback(async () => {
+  const handleReset = useCallback(async () => {
     if (downloadAlertId) return;
-    let currentDevice;
-    try {
-      currentDevice = await MPYUtils.connectBLE();
-    } catch (err) {
-      console.log(err);
-      errorAlert(err.name);
-    }
-    if (!currentDevice) return;
-    downloadProgram(currentDevice, file.value, assets.value);
+    appState.value?.currentDevice?.reset();
+    setAlert(
+      {
+        message: (
+          <Text
+            id="iotbit.menubar.device.resetDone"
+            defaultMessage="Device reset successful"
+          />
+        ),
+      },
+      1000,
+    );
   }, []);
 
   return (
     <>
-      <MenuSection>
+      <MenuSection disabled={downloadAlertId || !appState.value?.currentDevice}>
         <MenuItem
-          disabled={true || downloadAlertId}
-          className={classNames(itemClassName, styles.blankCheckItem)}
-          label={
-            <Text
-              id="iotbit.menubar.device.downloadBle"
-              defaultMessage="Download program via Bluetooth (BLE)"
-            />
-          }
-          onClick={handleDownloadBLE}
-        />
-        <MenuItem
-          disabled={downloadAlertId}
           className={classNames(itemClassName, styles.blankCheckItem)}
           label={
             <Text
               id="iotbit.menubar.device.download"
-              defaultMessage="Download program via Serial Port"
+              defaultMessage="Download program"
             />
           }
           onClick={handleDownload}
         />
+        <MenuItem
+          className={classNames(itemClassName, styles.blankCheckItem)}
+          label={
+            <Text
+              id="iotbit.menubar.device.reset"
+              defaultMessage="Reset device"
+            />
+          }
+          onClick={handleReset}
+        />
       </MenuSection>
 
-      <FirmwareSection itemClassName={itemClassName} />
+      <MenuSection disabled={downloadAlertId}>
+        <MenuItem
+          className={classNames(itemClassName, styles.blankCheckItem)}
+          label={
+            <Text
+              id="iotbit.menubar.device.connectUsb"
+              defaultMessage="Connect device with USB"
+            />
+          }
+          onClick={handleConnectUSB}
+        />
+        <MenuItem
+          className={classNames(itemClassName, styles.blankCheckItem)}
+          label={
+            <Text
+              id="iotbit.menubar.device.connectBle"
+              defaultMessage="Connect device with Bluetooth (BLE)"
+            />
+          }
+          onClick={handleConnectBLE}
+        />
+        iotbit{' '}
+      </MenuSection>
+
+      <BoardsSection
+        disabled={downloadAlertId}
+        itemClassName={itemClassName}
+      />
+
+      <FirmwareSection
+        disabled={downloadAlertId}
+        itemClassName={itemClassName}
+      />
     </>
   );
 }

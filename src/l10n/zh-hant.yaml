@@ -4,6 +4,10 @@ iotbit.menubar.device.sync: 同步程式
 
 iotbit.menubar.device.download: 通過 USB 下載程式
 iotbit.menubar.device.downloadBle: 通過藍牙下載程式
+iotbit.menubar.device.reset: 重置
+iotbit.menubar.device.resetDone: 設備已重置。
+iotbit.menubar.device.connectUsb: 通過 USB 連接
+iotbit.menubar.device.connectBle: 通過藍牙（BLE）連接
 iotbit.menubar.device.iotbitFirmware: 還原 iot:bit 固件（v{version}）
 iotbit.menubar.device.erasing: 正在清除…
 iotbit.menubar.device.restoring: 正在還原固件…{progress}%
