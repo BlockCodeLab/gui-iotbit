@@ -4,8 +4,7 @@ iotbit.menubar.device.sync: Sync program
 
 iotbit.menubar.device.download: Download program via USB
 iotbit.menubar.device.downloadBle: Download program via Bluetooth
-iotbit.menubar.device.iotboardFirmware: Restore IOT Board firmware
-iotbit.menubar.device.firmware: Restore firmware
+iotbit.menubar.device.iotbitFirmware: Restore iot:bit firmware (v{version})
 iotbit.menubar.device.erasing: Erasing...
 iotbit.menubar.device.restoring: Firmware restoring...{progress}%
 iotbit.menubar.device.recovering: Recovering...
@@ -76,6 +75,7 @@ iotbit.blocks.textRemove: remove letters from %1 to %2 of %3
 iotbit.blocks.textReplace: replace %1 of %2 with %3
 iotbit.blocks.textReplaceLetter: replace letter %1 of %2 with %3
 iotbit.blocks.textSubstring: substring of %1 from %2 to %3
+iotbit.blocks.textFind: find %1 of %2 place
 iotbit.blocks.textWith: "%1 %2 with %3?"
 iotbit.blocks.textStartsWith: starts
 iotbit.blocks.textEndsWith: ends
@@ -142,7 +142,7 @@ iotbit.blocks.musicJumpDown: jump down
 iotbit.blocks.musicPowerUp: power up
 iotbit.blocks.musicPowerDown: power down
 iotbit.blocks.magneticForce: magnetic force %1
-iotbit.blocks.magneticStrength: strength
+iotbit.blocks.strength: strength
 iotbit.blocks.compassHeading: compass heading
 iotbit.blocks.calibrateCompass: calibrate compass
 iotbit.blocks.acceleration: acceleration %1
@@ -178,3 +178,5 @@ iotbit.blocks.displayLine: line from x1:%1 y1:%2 to x2:%3 y2%4
 iotbit.blocks.displayEllipse: ellipse with x-radius:%1 and y-radius:%2 at x:%3 y:%4
 iotbit.blocks.displayRect: rect with width:%1 height:%2 at x:%3 y:%4
 iotbit.blocks.displayFill: fill with width:%1 height:%2 at x:%3 y:%4
+iotbit.blocks.terminal: Terminal
+iotbit.blocks.terminalPrint: print %1

@@ -6,7 +6,7 @@ export default () => ({
   themeColor: '#28A0DC',
   inputColor: '#42A8DB',
   otherColor: '#1386BF',
-  order: 6,
+  order: 5,
   blocks: [
     {
       id: 'connectwifi',

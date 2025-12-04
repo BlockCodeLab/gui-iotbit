@@ -1,6 +1,6 @@
 import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
-import { nanoid, classNames, sleep, arrayBufferToBinaryString, getBinaryCache, setBinaryCache } from '@blockcode/utils';
+import { nanoid, classNames, sleep, Base64Utils, getBinaryCache, setBinaryCache } from '@blockcode/utils';
 import { setAlert, delAlert, openPromptModal } from '@blockcode/core';
 import { ESPTool } from '@blockcode/board';
 import { firmware } from '../../../package.json';
@@ -102,7 +102,7 @@ const getFirmwareCache = async (cacheName, downloadUrl, firmwareHash, firmwareVe
   await setBinaryCache(cacheName, {
     version: firmwareVersion,
     hash: firmwareHash,
-    binaryString: arrayBufferToBinaryString(buffer),
+    binaryString: Base64Utils.arrayBufferToBinaryString(buffer),
   });
   readyForUpdate.value = true;
 };
@@ -168,30 +168,10 @@ const uploadFirmware = async (firmwareCache) => {
     uploadData(esploader, [
       {
         data: data.binaryString,
-        address: 0,
+        address: 0x1000,
       },
     ]);
   }
-
-  // 用户自选固件
-  const fileInput = document.createElement('input');
-  fileInput.type = 'file';
-  fileInput.accept = '.bin';
-  fileInput.multiple = false;
-  fileInput.click();
-  fileInput.addEventListener('cancel', () => ESPTool.disconnect(esploader));
-  fileInput.addEventListener('change', async (e) => {
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(e.target.files[0]);
-    reader.addEventListener('load', (e) =>
-      uploadData(esploader, [
-        {
-          data: arrayBufferToBinaryString(e.target.result),
-          address: 0,
-        },
-      ]),
-    );
-  });
 };
 
 export function FirmwareSection({ itemClassName }) {
@@ -222,7 +202,8 @@ export function FirmwareSection({ itemClassName }) {
         {readyForUpdate.value ? (
           <Text
             id="iotbit.menubar.device.iotbitFirmware"
-            defaultMessage="Restore iot:bit firmware"
+            defaultMessage="Restore iot:bit firmware (v{version})"
+            version={firmwareJson.value.version}
           />
         ) : (
           <Text

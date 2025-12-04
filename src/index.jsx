@@ -2,7 +2,7 @@ import './l10n';
 
 import { svgAsDataUri } from '@blockcode/utils';
 import { ScratchBlocks, blocksTab, CodeReview } from '@blockcode/blocks';
-import { codeTab, terminalTab } from '@blockcode/code';
+import { codeTab, terminalTab, Terminal } from '@blockcode/code';
 
 import { Text } from '@blockcode/core';
 import { IotBitBlocksEditor } from './components/blocks-editor/blocks-editor';
@@ -102,14 +102,16 @@ export default {
     },
     {
       ...terminalTab,
-      disabled: true,
+      Content: Terminal,
     },
   ].filter(Boolean),
 
-  docks: DEBUG && [
-    {
-      expand: 'right',
-      Content: Sidedock,
-    },
-  ],
+  docks: DEBUG
+    ? [
+        {
+          expand: 'right',
+          Content: Sidedock,
+        },
+      ]
+    : [],
 };

@@ -4,8 +4,7 @@ iotbit.menubar.device.sync: 同步程式
 
 iotbit.menubar.device.download: 通過 USB 下載程式
 iotbit.menubar.device.downloadBle: 通過藍牙下載程式
-iotbit.menubar.device.iotboardFirmware: 還原 IOT Borad 出廠固件
-iotbit.menubar.device.firmware: 還原固件
+iotbit.menubar.device.iotbitFirmware: 還原 iot:bit 固件（v{version}）
 iotbit.menubar.device.erasing: 正在清除…
 iotbit.menubar.device.restoring: 正在還原固件…{progress}%
 iotbit.menubar.device.recovering: 恢復設備…
@@ -68,7 +67,7 @@ iotbit.blocks.interruptChange: 電平改變
 iotbit.blocks.interruptHigh: 高電平
 iotbit.blocks.interruptLow: 低電平
 iotbit.blocks.detachinterrupt: 取消引腳 %1 中斷
-iotbit.blocks.network: 網絡通訊
+iotbit.blocks.network: 網絡
 iotbit.blocks.sensing: 偵測
 iotbit.blocks.display: 顯示
 iotbit.blocks.sound: 聲音
@@ -78,6 +77,7 @@ iotbit.blocks.textRemove: 刪除 %3 從第 %1 個到第 %2 個字符
 iotbit.blocks.textReplace: 將 %2 中的 %1 替換為 %3
 iotbit.blocks.textReplaceLetter: 將 %2 中的第 %1 個字符替換為 %3
 iotbit.blocks.textSubstring: 截取 %1 從第 %2 個到第 %3 個字符
+iotbit.blocks.textFind: 在 %2 中查找 %1 的位置
 iotbit.blocks.textWith: "%1 %2 %3?"
 iotbit.blocks.textStartsWith: 開始於
 iotbit.blocks.textEndsWith: 結束於
@@ -144,7 +144,7 @@ iotbit.blocks.musicJumpDown: 跳下去
 iotbit.blocks.musicPowerUp: 打開電源
 iotbit.blocks.musicPowerDown: 關閉電源
 iotbit.blocks.magneticForce: 磁力%1
-iotbit.blocks.magneticStrength: 強度
+iotbit.blocks.strength: 強度
 iotbit.blocks.compassHeading: 指南針朝向
 iotbit.blocks.calibrateCompass: 校準指南針
 iotbit.blocks.acceleration: 加速度%1
@@ -180,3 +180,5 @@ iotbit.blocks.displayLine: 從 x1:%1 y1:%2 到 x2:%3 y2%4 的畫線
 iotbit.blocks.displayEllipse: 在 x:%3 y:%4 畫橫半徑%1 縱半徑%2 的橢圓
 iotbit.blocks.displayRect: 在 x:%3 y:%4 畫寬%1 高%2 的矩形
 iotbit.blocks.displayFill: 在 x:%3 y:%4 填充寬%1 高%2 的矩形
+iotbit.blocks.terminal: 終端
+iotbit.blocks.terminalPrint: 打印 %1

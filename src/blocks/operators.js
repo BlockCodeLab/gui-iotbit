@@ -1,5 +1,6 @@
 import { translate, themeColors } from '@blockcode/core';
 import { ScratchBlocks } from '@blockcode/blocks';
+
 export default () => ({
   id: 'operator',
   name: '%{BKY_CATEGORY_OPERATORS}',
@@ -481,7 +482,33 @@ export default () => ({
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
-
+    {
+      // 替换
+      id: 'replace',
+      text: translate('iotbit.blocks.textReplace', 'replace %1 of %2 with %3'),
+      output: 'string',
+      inputs: {
+        STRING1: {
+          type: 'string',
+          defaultValue: 'e',
+        },
+        STRING2: {
+          type: 'string',
+          defaultValue: 'esp32',
+        },
+        STRING3: {
+          type: 'string',
+          defaultValue: 'The E',
+        },
+      },
+      mpy(block) {
+        const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
+        const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
+        const str3 = this.valueToCode(block, 'STRING3', this.ORDER_NONE);
+        const code = `${str2}.replace(${str1}, ${str3})\n`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
+    },
     {
       // 截取
       id: 'substring',
@@ -506,6 +533,28 @@ export default () => ({
         const to = this.valueToCode(block, 'TO', this.ORDER_NONE);
         const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
         const code = `${str}[${from}:${to}]`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
+    },
+    {
+      // 查找
+      id: 'find',
+      text: translate('iotbit.blocks.textFind', 'find %1 of %2 place'),
+      output: 'string',
+      inputs: {
+        STRING1: {
+          type: 'string',
+          defaultValue: 'e',
+        },
+        STRING2: {
+          type: 'string',
+          defaultValue: 'esp32',
+        },
+      },
+      mpy(block) {
+        const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
+        const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
+        const code = `(${str2}.find(${str1}) + 1)\n`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },

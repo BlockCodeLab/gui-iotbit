@@ -4,12 +4,11 @@ iotbit.menubar.device.sync: 同步程序
 
 iotbit.menubar.device.download: 通过 USB 下载程序
 iotbit.menubar.device.downloadBle: 通过蓝牙下载程序
-iotbit.menubar.device.iotboardFirmware: 还原 IOT Borad 出厂固件
-iotbit.menubar.device.firmware: 还原固件
+iotbit.menubar.device.iotbitFirmware: 恢复 iot:bit 固件（v{version}）
 iotbit.menubar.device.erasing: 正在清除…
-iotbit.menubar.device.restoring: 正在还原固件…{progress}%
+iotbit.menubar.device.restoring: 正在恢复固件…{progress}%
 iotbit.menubar.device.recovering: 恢复设备…
-iotbit.menubar.device.restoreDone: 还原固件完成，请按下 RESET 键。
+iotbit.menubar.device.restoreDone: 恢复固件完成，请按下 RESET 键。
 iotbit.menubar.device.caching: 正在缓存最新固件…
 
 iotbit.extension.tags.controllers: 输入模块
@@ -68,7 +67,7 @@ iotbit.blocks.interruptChange: 电平改变
 iotbit.blocks.interruptHigh: 高电平
 iotbit.blocks.interruptLow: 低电平
 iotbit.blocks.detachinterrupt: 取消引脚 %1 中断
-iotbit.blocks.network: 网络通讯
+iotbit.blocks.network: 网络
 iotbit.blocks.sensing: 侦测
 iotbit.blocks.display: 显示
 iotbit.blocks.sound: 声音
@@ -78,6 +77,7 @@ iotbit.blocks.textRemove: 删除 %3 从第 %1 个到第 %2 个字符
 iotbit.blocks.textReplace: 将 %2 中的 %1 替换为 %3
 iotbit.blocks.textReplaceLetter: 将 %2 中的第 %1 个字符替换为 %3
 iotbit.blocks.textSubstring: 截取 %1 从第 %2 个到第 %3 个字符
+iotbit.blocks.textFind: 在 %2 中查找 %1 的位置
 iotbit.blocks.textWith: "%1 %2 %3?"
 iotbit.blocks.textStartsWith: 开始于
 iotbit.blocks.textEndsWith: 结束于
@@ -144,7 +144,7 @@ iotbit.blocks.musicJumpDown: 跳下去
 iotbit.blocks.musicPowerUp: 打开电源
 iotbit.blocks.musicPowerDown: 关闭电源
 iotbit.blocks.magneticForce: 磁力%1
-iotbit.blocks.magneticStrength: 强度
+iotbit.blocks.strength: 强度
 iotbit.blocks.compassHeading: 指南针朝向
 iotbit.blocks.calibrateCompass: 校准指南针
 iotbit.blocks.acceleration: 加速度%1
@@ -180,3 +180,5 @@ iotbit.blocks.displayLine: 从 x1:%1 y1:%2 到 x2:%3 y2%4 的画线
 iotbit.blocks.displayEllipse: 在 x:%3 y:%4 画横半径%1 纵半径%2 的椭圆
 iotbit.blocks.displayRect: 在 x:%3 y:%4 画宽%1 高%2 的矩形
 iotbit.blocks.displayFill: 在 x:%3 y:%4 填充宽%1 高%2 的矩形
+iotbit.blocks.terminal: 终端
+iotbit.blocks.terminalPrint: 打印 %1

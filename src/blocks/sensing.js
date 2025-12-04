@@ -35,16 +35,12 @@ export default () => ({
       output: 'number',
       inputs: {
         MAGNETIC_OPTION: {
-          menu: [
-            ['x', 'x'],
-            ['y', 'y'],
-            ['z', 'z'],
-            [translate('iotbit.blocks.magneticStrength', 'strength'), 'strength'],
-          ],
+          menu: 'xyz',
         },
       },
       mpy(block) {
         const option = block.getFieldValue('MAGNETIC_OPTION');
+        this.definitions_['compass_calibrate'] = 'if not compass.is_calibrated(): compass.calibrate(display)';
         const code = `compass.get_${option}()`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
@@ -54,6 +50,7 @@ export default () => ({
       text: translate('iotbit.blocks.compassHeading', 'compass heading'),
       output: 'number',
       mpy(block) {
+        this.definitions_['compass_calibrate'] = 'if not compass.is_calibrated(): compass.calibrate(display)';
         const code = 'compass.get_heading()';
         return [code, this.ORDER_FUNCTION_CALL];
       },
@@ -62,7 +59,7 @@ export default () => ({
       id: 'calibrateCompass',
       text: translate('iotbit.blocks.calibrateCompass', 'calibrate compass'),
       mpy(block) {
-        const code = 'await compass.acalibrate()\n';
+        const code = 'compass.calibrate(display)\n';
         return code;
       },
     },
@@ -82,21 +79,6 @@ export default () => ({
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
-    // {
-    //   id: 'gyroscope',
-    //   text: translate('iotbit.blocks.gyroscope', 'gyroscope %1'),
-    //   output: 'number',
-    //   inputs: {
-    //     XYZ_OPTION: {
-    //       menu: 'xyz',
-    //     },
-    //   },
-    //   mpy(block) {
-    //     const option = block.getFieldValue('XYZ_OPTION');
-    //     const code = `gyroscope.get_${option}()`;
-    //     return [code, this.ORDER_FUNCTION_CALL];
-    //   },
-    // },
     {
       id: 'accelerometerRange',
       text: translate('iotbit.blocks.accelerometerRange', 'set accelerometer range %1'),
@@ -116,6 +98,21 @@ export default () => ({
       },
     },
     '---',
+    // {
+    //   id: 'gyroscope',
+    //   text: translate('iotbit.blocks.gyroscope', 'gyroscope %1'),
+    //   output: 'number',
+    //   inputs: {
+    //     XYZ_OPTION: {
+    //       menu: 'xyz',
+    //     },
+    //   },
+    //   mpy(block) {
+    //     const option = block.getFieldValue('XYZ_OPTION');
+    //     const code = `gyroscope.get_${option}()`;
+    //     return [code, this.ORDER_FUNCTION_CALL];
+    //   },
+    // },
     {
       id: 'rotation',
       text: translate('iotbit.blocks.rotation', 'rotation %1'),
@@ -183,8 +180,9 @@ export default () => ({
       output: 'number',
       mpy(block) {
         this.definitions_['import_esp32'] = 'import esp32';
-        const code = '((esp32.raw_temperature() - 32) * 5 / 9)';
-        return [code, this.ORDER_ATOMIC];
+        const code = 'round((esp32.raw_temperature() - 32) * 5 / 9, 3)';
+        // const code = 'accelerometer.get_temperature()';
+        return [code, this.ORDER_FUNCTION_CALL];
       },
     },
     '---',
@@ -213,7 +211,12 @@ export default () => ({
   ],
   menus: {
     xyz: {
-      items: ['x', 'y', 'z'],
+      items: [
+        ['x', 'x'],
+        ['y', 'y'],
+        ['z', 'z'],
+        [translate('iotbit.blocks.strength', 'strength'), 'strength'],
+      ],
     },
   },
 });
