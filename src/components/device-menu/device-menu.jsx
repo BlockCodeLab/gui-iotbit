@@ -165,13 +165,7 @@ export function DeviceMenu({ itemClassName }) {
           }
           onClick={handleConnectBLE}
         />
-        iotbit{' '}
       </MenuSection>
-
-      <BoardsSection
-        disabled={downloadAlertId}
-        itemClassName={itemClassName}
-      />
 
       <FirmwareSection
         disabled={downloadAlertId}

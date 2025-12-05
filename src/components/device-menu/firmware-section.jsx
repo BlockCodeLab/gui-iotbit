@@ -174,7 +174,7 @@ const uploadFirmware = async (firmwareCache) => {
   }
 };
 
-export function FirmwareSection({ itemClassName }) {
+export function FirmwareSection({ disabled, itemClassName }) {
   const readyForUpdate = useSignal(false);
 
   const firmwareJson = useSignal(null);
