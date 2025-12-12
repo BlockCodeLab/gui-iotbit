@@ -6,3 +6,7 @@
 .blank-check-item>div {
   padding-left: calc(var(--space) / 2 + 14px);
 }
+
+.section-title {
+  padding-left: calc(var(--space) * 1.5 + 2px + 14px);
+}

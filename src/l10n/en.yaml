@@ -1,19 +1,5 @@
 iotbit.menubar.device: iot:bit
 
-iotbit.menubar.device.sync: Sync program
-
-iotbit.menubar.device.download: Download program
-iotbit.menubar.device.reset: Reset device
-iotbit.menubar.device.resetDone: Device reset successful.
-iotbit.menubar.device.connectUsb: Connect device with USB
-iotbit.menubar.device.connectBle: Connect device with Bluetooth (BLE)
-iotbit.menubar.device.iotbitFirmware: Restore iot:bit firmware (v{version})
-iotbit.menubar.device.erasing: Erasing...
-iotbit.menubar.device.restoring: Firmware restoring...{progress}%
-iotbit.menubar.device.recovering: Recovering...
-iotbit.menubar.device.restoreDone: Firmware resotre completed! Now press RESET key
-iotbit.menubar.device.caching: Caching latest firmware...
-
 iotbit.extension.tags.controllers: Controllers
 iotbit.extension.tags.sensors: Sensors
 iotbit.extension.tags.actuators: Actuators
@@ -183,3 +169,4 @@ iotbit.blocks.displayRect: rect with width:%1 height:%2 at x:%3 y:%4
 iotbit.blocks.displayFill: fill with width:%1 height:%2 at x:%3 y:%4
 iotbit.blocks.terminal: Terminal
 iotbit.blocks.terminalPrint: print %1
+iotbit.blocks.terminalEval: eval %1

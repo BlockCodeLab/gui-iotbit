@@ -1,43 +1,24 @@
-import { useEffect } from 'preact/hooks';
+import { useEffect, useCallback } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 import { nanoid, classNames, sleep, Base64Utils, getBinaryCache, setBinaryCache } from '@blockcode/utils';
-import { setAlert, delAlert, openPromptModal } from '@blockcode/core';
+import { setAlert, delAlert } from '@blockcode/core';
 import { ESPTool } from '@blockcode/board';
 import { firmware } from '../../../package.json';
 import deviceFilters from './device-filters.yaml';
 
-import { Text, Spinner, MenuSection, MenuItem } from '@blockcode/core';
+import { Text, MenuSection, MenuItem } from '@blockcode/core';
 import styles from './device-menu.module.css';
 
 let alertId = null;
 
 const uploadingAlert = (progress) => {
-  if (!alertId) {
-    alertId = nanoid();
-  }
   if (progress < 100) {
-    setAlert({
+    setAlert('restoring', {
       id: alertId,
-      icon: <Spinner level="success" />,
-      message: (
-        <Text
-          id="iotbit.menubar.device.restoring"
-          defaultMessage="Firmware restoring...{progress}%"
-          progress={progress}
-        />
-      ),
+      progress,
     });
   } else {
-    setAlert({
-      id: alertId,
-      icon: <Spinner level="success" />,
-      message: (
-        <Text
-          id="iotbit.menubar.device.recovering"
-          defaultMessage="Recovering..."
-        />
-      ),
-    });
+    setAlert('recovering', { id: alertId });
   }
 };
 
@@ -108,50 +89,23 @@ const getFirmwareCache = async (cacheName, downloadUrl, firmwareHash, firmwareVe
 };
 
 const uploadData = async (esploader, data) => {
-  if (!alertId) {
-    alertId = nanoid();
-  }
-  setAlert({
-    id: alertId,
-    icon: <Spinner level="success" />,
-    message: (
-      <Text
-        id="iotbit.menubar.device.erasing"
-        defaultMessage="Erasing..."
-      />
-    ),
-  });
-
-  const checker = ESPTool.check(esploader).catch(() => {
-    errorAlert();
-    closeAlert();
-    ESPTool.disconnect(esploader);
-  });
+  alertId = nanoid();
+  setAlert('erasing', { id: alertId });
 
   try {
-    await esploader.main();
     await ESPTool.writeFlash(esploader, data, true, (val) => uploadingAlert(val));
-    setAlert({
+    setAlert('restoreCompleted', {
       id: alertId,
-      icon: null,
-      message: (
-        <Text
-          id="iotbit.menubar.device.restoreDone"
-          defaultMessage="Firmware resotre completed!"
-        />
-      ),
       onClose: closeAlert,
     });
   } catch (err) {
     errorAlert(err.name);
     closeAlert();
-  } finally {
-    checker.cancel();
   }
   await ESPTool.disconnect(esploader);
 };
 
-const uploadFirmware = async (firmwareCache) => {
+const uploadFirmware = async (cacheName) => {
   if (alertId) return;
 
   let esploader;
@@ -163,7 +117,7 @@ const uploadFirmware = async (firmwareCache) => {
   if (!esploader) return;
 
   // 从缓存中升级到最新固件
-  const data = await getBinaryCache(firmwareCache);
+  const data = await getBinaryCache(cacheName);
   if (data) {
     uploadData(esploader, [
       {
@@ -197,17 +151,17 @@ export function FirmwareSection({ disabled, itemClassName }) {
       <MenuItem
         disabled={disabled || alertId || !readyForUpdate.value}
         className={classNames(itemClassName, styles.blankCheckItem)}
-        onClick={() => uploadFirmware('iotbitFirmware')}
+        onClick={useCallback(() => uploadFirmware('iotbitFirmware'), [])}
       >
         {readyForUpdate.value ? (
           <Text
-            id="iotbit.menubar.device.iotbitFirmware"
-            defaultMessage="Restore iot:bit firmware (v{version})"
+            id="gui.menubar.device.firmwareVersion"
+            defaultMessage="Restore v{version} firmware..."
             version={firmwareJson.value.version}
           />
         ) : (
           <Text
-            id="iotbit.menubar.device.caching"
+            id="gui.menubar.device.caching"
             defaultMessage="Caching latest firmware..."
           />
         )}

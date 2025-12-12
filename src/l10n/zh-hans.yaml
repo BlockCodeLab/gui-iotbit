@@ -1,20 +1,5 @@
 iotbit.menubar.device: 物联板
 
-iotbit.menubar.device.sync: 同步程序
-
-iotbit.menubar.device.download: 通过 USB 下载程序
-iotbit.menubar.device.downloadBle: 通过蓝牙下载程序
-iotbit.menubar.device.reset: 复位
-iotbit.menubar.device.resetDone: 设备已复位。
-iotbit.menubar.device.connectUsb: 通过 USB 连接
-iotbit.menubar.device.connectBle: 通过蓝牙（BLE）连接
-iotbit.menubar.device.iotbitFirmware: 恢复 物联板 iot:bit 固件（v{version}）
-iotbit.menubar.device.erasing: 正在清除…
-iotbit.menubar.device.restoring: 正在恢复固件…{progress}%
-iotbit.menubar.device.recovering: 恢复设备…
-iotbit.menubar.device.restoreDone: 恢复固件完成，请按下 RESET 键。
-iotbit.menubar.device.caching: 正在缓存最新固件…
-
 iotbit.extension.tags.controllers: 输入模块
 iotbit.extension.tags.sensors: 传感器
 iotbit.extension.tags.actuators: 执行器
@@ -186,3 +171,4 @@ iotbit.blocks.displayRect: 在 x:%3 y:%4 画宽%1 高%2 的矩形
 iotbit.blocks.displayFill: 在 x:%3 y:%4 填充宽%1 高%2 的矩形
 iotbit.blocks.terminal: 终端
 iotbit.blocks.terminalPrint: 打印 %1
+iotbit.blocks.terminalEval: 执行 %1

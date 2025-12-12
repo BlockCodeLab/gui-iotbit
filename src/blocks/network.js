@@ -1,5 +1,27 @@
 import { translate, themeColors } from '@blockcode/core';
 
+// espnow 发送辅助函数
+let espnowSend = '';
+espnowSend += 'async def espnow_asend(msg, mac="ff:ff:ff:ff:ff:ff"):\n';
+espnowSend += '  chuck_size = 250\n';
+espnowSend += '  msg_data = msg if type(msg) is bytes else str(msg).encode()\n';
+espnowSend += '  size = len(msg_data)\n';
+espnowSend += '  if size > chuck_size:\n';
+espnowSend += '    chucks_count = 1 + size // chuck_size\n';
+espnowSend += '    for i in range(chucks_count):\n';
+espnowSend += '      n = i * chuck_size\n';
+espnowSend += '      m = (i + 1) * chuck_size\n';
+espnowSend += '      data = msg_data[n:m] if m <= size else msg_data[n:]\n';
+espnowSend += '      await espnow_asend(data, mac)\n';
+espnowSend += '    return\n';
+espnowSend += '  mac_addr = bytes.fromhex(mac.replace(":", "")) if type(mac) is str else mac\n';
+espnowSend += '  try:\n';
+espnowSend += '    await espnow.asend(mac_addr, msg_data)\n';
+espnowSend += '  except OSError as err:\n';
+espnowSend += '    if len(err.args) > 1 and err.args[1] == "ESP_ERR_ESPNOW_NOT_FOUND":\n';
+espnowSend += '      espnow.add_peer(mac_addr)\n';
+espnowSend += '      await espnow.asend(mac_addr, msg_data)\n';
+
 export default () => ({
   id: 'network',
   name: translate('iotbit.blocks.network', 'Network'),
@@ -179,20 +201,9 @@ export default () => ({
         this.definitions_['import_aioespnow'] = 'from aioespnow import AIOESPNow';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
+        this.definitions_['espnow_asend'] = espnowSend;
 
-        // espnow 发送辅助函数
-        let code = '';
-        code += 'async def espnow_asend(mac, msg):\n';
-        code += `${this.INDENT}mac_addr = bytes.fromhex(mac.replace(':', ''))\n`;
-        code += `${this.INDENT}try:\n`;
-        code += `${this.INDENT}${this.INDENT}await espnow.asend(mac_addr, msg.encode())\n`;
-        code += `${this.INDENT}except OSError as err:\n`;
-        code += `${this.INDENT}${this.INDENT}if len(err.args) > 1 and err.args[1] == 'ESP_ERR_ESPNOW_NOT_FOUND':\n`;
-        code += `${this.INDENT}${this.INDENT}${this.INDENT}espnow.add_peer(mac_addr)\n`;
-        code += `${this.INDENT}${this.INDENT}${this.INDENT}await espnow.asend(mac_addr, msg.encode())\n`;
-        this.definitions_['espnow_asend'] = code;
-
-        return `await espnow_asend(${mac}, ${msg})\n`;
+        return `await espnow_asend(${msg}, ${mac})\n`;
       },
     },
     {
@@ -206,25 +217,13 @@ export default () => ({
       },
       mpy(block) {
         const msg = this.valueToCode(block, 'MESSAGE', this.ORDER_NONE);
-        const mac = this.valueToCode(block, 'MAC', this.ORDER_NONE);
         this.definitions_['import_network'] = 'import network';
         this.definitions_['import_aioespnow'] = 'from aioespnow import AIOESPNow';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
+        this.definitions_['espnow_asend'] = espnowSend;
 
-        // espnow 发送辅助函数
-        let code = '';
-        code += 'async def espnow_asend(mac, msg):\n';
-        code += `${this.INDENT}mac_addr = bytes.fromhex(mac.replace(':', ''))\n`;
-        code += `${this.INDENT}try:\n`;
-        code += `${this.INDENT}${this.INDENT}await espnow.asend(mac_addr, msg.encode())\n`;
-        code += `${this.INDENT}except OSError as err:\n`;
-        code += `${this.INDENT}${this.INDENT}if len(err.args) > 1 and err.args[1] == 'ESP_ERR_ESPNOW_NOT_FOUND':\n`;
-        code += `${this.INDENT}${this.INDENT}${this.INDENT}espnow.add_peer(mac_addr)\n`;
-        code += `${this.INDENT}${this.INDENT}${this.INDENT}await espnow.asend(mac_addr, msg.encode())\n`;
-        this.definitions_['espnow_asend'] = code;
-
-        return `await espnow_asend(${mac}, 'ff:ff:ff:ff:ff:ff')\n`;
+        return `await espnow_asend(${msg})\n`;
       },
     },
     // {

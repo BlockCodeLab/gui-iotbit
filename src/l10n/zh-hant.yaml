@@ -1,20 +1,5 @@
 iotbit.menubar.device: iot:bit
 
-iotbit.menubar.device.sync: 同步程式
-
-iotbit.menubar.device.download: 通過 USB 下載程式
-iotbit.menubar.device.downloadBle: 通過藍牙下載程式
-iotbit.menubar.device.reset: 重置
-iotbit.menubar.device.resetDone: 設備已重置。
-iotbit.menubar.device.connectUsb: 通過 USB 連接
-iotbit.menubar.device.connectBle: 通過藍牙（BLE）連接
-iotbit.menubar.device.iotbitFirmware: 還原 iot:bit 固件（v{version}）
-iotbit.menubar.device.erasing: 正在清除…
-iotbit.menubar.device.restoring: 正在還原固件…{progress}%
-iotbit.menubar.device.recovering: 恢復設備…
-iotbit.menubar.device.restoreDone: 還原固件完成，請按下 RESET 鍵。
-iotbit.menubar.device.caching: 正在緩存最新固件…
-
 iotbit.extension.tags.controllers: 輸入模組
 iotbit.extension.tags.sensors: 傳感器
 iotbit.extension.tags.actuators: 執行器
@@ -186,3 +171,4 @@ iotbit.blocks.displayRect: 在 x:%3 y:%4 畫寬%1 高%2 的矩形
 iotbit.blocks.displayFill: 在 x:%3 y:%4 填充寬%1 高%2 的矩形
 iotbit.blocks.terminal: 終端
 iotbit.blocks.terminalPrint: 打印 %1
+iotbit.blocks.terminalEval: 執行 %1
