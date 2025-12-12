@@ -156,6 +156,7 @@ export function DeviceMenu({ itemClassName }) {
           onClick={handleConnectUSB}
         />
         <MenuItem
+          disabled
           className={classNames(itemClassName, styles.blankCheckItem)}
           label={
             <Text

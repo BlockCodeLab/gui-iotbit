@@ -1,8 +1,8 @@
 import './l10n';
 
 import { svgAsDataUri } from '@blockcode/utils';
-import { ScratchBlocks, blocksTab, CodeReview } from '@blockcode/blocks';
-import { codeTab, terminalTab, Terminal } from '@blockcode/code';
+import { ScratchBlocks, blocksTab, codeReviewTab, CodeReview } from '@blockcode/blocks';
+import { terminalTab } from '@blockcode/code';
 
 import { Text } from '@blockcode/core';
 import { IotBitBlocksEditor } from './components/blocks-editor/blocks-editor';
@@ -88,11 +88,10 @@ export default {
       Content: IotBitBlocksEditor,
     },
     {
-      ...codeTab,
-      Content: () => <CodeReview />,
+      ...codeReviewTab,
     },
     DEBUG && {
-      ...codeTab,
+      ...codeReviewTab,
       Content: () => (
         <CodeReview
           readOnly
@@ -102,7 +101,6 @@ export default {
     },
     {
       ...terminalTab,
-      Content: Terminal,
     },
   ].filter(Boolean),
 
