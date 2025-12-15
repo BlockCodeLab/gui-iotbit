@@ -5,6 +5,7 @@ export default () => ({
   name: translate('iotbit.blocks.terminal', 'Terminal'),
   themeColor: themeColors.blocks.debug.primary,
   inputColor: themeColors.blocks.debug.secondary,
+  otherColor: themeColors.blocks.debug.tertiary,
   order: 8,
   blocks: [
     {
