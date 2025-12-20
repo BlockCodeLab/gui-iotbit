@@ -176,7 +176,7 @@ export default () => ({
     },
     {
       id: 'temperature',
-      text: translate('iotbit.blocks.temperature', 'temperature'),
+      text: translate('esp32.blocks.temperature', 'temperature'),
       output: 'number',
       mpy(block) {
         this.definitions_['import_esp32'] = 'import esp32';
@@ -189,13 +189,13 @@ export default () => ({
     {
       // 运行时长
       id: 'runtime',
-      text: translate('iotbit.blocks.runtime', 'run time %1'),
+      text: translate('esp32.blocks.runtime', 'run time %1'),
       output: 'number',
       inputs: {
         UNIT: {
           menu: [
-            [translate('iotbit.blocks.runtimeMilliseconds', 'milliseconds'), 'MS'],
-            [translate('iotbit.blocks.runtimeSeconds', 'seconds'), 'SEC'],
+            [translate('esp32.blocks.runtimeMilliseconds', 'milliseconds'), 'MS'],
+            [translate('esp32.blocks.runtimeSeconds', 'seconds'), 'SEC'],
           ],
         },
       },

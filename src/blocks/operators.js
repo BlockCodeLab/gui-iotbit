@@ -232,7 +232,7 @@ export default () => ({
     {
       // 最大值
       id: 'larger',
-      text: translate('iotbit.blocks.operatorLarger', 'larger of %1 and %2'),
+      text: translate('esp32.blocks.operatorLarger', 'larger of %1 and %2'),
       output: 'number',
       inputs: {
         NUM1: {
@@ -254,7 +254,7 @@ export default () => ({
     {
       // 最小值
       id: 'smaller',
-      text: translate('iotbit.blocks.operatorSmaller', 'smaller of %1 and %2'),
+      text: translate('esp32.blocks.operatorSmaller', 'smaller of %1 and %2'),
       output: 'number',
       inputs: {
         NUM1: {
@@ -360,7 +360,7 @@ export default () => ({
     {
       // 约束
       id: 'constrain',
-      text: translate('iotbit.blocks.dataConstrain', 'constrain %1 between %2 to %3'),
+      text: translate('esp32.blocks.dataConstrain', 'constrain %1 between %2 to %3'),
       output: 'number',
       inputs: {
         DATA: {
@@ -386,7 +386,7 @@ export default () => ({
     {
       // 映射
       id: 'map',
-      text: translate('iotbit.blocks.dataMap', 'map %1 from %2 - %3 to %4 - %5'),
+      text: translate('esp32.blocks.dataMap', 'map %1 from %2 - %3 to %4 - %5'),
       output: 'number',
       inputs: {
         DATA: {
@@ -424,7 +424,7 @@ export default () => ({
     {
       // 长度
       id: 'sizeof',
-      text: translate('iotbit.blocks.dataLengthOf', 'length of %1'),
+      text: translate('esp32.blocks.dataLengthOf', 'length of %1'),
       output: 'number',
       inputs: {
         DATA: {
@@ -441,7 +441,7 @@ export default () => ({
     {
       // 类型转换
       id: 'convert',
-      text: translate('iotbit.blocks.dataConvert', 'convert %1 to %2'),
+      text: translate('esp32.blocks.dataConvert', 'convert %1 to %2'),
       output: true,
       inputs: {
         DATA: {
@@ -450,10 +450,10 @@ export default () => ({
         },
         TYPE: {
           menu: [
-            [translate('iotbit.blocks.dataConvert.int', 'int'), 'int'],
-            [translate('iotbit.blocks.dataConvert.float', 'float'), 'float'],
-            [translate('iotbit.blocks.dataConvert.string', 'str'), 'str'],
-            [translate('iotbit.blocks.dataConvert.list', 'list'), 'list'],
+            [translate('esp32.blocks.dataConvert.int', 'int'), 'int'],
+            [translate('esp32.blocks.dataConvert.float', 'float'), 'float'],
+            [translate('esp32.blocks.dataConvert.string', 'str'), 'str'],
+            [translate('esp32.blocks.dataConvert.list', 'list'), 'list'],
           ],
         },
       },

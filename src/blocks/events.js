@@ -13,7 +13,7 @@ export default () => ({
     {
       // 开始
       id: 'whenstart',
-      text: translate('iotbit.blocks.whenstart', 'when iot:bit start'),
+      text: translate('esp32.blocks.whenstart', 'when iot:bit start'),
       hat: true,
       mpy(block) {
         let branchCode = this.statementToCode(block) || this.PASS;
@@ -65,7 +65,7 @@ export default () => ({
     {
       // 设置定时器
       id: 'timerset',
-      text: translate('iotbit.blocks.timerset', 'set timer # %1 per %2 milliseconds'),
+      text: translate('esp32.blocks.timerset', 'set timer # %1 per %2 milliseconds'),
       substack: true,
       inputs: {
         ID: {
@@ -107,7 +107,7 @@ export default () => ({
     {
       // 关闭定时器
       id: 'timeroff',
-      text: translate('iotbit.blocks.timeroff', 'stop timer # %1'),
+      text: translate('esp32.blocks.timeroff', 'stop timer # %1'),
       inputs: {
         ID: {
           menu: timerIds,

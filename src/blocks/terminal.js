@@ -2,7 +2,7 @@ import { translate, themeColors } from '@blockcode/core';
 
 export default () => ({
   id: 'terminal',
-  name: translate('iotbit.blocks.terminal', 'Terminal'),
+  name: translate('esp32.blocks.terminal', 'Terminal'),
   themeColor: themeColors.blocks.debug.primary,
   inputColor: themeColors.blocks.debug.secondary,
   otherColor: themeColors.blocks.debug.tertiary,
@@ -10,7 +10,7 @@ export default () => ({
   blocks: [
     {
       id: 'print',
-      text: translate('iotbit.blocks.terminalPrint', 'print %1'),
+      text: translate('esp32.blocks.terminalPrint', 'print %1'),
       inputs: {
         STRING: {
           type: 'string',

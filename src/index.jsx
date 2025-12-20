@@ -80,12 +80,7 @@ export default {
     },
     DEBUG && {
       ...codeReviewTab,
-      Content: () => (
-        <CodeReview
-          readOnly
-          keyName="script"
-        />
-      ),
+      Content: () => <CodeReview keyName="script" />,
     },
     {
       ...terminalTab,

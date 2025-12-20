@@ -11,7 +11,7 @@ export default () => ({
     {
       // 等待
       id: 'wait',
-      text: translate('iotbit.blocks.wait', 'wait %1 milliseconds'),
+      text: translate('esp32.blocks.wait', 'wait %1 milliseconds'),
       inputs: {
         MS: {
           type: 'integer',
@@ -59,7 +59,7 @@ export default () => ({
     {
       // 否则，如果
       id: 'elseif',
-      text: translate('iotbit.blocks.elseif', 'else if %1 then'),
+      text: translate('esp32.blocks.elseif', 'else if %1 then'),
       substack: true,
       inputs: {
         CONDITION: {
@@ -80,7 +80,7 @@ export default () => ({
     {
       // 否则
       id: 'else',
-      text: translate('iotbit.blocks.else', 'else'),
+      text: translate('esp32.blocks.else', 'else'),
       substack: true,
       mpy(block) {
         const branchCode = this.statementToCode(block, 'SUBSTACK') || this.PASS;
@@ -118,7 +118,7 @@ export default () => ({
     {
       // continue
       id: 'continue',
-      text: translate('iotbit.blocks.continue', 'continue'),
+      text: translate('esp32.blocks.continue', 'continue'),
       end: true,
       mpy(block) {
         return 'continue\n';
@@ -127,7 +127,7 @@ export default () => ({
     {
       // break
       id: 'break',
-      text: translate('iotbit.blocks.break', 'break'),
+      text: translate('esp32.blocks.break', 'break'),
       end: true,
       mpy(block) {
         return 'break\n';

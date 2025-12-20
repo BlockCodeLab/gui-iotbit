@@ -3,7 +3,7 @@ import { ScratchBlocks } from '@blockcode/blocks';
 
 export default () => ({
   id: 'text',
-  name: translate('iotbit.blocks.text', 'Text'),
+  name: translate('esp32.blocks.text', 'Text'),
   themeColor: themeColors.blocks.text.primary,
   inputColor: themeColors.blocks.text.secondary,
   otherColor: themeColors.blocks.text.tertiary,
@@ -56,7 +56,7 @@ export default () => ({
     {
       // 替换
       id: 'replace',
-      text: translate('iotbit.blocks.textReplace', 'replace %1 of %2 with %3'),
+      text: translate('esp32.blocks.textReplace', 'replace %1 of %2 with %3'),
       output: 'string',
       inputs: {
         STRING1: {
@@ -83,7 +83,7 @@ export default () => ({
     {
       // 截取
       id: 'substring',
-      text: translate('iotbit.blocks.textSubstring', 'substring of %1 from %2 to %3'),
+      text: translate('esp32.blocks.textSubstring', 'substring of %1 from %2 to %3'),
       output: 'string',
       inputs: {
         STRING: {
@@ -110,7 +110,7 @@ export default () => ({
     {
       // 查找
       id: 'find',
-      text: translate('iotbit.blocks.textFind', 'find %1 of %2 place'),
+      text: translate('esp32.blocks.textFind', 'find %1 of %2 place'),
       output: 'string',
       inputs: {
         STRING1: {
@@ -155,7 +155,7 @@ export default () => ({
     {
       // 开始/结束于
       id: 'with',
-      text: translate('iotbit.blocks.textWith', '%1 %2 with %3 ?'),
+      text: translate('esp32.blocks.textWith', '%1 %2 with %3 ?'),
       output: 'boolean',
       inputs: {
         STRING1: {
@@ -165,8 +165,8 @@ export default () => ({
         WITH: {
           type: 'string',
           menu: [
-            [translate('iotbit.blocks.textStartsWith', 'starts'), 'START'],
-            [translate('iotbit.blocks.textEndsWith', 'ends'), 'END'],
+            [translate('esp32.blocks.textStartsWith', 'starts'), 'START'],
+            [translate('esp32.blocks.textEndsWith', 'ends'), 'END'],
           ],
         },
         STRING2: {
@@ -186,7 +186,7 @@ export default () => ({
     {
       // 相同
       id: 'equals',
-      text: translate('iotbit.blocks.textEquals', '%1 equals %2 (not case-sensitive)?'),
+      text: translate('esp32.blocks.textEquals', '%1 equals %2 (not case-sensitive)?'),
       output: 'boolean',
       inputs: {
         STRING1: {
@@ -209,13 +209,13 @@ export default () => ({
     {
       // 转换大小写
       id: 'case',
-      text: translate('iotbit.blocks.textCase', 'get %1 case of %2'),
+      text: translate('esp32.blocks.textCase', 'get %1 case of %2'),
       output: 'stirng',
       inputs: {
         WITH: {
           menu: [
-            [translate('iotbit.blocks.textLowerCase', 'lower'), 'LOWER'],
-            [translate('iotbit.blocks.textUpperCase', 'upper'), 'UPPER'],
+            [translate('esp32.blocks.textLowerCase', 'lower'), 'LOWER'],
+            [translate('esp32.blocks.textUpperCase', 'upper'), 'UPPER'],
           ],
         },
         STRING: {
@@ -234,7 +234,7 @@ export default () => ({
     {
       // 清除空白
       id: 'trim',
-      text: translate('iotbit.blocks.textTrim', 'remove %1 leading and trailing whitespace'),
+      text: translate('esp32.blocks.textTrim', 'remove %1 leading and trailing whitespace'),
       output: 'string',
       inputs: {
         STRING: {

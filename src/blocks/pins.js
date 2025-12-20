@@ -2,7 +2,7 @@ import { translate, themeColors } from '@blockcode/core';
 
 export default () => ({
   id: 'pin',
-  name: translate('iotbit.blocks.pin', 'Pins'),
+  name: translate('esp32.blocks.pin', 'Pins'),
   themeColor: themeColors.blocks.motion.primary,
   inputColor: themeColors.blocks.motion.secondary,
   otherColor: themeColors.blocks.motion.tertiary,
@@ -11,17 +11,17 @@ export default () => ({
     {
       // 设置模式
       id: 'setmode',
-      text: translate('iotbit.blocks.setmode', 'set pin %1 mode to %2'),
+      text: translate('esp32.blocks.setmode', 'set pin %1 mode to %2'),
       inputs: {
         PIN: {
           menu: 'PINS',
         },
         MODE: {
           menu: [
-            [translate('iotbit.blocks.ouputMode', 'output'), 'OUTPUT'],
-            [translate('iotbit.blocks.inputMode', 'input'), 'INPUT'],
-            [translate('iotbit.blocks.inputPullUpMode', 'input pull-up'), 'INPUT_PULLUP'],
-            [translate('iotbit.blocks.inputPullDownMode', 'input pull-down'), 'INPUT_PULLDOWN'],
+            [translate('esp32.blocks.ouputMode', 'output'), 'OUTPUT'],
+            [translate('esp32.blocks.inputMode', 'input'), 'INPUT'],
+            [translate('esp32.blocks.inputPullUpMode', 'input pull-up'), 'INPUT_PULLUP'],
+            [translate('esp32.blocks.inputPullDownMode', 'input pull-down'), 'INPUT_PULLDOWN'],
           ],
         },
       },
@@ -50,7 +50,7 @@ export default () => ({
     {
       // 数字引脚设为
       id: 'setdigital',
-      text: translate('iotbit.blocks.setdigital', 'set pin %1 to %2'),
+      text: translate('esp32.blocks.setdigital', 'set pin %1 to %2'),
       inputs: {
         PIN: {
           menu: 'OUT_PINS',
@@ -60,8 +60,8 @@ export default () => ({
           type: 'integer',
           defaultValue: '1',
           menu: [
-            [translate('iotbit.blocks.digitalHigh', 'high'), '1'],
-            [translate('iotbit.blocks.digitalLow', 'low'), '0'],
+            [translate('esp32.blocks.digitalHigh', 'high'), '1'],
+            [translate('esp32.blocks.digitalLow', 'low'), '0'],
           ],
         },
       },
@@ -78,7 +78,7 @@ export default () => ({
     {
       // 模拟 引脚设为
       id: 'setDAC',
-      text: translate('iotbit.blocks.setanalog', 'set pin %1 analog to %2'),
+      text: translate('esp32.blocks.setanalog', 'set pin %1 analog to %2'),
       inputs: {
         PIN: {
           menu: 'DAC_PINS',
@@ -120,7 +120,7 @@ export default () => ({
     {
       // 数字引脚是否为高电平？
       id: 'digital',
-      text: translate('iotbit.blocks.isDigitalHigh', 'pin %1 is high?'),
+      text: translate('esp32.blocks.isDigitalHigh', 'pin %1 is high?'),
       output: 'boolean',
       inputs: {
         PIN: {
@@ -138,7 +138,7 @@ export default () => ({
     {
       // 模拟引脚值
       id: 'analog',
-      text: translate('iotbit.blocks.analogValue', 'pin %1 analog value'),
+      text: translate('esp32.blocks.analogValue', 'pin %1 analog value'),
       output: 'integer',
       inputs: {
         PIN: {
@@ -160,7 +160,7 @@ export default () => ({
     {
       // PWM 引脚频率设为
       id: 'setPWMFreq',
-      text: translate('iotbit.blocks.setpwmfreq', 'set pin %1 pwm frequency to %2 Hz'),
+      text: translate('esp32.blocks.setpwmfreq', 'set pin %1 pwm frequency to %2 Hz'),
       inputs: {
         PIN: {
           menu: 'OUT_PINS',
@@ -184,7 +184,7 @@ export default () => ({
     {
       // PWM 引脚设为
       id: 'setPWM',
-      text: translate('iotbit.blocks.setpwm', 'set pin %1 pwm to %2'),
+      text: translate('esp32.blocks.setpwm', 'set pin %1 pwm to %2'),
       inputs: {
         PIN: {
           menu: 'OUT_PINS',
@@ -227,7 +227,7 @@ export default () => ({
     {
       // 设置中断
       id: 'attachinterrupt',
-      text: translate('iotbit.blocks.attachinterrupt', 'attach pin %1 interrupt to %2'),
+      text: translate('esp32.blocks.attachinterrupt', 'attach pin %1 interrupt to %2'),
       substack: true,
       inputs: {
         PIN: {
@@ -235,11 +235,11 @@ export default () => ({
         },
         INTERRUPT: {
           menu: [
-            [translate('iotbit.blocks.interruptRising', 'rising'), 'RISING'],
-            [translate('iotbit.blocks.interruptFalling', 'falling'), 'FALLING'],
-            [translate('iotbit.blocks.interruptChange', 'change'), 'CHANGE'],
-            [translate('iotbit.blocks.interruptHigh', 'high'), 'HIGH'],
-            [translate('iotbit.blocks.interruptLow', 'low'), 'LOW'],
+            [translate('esp32.blocks.interruptRising', 'rising'), 'RISING'],
+            [translate('esp32.blocks.interruptFalling', 'falling'), 'FALLING'],
+            [translate('esp32.blocks.interruptChange', 'change'), 'CHANGE'],
+            [translate('esp32.blocks.interruptHigh', 'high'), 'HIGH'],
+            [translate('esp32.blocks.interruptLow', 'low'), 'LOW'],
           ],
         },
       },
@@ -279,7 +279,7 @@ export default () => ({
     {
       // 解除中断
       id: 'detachinterrupt',
-      text: translate('iotbit.blocks.detachinterrupt', 'detach pin %1 interrupt'),
+      text: translate('esp32.blocks.detachinterrupt', 'detach pin %1 interrupt'),
       inputs: {
         PIN: {
           menu: 'PINS',
