@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 import { nanoid, classNames, sleep, Base64Utils, getBinaryCache, setBinaryCache } from '@blockcode/utils';
-import { setAlert, delAlert } from '@blockcode/core';
+import { useAppContext, setAlert, delAlert } from '@blockcode/core';
 import { ESPTool } from '@blockcode/board';
 import { firmware } from '../../../package.json';
 import deviceFilters from './device-filters.yaml';
@@ -129,6 +129,8 @@ const uploadFirmware = async (cacheName) => {
 };
 
 export function FirmwareSection({ disabled, itemClassName }) {
+  const { appState } = useAppContext();
+
   const readyForUpdate = useSignal(false);
 
   const firmwareJson = useSignal(null);
@@ -149,7 +151,7 @@ export function FirmwareSection({ disabled, itemClassName }) {
   return (
     <MenuSection>
       <MenuItem
-        disabled={disabled || alertId || !readyForUpdate.value}
+        disabled={disabled || alertId || appState.value?.device || !readyForUpdate.value}
         className={classNames(itemClassName, styles.blankCheckItem)}
         onClick={useCallback(() => uploadFirmware('iotbitFirmware'), [])}
       >

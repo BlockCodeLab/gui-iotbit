@@ -201,7 +201,7 @@ export default () => ({
       },
       mpy(block) {
         const unit = block.getFieldValue('UNIT');
-        let code = '(time.ticks_ms() - _times__)';
+        let code = 'time.ticks_diff(time.ticks_ms(), _times__)';
         if (unit === 'SEC') {
           code = `(${code} / 1000)`;
         }

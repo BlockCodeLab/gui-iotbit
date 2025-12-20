@@ -16,22 +16,10 @@ export default {
     return defaultProject;
   },
 
-  onSave(files, assets, meta) {
-    const extensions = [];
-    files = files.map((file) => {
-      extensions.push(file.extensions);
-      return {
-        id: file.id,
-        type: file.type,
-        xml: file.xml,
-      };
-    });
+  onSave(files, assets) {
     return {
       files,
       assets,
-      meta: {
-        extensions: Array.from(new Set(extensions.flat())),
-      },
     };
   },
 

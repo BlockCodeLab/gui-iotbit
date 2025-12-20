@@ -31,19 +31,18 @@ const errorAlert = (err) => {
 };
 
 const downloadProgram = async (device, mainFile, assetFiles) => {
-  const projectFiles = [].concat(mainFile, assetFiles).map((file) => ({
-    ...file,
-    filename: file.id,
-  }));
-
   downloadingAlert(0);
-
   try {
+    const projectFiles = [].concat(mainFile, assetFiles).map((file) => ({
+      ...file,
+      filename: file.id,
+    }));
+
     // 开始下载
     await MPYUtils.write(device, projectFiles, downloadingAlert);
     device.reset();
-    setAlert('downloadCompleted', 2000);
-    removeDownloading();
+    setAlert('downloadCompleted', { id: downloadAlertId });
+    setTimeout(removeDownloading, 2000);
   } catch (err) {
     errorAlert(err.name);
     removeDownloading();
@@ -122,30 +121,32 @@ export function DeviceMenu({ itemClassName }) {
           }
           onClick={handleDownload}
         />
-        <MenuItem
-          className={classNames(itemClassName, styles.blankCheckItem)}
-          label={
-            <Text
-              id="gui.menubar.device.reset"
-              defaultMessage="Reset device"
-            />
-          }
-          onClick={handleReset}
-        />
       </MenuSection>
 
       <MenuSection disabled={downloadAlertId}>
         {appState.value?.device ? (
-          <MenuItem
-            className={classNames(itemClassName, styles.blankCheckItem)}
-            label={
-              <Text
-                id="gui.menubar.device.disconnect"
-                defaultMessage="Disconnect device"
-              />
-            }
-            onClick={handleDisconnect}
-          />
+          <>
+            <MenuItem
+              className={classNames(itemClassName, styles.blankCheckItem)}
+              label={
+                <Text
+                  id="gui.menubar.device.disconnect"
+                  defaultMessage="Disconnect device"
+                />
+              }
+              onClick={handleDisconnect}
+            />
+            <MenuItem
+              className={classNames(itemClassName, styles.blankCheckItem)}
+              label={
+                <Text
+                  id="gui.menubar.device.reset"
+                  defaultMessage="Reset device"
+                />
+              }
+              onClick={handleReset}
+            />
+          </>
         ) : (
           <>
             <MenuItem

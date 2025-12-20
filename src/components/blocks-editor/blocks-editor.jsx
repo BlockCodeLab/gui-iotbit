@@ -34,6 +34,7 @@ export function IotBitBlocksEditor() {
   return (
     <BlocksEditor
       // enableCodePreview
+      enableProcedureExecute
       enableProcedureReturns
       disableSensingBlocks
       disableGenerateCode={tabIndex.value !== 0}
