@@ -1,26 +1,21 @@
 import { translate, themeColors } from '@blockcode/core';
 
 // espnow 发送辅助函数
-let espnowSend = '';
-espnowSend += 'async def espnow_asend(msg, mac="ff:ff:ff:ff:ff:ff"):\n';
-espnowSend += '  chuck_size = 250\n';
-espnowSend += '  msg_data = msg if type(msg) is bytes else str(msg).encode()\n';
-espnowSend += '  size = len(msg_data)\n';
-espnowSend += '  if size > chuck_size:\n';
-espnowSend += '    chucks_count = 1 + size // chuck_size\n';
-espnowSend += '    for i in range(chucks_count):\n';
-espnowSend += '      n = i * chuck_size\n';
-espnowSend += '      m = (i + 1) * chuck_size\n';
-espnowSend += '      data = msg_data[n:m] if m <= size else msg_data[n:]\n';
-espnowSend += '      await espnow_asend(data, mac)\n';
-espnowSend += '    return\n';
-espnowSend += '  mac_addr = bytes.fromhex(mac.replace(":", "")) if type(mac) is str else mac\n';
-espnowSend += '  try:\n';
-espnowSend += '    await espnow.asend(mac_addr, msg_data)\n';
-espnowSend += '  except OSError as err:\n';
-espnowSend += '    if len(err.args) > 1 and err.args[1] == "ESP_ERR_ESPNOW_NOT_FOUND":\n';
-espnowSend += '      espnow.add_peer(mac_addr)\n';
-espnowSend += '      await espnow.asend(mac_addr, msg_data)\n';
+const EspnowSend = `
+async def espnow_asend(msg, mac="ff:ff:ff:ff:ff:ff"):
+  mac_addr = mac
+  if isinstance(mac, str):
+    mac_addr = bytes.fromhex(mac.replace(" ", "").replace(":", "").replace(",", ""))
+  msg_data = msg if isinstance(msg, bytes) else str(msg).encode()
+  max_size = min(250, len(msg_data))
+  msg_data = msg_data[:max_size]
+  try:
+    await espnow.asend(mac_addr, msg_data)
+  except OSError as err:
+    if len(err.args) > 1 and err.args[1] == "ESP_ERR_ESPNOW_NOT_FOUND":
+      espnow.add_peer(mac_addr)
+      await espnow.asend(mac_addr, msg_data)
+`;
 
 export default () => ({
   id: 'network',
@@ -30,6 +25,42 @@ export default () => ({
   otherColor: '#1386BF',
   order: 5,
   blocks: [
+    {
+      id: 'ifconfig',
+      text: translate('esp32.blocks.networkCofing', 'local %1'),
+      output: 'string',
+      inputs: {
+        TYPE: {
+          menu: [
+            [translate('esp32.blocks.networkCofingIp', 'ip'), 'IP'],
+            [translate('esp32.blocks.networkCofingMac', 'mac address'), 'MAC'],
+          ],
+        },
+      },
+      mpy(block) {
+        const type = block.getFieldValue('TYPE') || 'IP';
+        this.definitions_['import_network'] = 'import network';
+        this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
+        let code = '';
+        if (type === 'IP') {
+          code = 'wlan.ifconfig()[0]';
+        } else if (type === 'MAC') {
+          code = '":".join(["%02x" % b for b in wlan.config("mac")])';
+        }
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
+    },
+    {
+      id: 'isconnected',
+      text: translate('esp32.blocks.isWifiConnected', 'wifi is connected?'),
+      output: 'boolean',
+      mpy(block) {
+        this.definitions_['import_network'] = 'import network';
+        this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
+        return ['wlan.isconnected()', this.ORDER_FUNCTION_CALL];
+      },
+    },
+    '---',
     {
       id: 'connectwifi',
       text: translate('esp32.blocks.connectWifi', 'connect wifi ssid: %1 password: %2'),
@@ -73,16 +104,6 @@ export default () => ({
         return code;
       },
     },
-    {
-      id: 'isconnected',
-      text: translate('esp32.blocks.isWifiConnected', 'wifi is connected?'),
-      output: 'boolean',
-      mpy(block) {
-        this.definitions_['import_network'] = 'import network';
-        this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
-        return ['wlan.isconnected()', this.ORDER_FUNCTION_CALL];
-      },
-    },
     '---',
     {
       id: 'wifiscan',
@@ -99,6 +120,17 @@ export default () => ({
       },
     },
     {
+      id: 'wificounts',
+      text: translate('esp32.blocks.wifiCounts', 'available wifi counts'),
+      output: 'number',
+      mpy(block) {
+        this.definitions_['import_network'] = 'import network';
+        this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
+        this.definitions_['wifi_list'] = 'wifi_list = []';
+        return ['len(wifi_list)', this.ORDER_FUNCTION_CALL];
+      },
+    },
+    {
       id: 'wifiitem',
       text: translate('esp32.blocks.wifiItem', '%2 of item %1 of available wifi'),
       output: 'number',
@@ -110,9 +142,9 @@ export default () => ({
         ITEM: {
           menu: [
             [translate('esp32.blocks.wifiItemSsid', 'ssid'), 'SSID'],
-            [translate('esp32.blocks.wifiItemMac', 'mac'), 'MAC'],
             [translate('esp32.blocks.wifiItemRssi', 'rssi'), 'RSSI'],
             [translate('esp32.blocks.wifiItemSecurity', 'security'), 'SECURITY'],
+            [translate('esp32.blocks.wifiItemMac', 'mac address'), 'MAC'],
           ],
         },
       },
@@ -138,17 +170,6 @@ export default () => ({
             break;
         }
         return [code, this.ORDER_ATOMIC];
-      },
-    },
-    {
-      id: 'wificounts',
-      text: translate('esp32.blocks.wifiCounts', 'available wifi counts'),
-      output: 'number',
-      mpy(block) {
-        this.definitions_['import_network'] = 'import network';
-        this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
-        this.definitions_['wifi_list'] = 'wifi_list = []';
-        return ['len(wifi_list)', this.ORDER_FUNCTION_CALL];
       },
     },
     '---',
@@ -201,8 +222,7 @@ export default () => ({
         this.definitions_['import_aioespnow'] = 'from aioespnow import AIOESPNow';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
-        this.definitions_['espnow_asend'] = espnowSend;
-
+        this.definitions_['espnow_asend'] = EspnowSend;
         return `await espnow_asend(${msg}, ${mac})\n`;
       },
     },
@@ -221,8 +241,7 @@ export default () => ({
         this.definitions_['import_aioespnow'] = 'from aioespnow import AIOESPNow';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
-        this.definitions_['espnow_asend'] = espnowSend;
-
+        this.definitions_['espnow_asend'] = EspnowSend;
         return `await espnow_asend(${msg})\n`;
       },
     },
@@ -245,18 +264,24 @@ export default () => ({
       inputs: {
         TYPE: {
           menu: [
-            [translate('esp32.blocks.espnowMsgText', 'message'), 'MESSAGE'],
+            [translate('esp32.blocks.espnowMsgText', 'text'), 'TEXT'],
+            [translate('esp32.blocks.espnowMsgBytes', 'bytes'), 'BYTES'],
             [translate('esp32.blocks.espnowMsgMac', 'mac address'), 'MAC'],
           ],
         },
       },
       mpy(block) {
-        const type = block.getFieldValue('TYPE') || 'MESSAGE';
+        const type = block.getFieldValue('TYPE') || 'TEXT';
         this.definitions_['import_network'] = 'import network';
         this.definitions_['import_aioespnow'] = 'from aioespnow import AIOESPNow';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
-        const code = type === 'MAC' ? 'peer.hex(":")' : 'msg.decode()';
+        let code = 'msg';
+        if (type === 'MAC') {
+          code = 'peer.hex(":")';
+        } else if (type === 'TEXT') {
+          code = 'msg.decode()';
+        }
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },

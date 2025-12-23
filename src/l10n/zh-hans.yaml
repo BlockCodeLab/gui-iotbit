@@ -27,6 +27,7 @@ esp32.blocks.dataConvert.int: 整数
 esp32.blocks.dataConvert.float: 浮点数
 esp32.blocks.dataConvert.string: 字符串
 esp32.blocks.dataConvert.list: 列表
+esp32.blocks.dataConvert.bytes: 字节数组
 esp32.blocks.dataLengthOf: "%1 长度"
 esp32.blocks.dataConstrain: 约束 %1 在 %2 和 %3 之间
 esp32.blocks.dataMap: 映射 %1 从 %2 - %3 到 %4 - %5
@@ -92,13 +93,16 @@ esp32.blocks.textConvert: 将 %1 转为 %2
 esp32.blocks.textConvertFrom: 将 %1 转为文本
 esp32.blocks.connectWifi: "连接 Wi-Fi 网络 SSID: %1 密码: %2"
 esp32.blocks.disconnectWifi: 断开 Wi-Fi 网络
+esp32.blocks.networkCofing: 本地 %1
+esp32.blocks.networkCofingIp: IP
+esp32.blocks.networkCofingMac: MAC 地址
 esp32.blocks.isWifiConnected: Wi-Fi 网络已连接？
 esp32.blocks.wifiScan: 开始扫描 Wi-Fi
 esp32.blocks.wifiItem: 第 %1 个可用 Wi-Fi 的 %2
 esp32.blocks.wifiItemSsid: SSID
-esp32.blocks.wifiItemMac: MAC
 esp32.blocks.wifiItemRssi: RSSI
 esp32.blocks.wifiItemSecurity: 加密类型
+esp32.blocks.wifiItemMac: MAC 地址
 esp32.blocks.wifiCounts: 可用 Wi-Fi 数量
 esp32.blocks.startap: "开启热点 SSID: %1"
 esp32.blocks.stopap: 关闭热点
@@ -106,7 +110,8 @@ esp32.blocks.espnowBroadcast: ESP-Now 广播 %1
 esp32.blocks.espnowSend: ESP-Now 发送 %1 给 %2
 esp32.blocks.espnowRecv: 等待 ESP-Now 接收消息
 esp32.blocks.espnowMsg: 收到的 %1
-esp32.blocks.espnowMsgText: 消息
+esp32.blocks.espnowMsgText: 文本
+esp32.blocks.espnowMsgBytes: 字节数组
 esp32.blocks.espnowMsgMac: MAC 地址
 esp32.blocks.espnowRepeat: 等待 ESP-Now 收到消息
 esp32.blocks.espnowWhen: 当 ESP-Now 收到 %1
@@ -125,6 +130,7 @@ esp32.blocks.terminal: 终端
 esp32.blocks.terminalPrint: 打印 %1
 esp32.blocks.temperature: 温度
 
+iotbit.blocks.whenstart: 当 [DEVICE] 系统启动
 iotbit.blocks.playNote: 演奏音符 %1 %2 拍
 iotbit.blocks.playMusic: 播放 %1
 iotbit.blocks.playMusicDone: 播放 %1 等待播完

@@ -1,5 +1,6 @@
 import { translate, themeColors } from '@blockcode/core';
 import { ScratchBlocks } from '@blockcode/blocks';
+import deviceIcon from '../components/device-menu/icon-device.svg';
 
 const timerIds = ['1', '2', '3', '4'];
 
@@ -13,7 +14,13 @@ export default () => ({
     {
       // 开始
       id: 'whenstart',
-      text: translate('esp32.blocks.whenstart', 'when iot:bit start'),
+      text: translate('iotbit.blocks.whenstart', 'when [DEVICE] start'),
+      inputs: {
+        DEVICE: {
+          type: 'image',
+          src: deviceIcon,
+        },
+      },
       hat: true,
       mpy(block) {
         let branchCode = this.statementToCode(block) || this.PASS;

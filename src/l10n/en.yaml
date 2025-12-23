@@ -27,6 +27,7 @@ esp32.blocks.dataConvert.int: int
 esp32.blocks.dataConvert.float: float
 esp32.blocks.dataConvert.string: str
 esp32.blocks.dataConvert.list: list
+esp32.blocks.dataConvert.bytes: bytes
 esp32.blocks.dataLengthOf: length of %1
 esp32.blocks.dataConstrain: constrain %1 between %2 to %3
 esp32.blocks.dataMap: map %1 from %2 - %3 to %4 - %5
@@ -92,13 +93,16 @@ esp32.blocks.textConvert: convert %1 to %2
 esp32.blocks.textConvertFrom: convert %1 to String
 esp32.blocks.connectWifi: "connect wi-fi ssid: %1 password: %2"
 esp32.blocks.disconnectWifi: disconnect wi-fi
+esp32.blocks.networkCofing: local %1
+esp32.blocks.networkCofingIp: ip
+esp32.blocks.networkCofingMac: mac address
 esp32.blocks.isWifiConnected: wi-fi is connected?
 esp32.blocks.wifiScan: start scan wi-fi
 esp32.blocks.wifiItem: "%2 of item %1 of available wi-fi"
 esp32.blocks.wifiItemSsid: ssid
-esp32.blocks.wifiItemMac: mac
 esp32.blocks.wifiItemRssi: rssi
 esp32.blocks.wifiItemSecurity: security
+esp32.blocks.wifiItemMac: mac address
 esp32.blocks.wifiCounts: available wi-fi counts
 esp32.blocks.startap: "start ap ssid: %1"
 esp32.blocks.stopap: stop ap
@@ -106,7 +110,8 @@ esp32.blocks.espnowBroadcast: broadcast %1 via esp-now
 esp32.blocks.espnowSend: send %1 to %2 via esp-now
 esp32.blocks.espnowRecv: wait for esp-now incoming
 esp32.blocks.espnowMsg: "%1 of incoming"
-esp32.blocks.espnowMsgText: message
+esp32.blocks.espnowMsgText: text
+esp32.blocks.espnowMsgBytes: bytes
 esp32.blocks.espnowMsgMac: mac address
 esp32.blocks.espnowRepeat: repeat wait for esp-now incoming
 esp32.blocks.espnowWhen: when esp-now receive %1
@@ -125,6 +130,7 @@ esp32.blocks.terminal: Terminal
 esp32.blocks.terminalPrint: print %1
 esp32.blocks.temperature: temperature
 
+iotbit.blocks.whenstart: when [DEVICE] start
 iotbit.blocks.playNote: play note %1 for %2 beats
 iotbit.blocks.playMusic: start sound %1
 iotbit.blocks.playMusicDone: play sound %1 until done

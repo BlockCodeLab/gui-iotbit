@@ -1,6 +1,23 @@
 import { translate, themeColors } from '@blockcode/core';
 import { ScratchBlocks } from '@blockcode/blocks';
 
+const ToBytes = `
+def to_bytes(val):
+  if isinstance(val, int):
+    if val <= 0:
+        return bytes(b"\\x00")
+    size = 0
+    temp = val
+    while temp > 0:
+      size += 1
+      temp >>= 8
+    return val.to_bytes(size, "big")
+  if isinstance(val, str):
+    val = val.replace(" ", "").replace(":", "").replace(",", "")
+    return bytes.fromhex(val)
+  return bytes(b"")
+`;
+
 export default () => ({
   id: 'operator',
   name: '%{BKY_CATEGORY_OPERATORS}',
@@ -454,13 +471,21 @@ export default () => ({
             [translate('esp32.blocks.dataConvert.float', 'float'), 'float'],
             [translate('esp32.blocks.dataConvert.string', 'str'), 'str'],
             [translate('esp32.blocks.dataConvert.list', 'list'), 'list'],
+            [translate('esp32.blocks.dataConvert.bytes', 'bytes'), 'to_bytes'],
           ],
         },
       },
       mpy(block) {
         const data = this.valueToCode(block, 'DATA', this.ORDER_NONE);
         const type = block.getFieldValue('TYPE') || 'int';
-        return [`${type}(${data})`, this.ORDER_FUNCTION_CALL];
+
+        // 转字节数组辅助函数
+        if (type === 'to_bytes') {
+          this.definitions_['to_bytes'] = ToBytes;
+        }
+
+        const code = `${type}(${data})`;
+        return [code, this.ORDER_FUNCTION_CALL];
       },
     },
   ],
