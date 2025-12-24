@@ -246,7 +246,7 @@ export default () => ({
       mpy(block) {
         const pin = block.getFieldValue('PIN') || 0;
         const pinName = `pin_${pin}`;
-        const flagName = `interrupt_${pin}_flag`;
+        const flagName = this.createName('event_flag');
         const interrupt = block.getFieldValue('INTERRUPT') || 'RISING';
         this.definitions_['import_pin'] = 'from machine import Pin';
         this.definitions_[pinName] = this.definitions_[pinName] ?? `${pinName} = Pin(${pin}, Pin.IN)`;
@@ -260,10 +260,10 @@ export default () => ({
         code += branchCode;
 
         branchCode = this.prefixLines(code, this.INDENT);
-        branchCode = this.addEventTrap(branchCode, block.id);
+        branchCode = this.addEventTrap(branchCode, 'pin_irq');
         code = '@_tasks__.append\n';
         code += branchCode;
-        this.definitions_[`interrupt_${pin}`] = code;
+        this.definitions_[`${flagName}_callback`] = code;
 
         const triggerMap = {
           RISING: 'Pin.IRQ_RISING',

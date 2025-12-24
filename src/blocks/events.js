@@ -14,7 +14,7 @@ export default () => ({
     {
       // 开始
       id: 'whenstart',
-      text: translate('iotbit.blocks.whenstart', 'when [DEVICE] start'),
+      text: translate('iotbit.blocks.whenstart', 'when %1 start'),
       inputs: {
         DEVICE: {
           type: 'image',

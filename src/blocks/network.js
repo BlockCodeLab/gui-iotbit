@@ -303,16 +303,16 @@ export default () => ({
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         this.definitions_['espnow'] = 'espnow = AIOESPNow(); espnow.active(True)';
 
-        const flagName = `${this.getFunctionName(block.id)}_flag`;
+        const flagName = this.createName('event_flag');
         this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()`;
-        if (!this.definitions_['espnowwhen']) {
+        if (!this.definitions_['espnow_received']) {
           let code = '';
           code += '@_tasks__.append\n';
-          code += 'async def espnow_when():\n';
+          code += 'async def espnow_received():\n';
           code += '  async for peer, msg in espnow:\n';
-          this.definitions_['espnowwhen'] = code;
+          this.definitions_['espnow_received'] = code;
         }
-        this.definitions_['espnowwhen'] += `    if msg.decode() == ${msg}: ${flagName}.set()\n`;
+        this.definitions_['espnow_received'] += `    if msg.decode() == ${msg}: ${flagName}.set()\n`;
 
         let branchCode = this.statementToCode(block) || this.PASS;
         let code = '';
@@ -321,7 +321,7 @@ export default () => ({
         code += branchCode;
 
         branchCode = this.prefixLines(code, this.INDENT);
-        branchCode = this.addEventTrap(branchCode, block.id);
+        branchCode = this.addEventTrap(branchCode, 'espnow_received');
         code = '@_tasks__.append\n';
         code += branchCode;
         return code;
