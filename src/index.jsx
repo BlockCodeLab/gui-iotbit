@@ -87,12 +87,10 @@ export default {
     },
   ].filter(Boolean),
 
-  docks: DEBUG
-    ? [
-        {
-          expand: 'right',
-          Content: Sidedock,
-        },
-      ]
-    : [],
+  docks: [
+    {
+      expand: 'right',
+      Content: Sidedock,
+    },
+  ]
 };

@@ -1,4 +1,4 @@
-import { MicroPythonGenerator } from '@blockcode/blocks';
+import { MicroPythonGenerator, EmulatorGenerator } from '@blockcode/blocks';
 
 const GENERATOR_COMMENT = '# Generate by BlockCode\n';
 
@@ -7,3 +7,5 @@ export class IotBitGenerator extends MicroPythonGenerator {
     return GENERATOR_COMMENT + 'from iotbit import *\n' + super.finish(code);
   }
 }
+
+export class IotBitEmulatorGenerator extends EmulatorGenerator {}

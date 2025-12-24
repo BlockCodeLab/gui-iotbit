@@ -23,6 +23,11 @@ export default () => ({
         const code = `await asyncio.sleep_ms(${ms})\n`;
         return code;
       },
+      emu(block) {
+        const ms = this.valueToCode(block, 'MS', this.ORDER_NONE);
+        const code = `await runtime.sleep(${ms}/1000);\n`;
+        return code;
+      },
     },
     {
       // 无限重复
@@ -76,6 +81,17 @@ export default () => ({
         code += branchCode;
         return code;
       },
+      emu(block) {
+        const condition = this.valueToCode(block, 'CONDITION', this.ORDER_NONE) || 'false';
+        const branchCode = this.statementToCode(block, 'SUBSTACK');
+
+        // [TODO] 处理 elseif 前面没有 if 的错误情况
+        let code = '';
+        code += `else if (${condition}) {\n`;
+        code += branchCode;
+        code += `}\n`;
+        return code;
+      },
     },
     {
       // 否则
@@ -89,6 +105,16 @@ export default () => ({
         let code = '';
         code += `else:\n`;
         code += branchCode;
+        return code;
+      },
+      emu(block) {
+        const branchCode = this.statementToCode(block, 'SUBSTACK');
+
+        // [TODO] 处理 else 前面没有 if 的错误情况
+        let code = '';
+        code += `else {\n`;
+        code += branchCode;
+        code += `}\n`;
         return code;
       },
     },
@@ -123,6 +149,9 @@ export default () => ({
       mpy(block) {
         return 'continue\n';
       },
+      emu(block) {
+        return 'continue;\n';
+      },
     },
     {
       // break
@@ -131,6 +160,9 @@ export default () => ({
       end: true,
       mpy(block) {
         return 'break\n';
+      },
+      emu(block) {
+        return 'break;\n';
       },
     },
   ],

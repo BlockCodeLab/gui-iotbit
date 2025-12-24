@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'preact/hooks';
-import { MathUtils, KonvaUtils } from '@blockcode/utils';
+import { Konva } from '@blockcode/utils';
 import { useAppContext, useProjectContext } from '@blockcode/core';
 import { Emulator } from '@blockcode/blocks';
 import { IotBitRuntime } from '../../lib/runtime/runtime';
@@ -36,6 +36,8 @@ export function IotBitEmulator({ runtime, onRuntime }) {
     if (appState.value?.running === false) {
       if (runtime.running) {
         runtime.stop();
+        runtime.clearLeds();
+        runtime.clearScreen();
       }
     }
   }, [appState.value?.running]);
@@ -59,18 +61,14 @@ export function IotBitEmulator({ runtime, onRuntime }) {
   // 模拟器运行时不可编辑
   useEffect(() => {
     if (!runtime) return;
-    runtime.stage.listening(!appState.value?.running);
+    // runtime.stage.listening(!appState.value?.running);
   }, [runtime, appState.value?.running]);
 
   // 绑定模拟器运行时
   const handleRuntime = useCallback(
     async (stage) => {
       const runtime = new IotBitRuntime(stage);
-      // runtime.handleKeyDown = runtime.handleKeyDown.bind(runtime);
-      // runtime.handleKeyUp = runtime.handleKeyUp.bind(runtime);
-      // document.addEventListener('keydown', runtime.handleKeyDown);
-      // document.addEventListener('keyup', runtime.handleKeyUp);
-      onRuntime(runtime);
+      onRuntime?.(runtime);
 
       const res = {
         iotbit: await runtime.loadImage(iotbitImage),
@@ -115,11 +113,27 @@ export function IotBitEmulator({ runtime, onRuntime }) {
           offsetY: res.display.height / 2,
         }),
       );
+      runtime.setScreen();
+
+      // LED
+      [-40, 0, 40].forEach((x, i) => {
+        const led = new Konva.Rect({
+          id: 'led-' + i,
+          x: x - 4,
+          y: 83,
+          scaleY: runtime.stage.scaleY(),
+          width: 8,
+          height: 6,
+          fill: 'white',
+        });
+        runtime.spritesLayer.add(led);
+      });
 
       // 按钮
       ['a', 'b'].forEach((id, i) => {
         const button = new Konva.Image({
           id: 'button-' + id,
+          name: id,
           x: -105 + i * 210,
           y: 7,
           scaleY: runtime.stage.scaleY(),
@@ -131,25 +145,33 @@ export function IotBitEmulator({ runtime, onRuntime }) {
         });
         runtime.spritesLayer.add(button);
 
-        button.on('pointerdown', () =>
+        button.on('pointerclick', ({ evt, target }) => {
+          if (evt.shiftKey) {
+            runtime.call('press:a+b');
+          } else {
+            runtime.call(`press:${target.name()}`);
+          }
+        });
+
+        button.on('pointerdown', () => {
           button.setAttrs({
             image: res.buttonClick,
             width: res.buttonClick.width,
             height: res.buttonClick.height,
             offsetX: res.buttonClick.width / 2,
             offsetY: res.buttonClick.height / 2,
-          }),
-        );
+          });
+        });
 
-        button.on('pointerup', () =>
+        button.on('pointerup', () => {
           button.setAttrs({
             image: res.button,
             width: res.button.width,
             height: res.button.height,
             offsetX: res.button.width / 2,
             offsetY: res.button.height / 2,
-          }),
-        );
+          });
+        });
       });
 
       // 引脚
@@ -157,6 +179,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
         const resName = i > 0 && i < 4 ? 'pin' : `pin${id.toUpperCase()}`;
         const pin = new Konva.Image({
           id: 'pin-' + id,
+          name: id,
           x: -123 + i * 61.5 + (i === 0 ? 6 : i === 4 ? -7 : i === 3 ? 0.2 : 0),
           y: -88,
           scaleY: runtime.stage.scaleY(),
@@ -170,25 +193,29 @@ export function IotBitEmulator({ runtime, onRuntime }) {
 
         // 0, 1, 2 可以控制
         if (i < 3) {
-          pin.on('pointerdown', () =>
+          pin.on('pointerclick', ({ target }) => {
+            runtime.call(`press:P${target.name()}`);
+          });
+
+          pin.on('pointerdown', () => {
             pin.setAttrs({
               image: res[`${resName}Click`],
               width: res[`${resName}Click`].width,
               height: res[`${resName}Click`].height,
               offsetX: res[`${resName}Click`].width / 2,
               offsetY: res[`${resName}Click`].height / 2,
-            }),
-          );
+            });
+          });
 
-          pin.on('pointerup', () =>
+          pin.on('pointerup', () => {
             pin.setAttrs({
               image: res[resName],
               width: res[resName].width,
               height: res[resName].height,
               offsetX: res[resName].width / 2,
               offsetY: res[resName].height / 2,
-            }),
-          );
+            });
+          });
         }
       });
 

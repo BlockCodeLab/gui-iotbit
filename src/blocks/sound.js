@@ -24,7 +24,13 @@ export default () => ({
       mpy(block) {
         const note = this.valueToCode(block, 'NOTE', this.ORDER_NONE);
         const beat = this.valueToCode(block, 'BEAT', this.ORDER_NONE);
-        const code = `audio.play(${note}":${beat}")\n`;
+        const code = `await audio.aplay(${note}":${beat}")\n`;
+        return code;
+      },
+      emu(block) {
+        const note = this.valueToCode(block, 'NOTE', this.ORDER_NONE);
+        const beat = this.valueToCode(block, 'BEAT', this.ORDER_NONE);
+        const code = `await runtime.tone.play(${note} + ":${beat}");\n`;
         return code;
       },
     },
@@ -39,7 +45,12 @@ export default () => ({
       },
       mpy(block) {
         const music = block.getFieldValue('MUSIC');
-        const code = `await audio.aplay(Music.${music.toUpperCase()})\n`;
+        const code = `await audio.aplay(Music.${music})\n`;
+        return code;
+      },
+      emu(block) {
+        const music = block.getFieldValue('MUSIC');
+        const code = `await runtime.tone.play(runtime.tone.Music.${music});\n`;
         return code;
       },
     },
@@ -53,7 +64,12 @@ export default () => ({
       },
       mpy(block) {
         const music = block.getFieldValue('MUSIC');
-        const code = `asyncio.create_task(audio.aplay(Music.${music.toUpperCase()}))\n`;
+        const code = `asyncio.create_task(audio.aplay(Music.${music}))\n`;
+        return code;
+      },
+      emu(block) {
+        const music = block.getFieldValue('MUSIC');
+        const code = `runtime.tone.play(runtime.tone.Music.${music});\n`;
         return code;
       },
     },
@@ -63,34 +79,37 @@ export default () => ({
       mpy(block) {
         return 'audio.stop()\n';
       },
+      emu(block) {
+        return 'runtime.tone.stop();\n';
+      },
     },
   ],
   menus: {
     MUSIC: {
       type: 'string',
-      defaultValue: 'dadadadum',
+      defaultValue: 'DADADADUM',
       items: [
-        [translate('iotbit.blocks.musicDadadadum', 'dadadadum'), 'dadadadum'],
-        [translate('iotbit.blocks.musicEntertainer', 'entertainer'), 'entertainer'],
-        [translate('iotbit.blocks.musicPrelude', 'prelude'), 'prelude'],
-        [translate('iotbit.blocks.musicOde', 'ode'), 'ode'],
-        [translate('iotbit.blocks.musicNyan', 'nyan'), 'nyan'],
-        [translate('iotbit.blocks.musicRingtone', 'ringtone'), 'ringtone'],
-        [translate('iotbit.blocks.musicFunk', 'funk'), 'funk'],
-        [translate('iotbit.blocks.musicBlues', 'blues'), 'blues'],
-        [translate('iotbit.blocks.musicBirthday', 'birthday'), 'birthday'],
-        [translate('iotbit.blocks.musicWedding', 'wedding'), 'wedding'],
-        [translate('iotbit.blocks.musicFuneral', 'funeral'), 'funeral'],
-        [translate('iotbit.blocks.musicPunchline', 'punchline'), 'punchline'],
-        [translate('iotbit.blocks.musicPython', 'python'), 'python'],
-        [translate('iotbit.blocks.musicBaddy', 'baddy'), 'baddy'],
-        [translate('iotbit.blocks.musicChase', 'chase'), 'chase'],
-        [translate('iotbit.blocks.musicBaDing', 'ba ding'), 'ba ding'],
-        [translate('iotbit.blocks.musicWawawawaa', 'wawawawaa'), 'wawawawaa'],
-        [translate('iotbit.blocks.musicJumpUp', 'jump up'), 'jump up'],
-        [translate('iotbit.blocks.musicJumpDown', 'jump down'), 'jump down'],
-        [translate('iotbit.blocks.musicPowerUp', 'power up'), 'power up'],
-        [translate('iotbit.blocks.musicPowerDown', 'power down'), 'power down'],
+        [translate('iotbit.blocks.musicDadadadum', 'dadadadum'), 'DADADADUM'],
+        [translate('iotbit.blocks.musicEntertainer', 'entertainer'), 'ENTERTAINER'],
+        [translate('iotbit.blocks.musicPrelude', 'prelude'), 'PRELUDE'],
+        [translate('iotbit.blocks.musicOde', 'ode'), 'ODE'],
+        [translate('iotbit.blocks.musicNyan', 'nyan'), 'NYAN'],
+        [translate('iotbit.blocks.musicRingtone', 'ringtone'), 'RINGTONE'],
+        [translate('iotbit.blocks.musicFunk', 'funk'), 'FUNK'],
+        [translate('iotbit.blocks.musicBlues', 'blues'), 'BLUES'],
+        [translate('iotbit.blocks.musicBirthday', 'birthday'), 'BIRTHDAY'],
+        [translate('iotbit.blocks.musicWedding', 'wedding'), 'WEDDING'],
+        [translate('iotbit.blocks.musicFuneral', 'funeral'), 'FUNERAL'],
+        [translate('iotbit.blocks.musicPunchline', 'punchline'), 'PUNCHLINE'],
+        [translate('iotbit.blocks.musicPython', 'python'), 'PYTHON'],
+        [translate('iotbit.blocks.musicBaddy', 'baddy'), 'BADDY'],
+        [translate('iotbit.blocks.musicChase', 'chase'), 'CHASE'],
+        [translate('iotbit.blocks.musicBaDing', 'ba ding'), 'BA_DING'],
+        [translate('iotbit.blocks.musicWawawawaa', 'wawawawaa'), 'WAWAWAWAA'],
+        [translate('iotbit.blocks.musicJumpUp', 'jump up'), 'JUMP_UP'],
+        [translate('iotbit.blocks.musicJumpDown', 'jump down'), 'JUMP_DOWN'],
+        [translate('iotbit.blocks.musicPowerUp', 'power up'), 'POWER_UP'],
+        [translate('iotbit.blocks.musicPowerDown', 'power down'), 'POWER_DOWN'],
       ],
     },
   },

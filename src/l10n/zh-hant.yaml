@@ -130,7 +130,8 @@ esp32.blocks.terminal: 終端
 esp32.blocks.terminalPrint: 打印 %1
 esp32.blocks.temperature: 温度
 
-iotbit.blocks.whenstart: 當 [DEVICE] 開始運行
+iotbit.blocks.whenstart: 當 %1 開始運行
+iotbit.blocks.pinTouched: 當 %1 被觸摸
 iotbit.blocks.playNote: 演奏音符 %1 %2 拍
 iotbit.blocks.playMusic: 播放 %1
 iotbit.blocks.playMusicDone: 播放 %1 直到結束

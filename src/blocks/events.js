@@ -24,10 +24,17 @@ export default () => ({
       hat: true,
       mpy(block) {
         let branchCode = this.statementToCode(block) || this.PASS;
-        branchCode = this.addEventTrap(branchCode, block.id);
+        branchCode = this.addEventTrap(branchCode, 'start');
         let code = '';
         code += '@_tasks__.append\n';
         code += branchCode;
+        return code;
+      },
+      emu(block) {
+        let branchCode = this.statementToCode(block);
+        branchCode = this.addEventTrap(branchCode, block.id);
+        branchCode = branchCode.replace('(done) => {\n', '(done) => {\n');
+        const code = `runtime.when('start', ${branchCode});\n`;
         return code;
       },
     },
@@ -42,18 +49,16 @@ export default () => ({
           type: 'string',
           defaultValue: 'a',
           menu: [
-            ['a', 'a'],
-            ['b', 'b'],
-            ['a+b', 'ab'],
+            ['A', 'a'],
+            ['B', 'b'],
+            ['A+B', 'ab'],
           ],
         },
       },
       mpy(block) {
         const key = block.getFieldValue('KEY_OPTION');
-
-        const flagName = `${this.getFunctionName(block.id)}_flag`;
-        this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()\n`;
-        this.definitions_[flagName] += `button_${key}.on_pressed(lambda _: ${flagName}.set())`;
+        const flagName = this.createName('event_flag');
+        this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()`;
 
         let branchCode = this.statementToCode(block) || this.PASS;
         let code = '';
@@ -62,9 +67,56 @@ export default () => ({
         code += branchCode;
 
         branchCode = this.prefixLines(code, this.INDENT);
-        branchCode = this.addEventTrap(branchCode, block.id);
+        branchCode = this.addEventTrap(branchCode, 'button_pressed');
         code = '@_tasks__.append\n';
         code += branchCode;
+        code += `button_${key}.on_pressed(lambda _: ${flagName}.set())\n`;
+        return code;
+      },
+      emu(block) {
+        const key = block.getFieldValue('KEY_OPTION');
+        let branchCode = this.statementToCode(block);
+        branchCode = this.addEventTrap(branchCode, block.id);
+        const code = `runtime.when('press:${key}', ${branchCode});\n`;
+        return code;
+      },
+    },
+    {
+      // 引脚被触摸
+      id: 'whenpintouched',
+      text: translate('iotbit.blocks.pinTouched', 'when %1 touched'),
+      hat: true,
+      inputs: {
+        PIN_OPTION: {
+          type: 'string',
+          defaultValue: 'P0',
+          menu: ['P0', 'P1', 'P2'],
+        },
+      },
+      mpy(block) {
+        const pin = block.getFieldValue('PIN_OPTION');
+        const flagName = this.createName('event_flag');
+        this.definitions_['import_pin'] = 'from machine import Pin';
+        this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()`;
+
+        let branchCode = this.statementToCode(block) || this.PASS;
+        let code = '';
+        code += 'while True:\n';
+        code += `  await ${flagName}.wait()\n`;
+        code += branchCode;
+
+        branchCode = this.prefixLines(code, this.INDENT);
+        branchCode = this.addEventTrap(branchCode, 'pin_touched');
+        code = '@_tasks__.append\n';
+        code += branchCode;
+        code += `${pin}.irq(trigger=Pin.IRQ_RISING, handler=lambda _: ${flagName}.set())\n`;
+        return code;
+      },
+      emu(block) {
+        const pin = block.getFieldValue('PIN_OPTION');
+        let branchCode = this.statementToCode(block);
+        branchCode = this.addEventTrap(branchCode, block.id);
+        const code = `runtime.when('pressed:${pin}', ${branchCode});\n`;
         return code;
       },
     },
@@ -90,7 +142,7 @@ export default () => ({
           id = 0;
         }
         const timerName = `timer_${id}`;
-        const flagName = `period_${id}_flag`;
+        const flagName = this.createName('event_flag');
         this.definitions_['import_timer'] = 'from machine import Timer';
         this.definitions_[timerName] = `${timerName} = Timer(${id})`;
         this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()`;
@@ -110,6 +162,20 @@ export default () => ({
 
         return `${timerName}.init(mode=Timer.PERIODIC, period=${period}, callback=lambda _: ${flagName}.set())\n`;
       },
+      emu(block) {
+        const period = this.valueToCode(block, 'PERIOD', this.ORDER_NONE) || 500;
+        let id = parseInt(block.getFieldValue('ID') || '1', 10) - 1;
+        if (id < 0) {
+          id = 0;
+        }
+        const timerName = `timer_${id}`;
+        this.definitions_[timerName] = `let ${timerName};`;
+        const branchCode = this.statementToCode(block, 'SUBSTACK');
+
+        let code = '';
+        code += `${timerName} = setInterval(() => {\n${branchCode}}, ${period});\n`;
+        return code;
+      },
     },
     {
       // 关闭定时器
@@ -126,6 +192,14 @@ export default () => ({
           id = 0;
         }
         const code = `timer_${id}.deinit()\n`;
+        return code;
+      },
+      emu(block) {
+        let id = parseInt(block.getFieldValue('ID') || '1', 10) - 1;
+        if (id < 0) {
+          id = 0;
+        }
+        const code = `clearInterval(timer_${id});\n`;
         return code;
       },
     },

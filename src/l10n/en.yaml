@@ -130,7 +130,8 @@ esp32.blocks.terminal: Terminal
 esp32.blocks.terminalPrint: print %1
 esp32.blocks.temperature: temperature
 
-iotbit.blocks.whenstart: when [DEVICE] start
+iotbit.blocks.whenstart: when %1 start
+iotbit.blocks.pinTouched: when %1 touched
 iotbit.blocks.playNote: play note %1 for %2 beats
 iotbit.blocks.playMusic: start sound %1
 iotbit.blocks.playMusicDone: play sound %1 until done

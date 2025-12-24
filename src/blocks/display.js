@@ -29,8 +29,7 @@ export default () => ({
         const color = this.valueToCode(block, 'COLOR', this.ORDER_NONE);
         const brightness = this.valueToCode(block, 'BRIGHTNESS', this.ORDER_NONE);
 
-        let code = '';
-        code += `pixels.set_led(${pos}, ${brightness}, ${color})\n`;
+        let code = `pixels.set_led(${pos}, ${brightness}, ${color})\n`;
 
         const nextBlock = block.getNextBlock();
         if (nextBlock?.type.endsWith('_setLeds')) {
@@ -38,6 +37,13 @@ export default () => ({
         }
 
         code += 'pixels.write()\n';
+        return code;
+      },
+      emu(block) {
+        const pos = this.getAdjusted(block, 'POS');
+        const color = this.valueToCode(block, 'COLOR', this.ORDER_NONE);
+        const brightness = this.valueToCode(block, 'BRIGHTNESS', this.ORDER_NONE);
+        const code = `runtime.setLed(${pos}, ${color}, ${brightness});\n`;
         return code;
       },
     },
@@ -57,12 +63,20 @@ export default () => ({
         const code = block.getFieldValue('BRIGHTNESS') || 0;
         return [code, this.ORDER_NONE];
       },
+      emu(block) {
+        const code = block.getFieldValue('BRIGHTNESS') || 0;
+        return [code, this.ORDER_NONE];
+      },
     },
     {
       id: 'closeLeds',
       text: translate('iotbit.blocks.closeLeds', 'close leds'),
       mpy(block) {
         const code = 'pixels.clear()\n';
+        return code;
+      },
+      emu(block) {
+        const code = 'runtime.clearLeds();\n';
         return code;
       },
     },
@@ -98,6 +112,13 @@ export default () => ({
         code += 'display.show()\n';
         return code;
       },
+      emu(block) {
+        const text = this.valueToCode(block, 'TEXT', this.ORDER_NONE) || '""';
+        const x = this.valueToCode(block, 'X', this.ORDER_NONE);
+        const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
+        const code = `runtime.drawText(\`\$\{${text}\}\`, ${x}, ${y});\n`;
+        return code;
+      },
     },
     {
       id: 'displayTextLine',
@@ -124,6 +145,12 @@ export default () => ({
         code += 'display.show()\n';
         return code;
       },
+      emu(block) {
+        const text = this.valueToCode(block, 'TEXT', this.ORDER_NONE) || '""';
+        const line = parseInt(block.getFieldValue('LINE')) - 1;
+        const code = `runtime.drawTextLine(\`\$\{${text}\}\`, ${line});\n`;
+        return code;
+      },
     },
     {
       id: 'displayClear',
@@ -136,6 +163,10 @@ export default () => ({
           return code;
         }
         code += 'display.show()\n';
+        return code;
+      },
+      emu(block) {
+        const code = `runtime.clearScreen();\n`;
         return code;
       },
     },
@@ -164,6 +195,12 @@ export default () => ({
           return code;
         }
         code += 'display.show()\n';
+        return code;
+      },
+      emu(block) {
+        const x = this.valueToCode(block, 'X', this.ORDER_NONE);
+        const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
+        const code = `runtime.drawPixel(${x}, ${y});\n`;
         return code;
       },
     },
@@ -203,6 +240,14 @@ export default () => ({
         code += 'display.show()\n';
         return code;
       },
+      emu(block) {
+        const x1 = this.valueToCode(block, 'X1', this.ORDER_NONE);
+        const y1 = this.valueToCode(block, 'Y1', this.ORDER_NONE);
+        const x2 = this.valueToCode(block, 'X2', this.ORDER_NONE);
+        const y2 = this.valueToCode(block, 'Y2', this.ORDER_NONE);
+        const code = `runtime.drawLine(${x1}, ${y1}, ${x2}, ${y2});\n`;
+        return code;
+      },
     },
     {
       id: 'displayEllipse',
@@ -238,6 +283,14 @@ export default () => ({
           return code;
         }
         code += 'display.show()\n';
+        return code;
+      },
+      emu(block) {
+        const rx = this.valueToCode(block, 'RX', this.ORDER_NONE);
+        const ry = this.valueToCode(block, 'RY', this.ORDER_NONE);
+        const x = this.valueToCode(block, 'X', this.ORDER_NONE);
+        const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
+        const code = `runtime.drawEllipse(${x}, ${y}, ${rx}, ${ry});\n`;
         return code;
       },
     },
@@ -277,6 +330,14 @@ export default () => ({
         code += 'display.show()\n';
         return code;
       },
+      emu(block) {
+        const width = this.valueToCode(block, 'WIDTH', this.ORDER_NONE);
+        const height = this.valueToCode(block, 'HEIGHT', this.ORDER_NONE);
+        const x = this.valueToCode(block, 'X', this.ORDER_NONE);
+        const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
+        const code = `runtime.drawRect(${x}, ${y}, ${width}, ${height});\n`;
+        return code;
+      },
     },
     {
       id: 'displayFill',
@@ -312,6 +373,14 @@ export default () => ({
           return code;
         }
         code += 'display.show()\n';
+        return code;
+      },
+      emu(block) {
+        const width = this.valueToCode(block, 'WIDTH', this.ORDER_NONE);
+        const height = this.valueToCode(block, 'HEIGHT', this.ORDER_NONE);
+        const x = this.valueToCode(block, 'X', this.ORDER_NONE);
+        const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
+        const code = `runtime.fillRect(${x}, ${y}, ${width}, ${height});\n`;
         return code;
       },
     },

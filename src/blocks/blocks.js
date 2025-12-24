@@ -11,7 +11,7 @@ import getMyBlocks from './procedures';
 import getTerminalBlocks from './terminal';
 import getTextBlocks from './text';
 
-export { IotBitGenerator } from './generator';
+export { IotBitGenerator, IotBitEmulatorGenerator } from './generator';
 
 export function buildBlocks() {
   const pinsBlocks = getPinsBlocks();

@@ -22,6 +22,11 @@ export default () => ({
         const code = `print(str(${str}))\n`;
         return code;
       },
+      emu(block) {
+        const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
+        const code = `console.log(${str})\n`;
+        return code;
+      },
     },
   ],
 });
