@@ -15,6 +15,8 @@ export default () => ({
         POS: {
           type: 'positive_integer',
           defaultValue: 1,
+          inputMode: true,
+          menu: [1, 2, 3],
         },
         COLOR: {
           type: 'color',

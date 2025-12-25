@@ -1,8 +1,9 @@
 import { basename, extname } from 'node:path';
-import { useCallback } from 'preact/hooks';
-import { useAppContext, useProjectContext } from '@blockcode/core';
+import { useCallback, useEffect } from 'preact/hooks';
+import { useAppContext, useProjectContext, setMeta } from '@blockcode/core';
 import { MicroPythonGenerator, BlocksEditor } from '@blockcode/blocks';
 import { IotBitGenerator, IotBitEmulatorGenerator, buildBlocks } from '../../blocks/blocks';
+import { getBoardPins } from '../../blocks/pins';
 import { extensionTags } from './extension-tags';
 
 // 过滤字符
@@ -17,6 +18,12 @@ export function IotBitBlocksEditor() {
   const { tabIndex } = useAppContext();
 
   const { meta } = useProjectContext();
+
+  useEffect(() => {
+    if (!meta.value.boardPins) {
+      setMeta('boardPins', getBoardPins());
+    }
+  }, []);
 
   const handleDefinitions = useCallback((name, define, resources, index) => {
     if (name === generator.name_) {

@@ -190,7 +190,7 @@ iotbit.blocks.displayTextLine: 在第%2行顯示%1
 iotbit.blocks.displayImage: 顯示%1
 iotbit.blocks.displayClear: 清除屏幕
 iotbit.blocks.displayPixel: 在 x1:%1 y1:%2 畫點
-iotbit.blocks.displayLine: 從 x1:%1 y1:%2 到 x2:%3 y2%4 的畫線
-iotbit.blocks.displayEllipse: 在 x:%3 y:%4 畫橫半徑%1 縱半徑%2 的橢圓
-iotbit.blocks.displayRect: 在 x:%3 y:%4 畫寬%1 高%2 的矩形
-iotbit.blocks.displayFill: 在 x:%3 y:%4 填充寬%1 高%2 的矩形
+iotbit.blocks.displayLine: 從 x1:%1 y1:%2 到 x2:%3 y2:%4 的畫線
+iotbit.blocks.displayEllipse: 在 x:%3 y:%4 畫橫半徑:%1 縱半徑:%2 的橢圓
+iotbit.blocks.displayRect: 在 x:%3 y:%4 畫寬:%1 高:%2 的矩形
+iotbit.blocks.displayFill: 在 x:%3 y:%4 填充寬:%1 高:%2 的矩形

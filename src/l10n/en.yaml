@@ -190,7 +190,7 @@ iotbit.blocks.displayTextLine: display text %1 at line %2
 iotbit.blocks.displayImage: display %1
 iotbit.blocks.displayClear: clear display
 iotbit.blocks.displayPixel: pixel x1:%1 y1:%2
-iotbit.blocks.displayLine: line from x1:%1 y1:%2 to x2:%3 y2%4
+iotbit.blocks.displayLine: line from x1:%1 y1:%2 to x2:%3 y2:%4
 iotbit.blocks.displayEllipse: ellipse with x-radius:%1 and y-radius:%2 at x:%3 y:%4
 iotbit.blocks.displayRect: rect with width:%1 height:%2 at x:%3 y:%4
 iotbit.blocks.displayFill: fill with width:%1 height:%2 at x:%3 y:%4

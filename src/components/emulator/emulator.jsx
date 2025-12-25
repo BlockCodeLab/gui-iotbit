@@ -145,11 +145,12 @@ export function IotBitEmulator({ runtime, onRuntime }) {
         });
         runtime.spritesLayer.add(button);
 
+        // 按键触发
         button.on('pointerclick', ({ evt, target }) => {
           if (evt.shiftKey) {
-            runtime.call('press:a+b');
+            runtime.call('pressed:a+b');
           } else {
-            runtime.call(`press:${target.name()}`);
+            runtime.call(`pressed:${target.name()}`);
           }
         });
 
@@ -193,8 +194,9 @@ export function IotBitEmulator({ runtime, onRuntime }) {
 
         // 0, 1, 2 可以控制
         if (i < 3) {
+          // 引脚触发
           pin.on('pointerclick', ({ target }) => {
-            runtime.call(`press:P${target.name()}`);
+            runtime.call(`touched:P${target.name()}`);
           });
 
           pin.on('pointerdown', () => {

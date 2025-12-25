@@ -77,7 +77,7 @@ export default () => ({
         const key = block.getFieldValue('KEY_OPTION');
         let branchCode = this.statementToCode(block);
         branchCode = this.addEventTrap(branchCode, block.id);
-        const code = `runtime.when('press:${key}', ${branchCode});\n`;
+        const code = `runtime.when('pressed:${key}', ${branchCode});\n`;
         return code;
       },
     },
@@ -97,6 +97,7 @@ export default () => ({
         const pin = block.getFieldValue('PIN_OPTION');
         const flagName = this.createName('event_flag');
         this.definitions_['import_pin'] = 'from machine import Pin';
+        this.definitions_[pin] = `${pin}.init(Pin.IN)`;
         this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()`;
 
         let branchCode = this.statementToCode(block) || this.PASS;
@@ -116,7 +117,7 @@ export default () => ({
         const pin = block.getFieldValue('PIN_OPTION');
         let branchCode = this.statementToCode(block);
         branchCode = this.addEventTrap(branchCode, block.id);
-        const code = `runtime.when('pressed:${pin}', ${branchCode});\n`;
+        const code = `runtime.when('touched:${pin}', ${branchCode});\n`;
         return code;
       },
     },
