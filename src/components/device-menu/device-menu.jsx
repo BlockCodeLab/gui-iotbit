@@ -1,116 +1,111 @@
-import { useCallback } from 'preact/hooks';
-import { nanoid, classNames, sleepMs } from '@blockcode/utils';
-import { useAppContext, useProjectContext, setAlert, delAlert, setAppState } from '@blockcode/core';
+import { useCallback, useEffect } from 'preact/hooks';
+import { useComputed } from '@preact/signals';
+import { classNames, sleepMs, nanoid } from '@blockcode/utils';
+import { useAppContext, useProjectContext, setAlert, setAppState, translate, logger } from '@blockcode/core';
 import { MPYUtils } from '@blockcode/board';
+import { downloadProgram } from '../../lib/download-program';
 import deviceFilters from './device-filters.yaml';
 
-import { Spinner, Text, MenuSection, MenuItem } from '@blockcode/core';
+import { Text, MenuSection, MenuItem } from '@blockcode/core';
 import { FirmwareSection } from './firmware-section';
 import styles from './device-menu.module.css';
 
-let downloadAlertId = null;
-
-const removeDownloading = () => {
-  delAlert(downloadAlertId);
-  downloadAlertId = null;
-};
-
-const downloadingAlert = (progress) => {
-  if (!downloadAlertId) {
-    downloadAlertId = nanoid();
-  }
-  setAlert('downloading', {
-    id: downloadAlertId,
-    progress,
-  });
-};
-
-const errorAlert = (err) => {
-  if (err === 'NotFoundError') return;
-  setAlert('connectionError', 1000);
-};
-
-const downloadProgram = async (device, mainFile, assetFiles) => {
-  downloadingAlert(0);
-  try {
-    const projectFiles = [].concat(mainFile, assetFiles).map((file) => ({
-      ...file,
-      filename: file.id,
-    }));
-
-    // 开始下载
-    await MPYUtils.write(device, projectFiles, downloadingAlert);
-    device.reset();
-    setAlert('downloadCompleted', { id: downloadAlertId });
-    setTimeout(removeDownloading, 2000);
-  } catch (err) {
-    errorAlert(err.name);
-    removeDownloading();
+const errorAlert = (err, id) => {
+  if (err.name === 'NotFoundError') return;
+  if (err.name === 'NetworkError') {
+    setAlert('connectionBusy', { id }, 1000);
+  } else {
+    setAlert('connectionError', { id }, 1000);
   }
 };
 
 export function DeviceMenu({ itemClassName }) {
   const { appState } = useAppContext();
+
   const { file, assets } = useProjectContext();
 
-  const connectDevice = useCallback(async (device) => {
-    await appState.value?.device?.disconnect();
+  const device = useComputed(() => appState.value?.device);
+
+  const deviceAlertId = useComputed(() => appState.value?.deviceAlertId);
+
+  const connectDevice = useCallback(async (newDevice) => {
+    if (newDevice === device.value) return;
+    await device.value?.disconnect();
     await sleepMs(500);
-    const handleConnect = () => connectDevice(device);
+    const handleConnect = () => connectDevice(newDevice);
     const handleDisconnect = (err) => {
-      if (err) errorAlert();
+      if (err) {
+        errorAlert(err, deviceAlertId.value);
+        logger.warn(translate('gui.logs.disconnected', 'Device disconnected') + ': ' + err.message);
+      }
       setAppState('device', null);
-      device.off('connect', handleConnect);
-      device.off('disconnect', handleDisconnect);
+      setAppState('deviceAlertId', null);
+      newDevice.off('connect', handleConnect);
+      newDevice.off('disconnect', handleDisconnect);
     };
-    device.on('connect', handleConnect);
-    device.on('disconnect', handleDisconnect);
-    setAlert('connected', 1000);
-    setAppState('device', device);
+    newDevice.on('connect', handleConnect);
+    newDevice.on('disconnect', handleDisconnect);
+    setAppState('device', newDevice);
   }, []);
 
   const handleConnectUSB = useCallback(async () => {
-    if (downloadAlertId) return;
+    if (deviceAlertId.value) return;
     try {
-      const device = await MPYUtils.connect(deviceFilters, {
+      const newDevice = await MPYUtils.connect(deviceFilters, {
         baudRate: 115200,
       });
-      connectDevice(device);
+      connectDevice(newDevice);
+      setAlert('connected', 1000);
+      logger.success(translate('gui.logs.connectedType', 'Device connected with {type}', { type: 'USB' }));
     } catch (err) {
-      errorAlert(err.name);
+      errorAlert(err, deviceAlertId.value);
     }
   }, []);
 
   const handleConnectBLE = useCallback(async () => {
-    if (downloadAlertId) return;
+    if (deviceAlertId.value) return;
     try {
-      const device = await MPYUtils.connectBLE();
-      connectDevice(device);
+      const newDevice = await MPYUtils.connectBLE();
+      connectDevice(newDevice);
+      setAlert('connected', 1000);
+      logger.success(translate('gui.logs.connectedType', 'Device connected with {type}', { type: 'BLE' }));
     } catch (err) {
-      errorAlert(err.name);
+      errorAlert(err, deviceAlertId.value);
     }
   }, []);
 
-  const handleDownload = useCallback(() => {
-    if (downloadAlertId) return;
-    if (!appState.value?.device) return;
-    downloadProgram(appState.value.device, file.value, assets.value);
-  }, []);
+  const handleDownload = useCallback(async () => {
+    if (!device.value) return;
+    if (deviceAlertId.value) return;
 
-  const handleReset = useCallback(() => {
-    if (downloadAlertId) return;
-    setAlert('reseting', 1000);
-    appState.value?.device?.reset();
+    const alertId = nanoid();
+    setAppState('deviceAlertId', alertId);
+    await downloadProgram(alertId, device.value, file.value, assets.value);
+
+    setAppState('deviceAlertId', null);
   }, []);
 
   const handleDisconnect = useCallback(() => {
-    if (downloadAlertId) return;
-    appState.value?.device?.disconnect();
-  });
+    if (deviceAlertId.value) return;
+    device.value?.disconnect();
+    logger.warn(translate('gui.logs.disconnected', 'Device disconnected'));
+  }, []);
+
+  const handleReset = useCallback(() => {
+    if (deviceAlertId.value) return;
+    device.value?.reset();
+    setAlert('reseting', 1000);
+  }, []);
+
+  useEffect(() => {
+    if (deviceAlertId.value && !device.value) {
+      setAppState('deviceAlertId', null);
+    }
+  }, [device.value]);
 
   return (
     <>
-      <MenuSection disabled={downloadAlertId || !appState.value?.device}>
+      <MenuSection disabled={deviceAlertId.value || !device.value}>
         <MenuItem
           className={classNames(itemClassName, styles.blankCheckItem)}
           label={
@@ -123,8 +118,8 @@ export function DeviceMenu({ itemClassName }) {
         />
       </MenuSection>
 
-      <MenuSection disabled={downloadAlertId}>
-        {appState.value?.device ? (
+      <MenuSection disabled={deviceAlertId.value}>
+        {device.value ? (
           <>
             <MenuItem
               className={classNames(itemClassName, styles.blankCheckItem)}
@@ -175,7 +170,7 @@ export function DeviceMenu({ itemClassName }) {
       </MenuSection>
 
       <FirmwareSection
-        disabled={downloadAlertId}
+        disabled={deviceAlertId.value}
         itemClassName={itemClassName}
       />
     </>

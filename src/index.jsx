@@ -6,6 +6,7 @@ import { terminalTab } from '@blockcode/code';
 
 import { Text } from '@blockcode/core';
 import { IotBitBlocksEditor } from './components/blocks-editor/blocks-editor';
+import { DownloadLabel } from './components/bar-items/download-label';
 import { DeviceIcon } from './components/device-menu/device-icon';
 import { DeviceMenu } from './components/device-menu/device-menu';
 import { Sidedock } from './components/sidedock/sidedock';
@@ -70,6 +71,12 @@ export default {
     },
   ],
 
+  barItems: [
+    {
+      Label: DownloadLabel,
+    },
+  ],
+
   tabs: [
     {
       ...blocksTab,
@@ -92,5 +99,5 @@ export default {
       expand: 'right',
       Content: Sidedock,
     },
-  ]
+  ],
 };

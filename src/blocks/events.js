@@ -125,7 +125,7 @@ export default () => ({
     {
       // 设置定时器
       id: 'timerset',
-      text: translate('esp32.blocks.timerset', 'set timer # %1 per %2 milliseconds'),
+      text: translate('esp32.blocks.timerset', 'trigger timer #%1 per %2 milliseconds'),
       substack: true,
       inputs: {
         ID: {
@@ -156,10 +156,10 @@ export default () => ({
         code += branchCode;
 
         branchCode = this.prefixLines(code, this.INDENT);
-        branchCode = this.addEventTrap(branchCode, block.id);
+        branchCode = this.addEventTrap(branchCode, 'timer');
         code = '@_tasks__.append\n';
         code += branchCode;
-        this.definitions_[`period_${id}`] = code;
+        this.definitions_[`${flagName}_callback`] = code;
 
         return `${timerName}.init(mode=Timer.PERIODIC, period=${period}, callback=lambda _: ${flagName}.set())\n`;
       },
