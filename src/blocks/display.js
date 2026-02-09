@@ -85,7 +85,7 @@ export default () => ({
     '---',
     {
       id: 'displayText',
-      text: translate('iotbit.blocks.displayText', 'display text %1 at x: %2 y: %3'),
+      text: translate('iotbit.blocks.displayText', 'display text %1 at x:%2 y:%3'),
       inputs: {
         TEXT: {
           type: 'string',
@@ -208,7 +208,7 @@ export default () => ({
     },
     {
       id: 'displayLine',
-      text: translate('iotbit.blocks.displayLine', 'line from x1:%1 y1:%2 to x2:%3 y2%4'),
+      text: translate('iotbit.blocks.displayLine', 'line from x1:%1 y1:%2 to x2:%3 y2:%4'),
       inputs: {
         X1: {
           type: 'integer',
