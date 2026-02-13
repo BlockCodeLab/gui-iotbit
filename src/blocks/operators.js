@@ -334,7 +334,7 @@ export default () => ({
     {
       // 函数
       id: 'mathop',
-      text: ScratchBlocks.Msg.MATHOP,
+      text: ScratchBlocks.Msg.OPERATORS_MATHOP,
       output: 'number',
       inputs: {
         OPERATOR: {
@@ -374,6 +374,7 @@ export default () => ({
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
+    '---',
     {
       // 约束
       id: 'constrain',

@@ -15,7 +15,7 @@ const emulator = new IotBitEmulatorGenerator();
 const handleExtensionsFilter = () => [['device', '!scratch'], 'data'];
 
 export function IotBitBlocksEditor() {
-  const { tabIndex } = useAppContext();
+  const { splashVisible, tabIndex } = useAppContext();
 
   const { meta } = useProjectContext();
 
@@ -23,7 +23,7 @@ export function IotBitBlocksEditor() {
     if (!meta.value.boardPins) {
       setMeta('boardPins', getBoardPins());
     }
-  }, []);
+  }, [splashVisible.value]);
 
   const handleDefinitions = useCallback((name, define, resources, index) => {
     if (name === generator.name_) {
