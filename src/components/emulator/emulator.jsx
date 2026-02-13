@@ -20,49 +20,26 @@ import pinNameImage from './images/pin-name.svg';
 export function IotBitEmulator({ runtime, onRuntime }) {
   const { splashVisible, appState } = useAppContext();
 
-  const { meta, file, modified } = useProjectContext();
+  const { file } = useProjectContext();
 
   // 运行模拟器
   useEffect(async () => {
     if (!runtime) return;
+
+    // 重置和停止
+    if (splashVisible.value === true || (appState.value?.running === false && runtime.running)) {
+      runtime.stop();
+      runtime.clearLeds();
+      runtime.clearScreen();
+      return;
+    }
 
     // 启动
     if (appState.value?.running === true) {
       const code = `((/*${file.value.name}*/) => {\n${file.value.script}})();`;
       runtime.launch(`${code}\n\nruntime.start();`);
     }
-
-    // 停止
-    if (appState.value?.running === false) {
-      if (runtime.running) {
-        runtime.stop();
-        runtime.clearLeds();
-        runtime.clearScreen();
-      }
-    }
   }, [appState.value?.running]);
-
-  // 模拟器编辑模式下更新
-  useEffect(async () => {
-    if (!runtime) return;
-
-    if (splashVisible.value === true) {
-      runtime.stop();
-      runtime.backdropLayer.destroyChildren();
-      runtime.paintLayer.destroyChildren();
-      runtime.spritesLayer.destroyChildren();
-      runtime.boardLayer.destroyChildren();
-      return;
-    }
-
-    if (appState.value?.running) return;
-  }, [runtime, splashVisible.value, modified.value, meta.value]);
-
-  // 模拟器运行时不可编辑
-  useEffect(() => {
-    if (!runtime) return;
-    // runtime.stage.listening(!appState.value?.running);
-  }, [runtime, appState.value?.running]);
 
   // 绑定模拟器运行时
   const handleRuntime = useCallback(
@@ -236,8 +213,6 @@ export function IotBitEmulator({ runtime, onRuntime }) {
       );
 
       return () => {
-        // document.removeEventListener('keydown', runtime.handleKeyDown);
-        // document.removeEventListener('keyup', runtime.handleKeyUp);
         onRuntime(null);
       };
     },
