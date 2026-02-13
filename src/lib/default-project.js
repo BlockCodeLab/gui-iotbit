@@ -4,7 +4,7 @@ export const defaultProject = {
     {
       id: 'main',
       type: 'text/x-python',
-      xml: '<xml xmlns="http://www.w3.org/1999/xhtml"><variables></variables><block type="event_whensetup" x="100" y="100"></block></xml>',
+      xml: '<xml xmlns="http://www.w3.org/1999/xhtml"><variables></variables><block type="event_whenstart" x="100" y="100"></block></xml>',
     },
   ],
 };
