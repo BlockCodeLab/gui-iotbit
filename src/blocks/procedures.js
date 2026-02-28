@@ -6,7 +6,7 @@ export default () => ({
       id: 'definition',
       mpy(block) {
         const myBlock = block.childBlocks_[0];
-        const funcName = this.getFunctionName(myBlock.getProcCode());
+        const funcName = this.getDistinctName(myBlock.getProcCode());
         let branchCode = this.statementToCode(block) || this.PASS;
 
         // 参数格式：name
@@ -22,7 +22,7 @@ export default () => ({
     {
       id: 'call',
       mpy(block) {
-        const funcName = this.getFunctionName(block.getProcCode());
+        const funcName = this.getDistinctName(block.getProcCode());
         const args = block.argumentIds_.map((arg) => this.valueToCode(block, arg, this.ORDER_NONE) || 'False');
         const code = `await ${funcName}(${args.join(', ')})`;
 
