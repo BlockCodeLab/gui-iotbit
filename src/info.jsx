@@ -5,7 +5,7 @@ import featureImage from './feature.svg';
 export default {
   version,
   preview: true,
-  sortIndex: 104,
+  sortIndex: 112,
   image: featureImage,
   name: (
     <Text
