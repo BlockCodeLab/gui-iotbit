@@ -60,6 +60,10 @@ export default {
 
   menuItems: [
     {
+      id: 'view',
+      autoDisplayPanel: true,
+    },
+    {
       icon: <DeviceIcon />,
       label: (
         <Text

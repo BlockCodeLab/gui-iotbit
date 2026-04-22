@@ -53,13 +53,12 @@ export default () => ({
     {
       // 如果
       id: 'if',
-      text: ScratchBlocks.Msg.CONTROL_IF,
-      substack: true,
-      inputs: {
-        CONDITION: {
-          type: 'boolean',
-        },
-      },
+      custom: true,
+    },
+    {
+      // 如果否则
+      id: 'if_else',
+      custom: true,
     },
     {
       // 否则，如果

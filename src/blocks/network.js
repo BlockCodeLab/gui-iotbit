@@ -75,7 +75,6 @@ export default () => ({
         },
       },
       mpy(block) {
-        this.definitions_['import_threading'] = 'import _thread as threading';
         this.definitions_['import_network'] = 'import network';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
 
@@ -85,10 +84,10 @@ export default () => ({
         pass = isNaN(pass) ? pass : this.quote_(pass);
 
         let code = '';
-        code += 'if not wlan.isconnected(): threading.start_new_thread(';
-        code += `lambda: wlan.connect(${ssid}, ${pass}), ())\n`;
-        code += 'while wlan.active() and not wlan.isconnected(): '; // while 写在一行
-        code += 'await asyncio.sleep_ms(500)\n'; // 每 500ms 检查一次
+        code += 'if wlan.isconnected():\n';
+        code += '  wlan.disconnect() \n';
+        code += '  await asyncio.sleep_ms(500)\n';
+        code += `wlan.connect(${ssid}, ${pass})\n`;
         return code;
       },
     },
@@ -98,9 +97,7 @@ export default () => ({
       mpy(block) {
         this.definitions_['import_network'] = 'import network';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
-        let code = '';
-        code += 'wlan.disconnect()\n';
-        code += 'wlan.active(False)\n';
+        const code = 'wlan.disconnect()\n';
         return code;
       },
     },

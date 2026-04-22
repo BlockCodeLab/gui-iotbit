@@ -1,7 +1,7 @@
 {
   "name": "@emakefun/gui-iotbit",
-  "private": "true",
   "version": "0.2.2",
+  "private": "true",
   "type": "module",
   "module": "dist/index.js",
   "exports": {
@@ -12,9 +12,6 @@
       "import": "./dist/info.js"
     }
   },
-  "firmware": {
-    "download": "https://firmware.blockcode.fun/iotbit"
-  },
   "dependencies": {
     "@preact/signals": "^2.8.1",
     "preact": "^10.28.4"
@@ -22,5 +19,8 @@
   "devDependencies": {
     "@types/bun": "latest",
     "playground-build": "git+https://github.com/BlockCodeLab/playground-build.git"
+  },
+  "firmware": {
+    "download": "https://firmware.blockcode.fun/iotbit"
   }
 }

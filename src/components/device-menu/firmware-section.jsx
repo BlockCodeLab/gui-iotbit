@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'preact/hooks';
-import { useSignal } from '@preact/signals';
+import { useSignal, useComputed } from '@preact/signals';
 import { nanoid, classNames, sleep, Base64Utils, getBinaryCache, setBinaryCache } from '@blockcode/utils';
-import { useAppContext, setAlert, delAlert } from '@blockcode/core';
+import { useAppContext, setAlert, delAlert, setAppState, logger, translate } from '@blockcode/core';
 import { ESPTool } from '@blockcode/board';
 import { firmware } from '../../../package.json';
 import deviceFilters from './device-filters.yaml';
@@ -9,22 +9,17 @@ import deviceFilters from './device-filters.yaml';
 import { Text, MenuSection, MenuItem } from '@blockcode/core';
 import styles from './device-menu.module.css';
 
-let alertId = null;
-
-const uploadingAlert = (progress) => {
+const uploadingAlert = (progress, id) => {
   if (progress < 100) {
-    setAlert('restoring', {
-      id: alertId,
-      progress,
-    });
+    setAlert('restoring', { id, progress });
   } else {
-    setAlert('recovering', { id: alertId });
+    setAlert('recovering', { id });
   }
 };
 
-const closeAlert = () => {
-  delAlert(alertId);
-  alertId = null;
+const closeAlert = (id) => {
+  delAlert(id);
+  setAppState('deviceAlertId', null);
 };
 
 const errorAlert = (err) => {
@@ -89,28 +84,36 @@ const getFirmwareCache = async (cacheName, downloadUrl, firmwareHash, firmwareVe
 };
 
 const uploadData = async (esploader, data) => {
-  alertId = nanoid();
+  const alertId = nanoid();
   setAlert('erasing', { id: alertId });
+  setAppState('deviceAlertId', alertId);
 
   try {
-    await ESPTool.writeFlash(esploader, data, true, (val) => uploadingAlert(val));
+    await ESPTool.writeFlash(esploader, data, true, (val) => uploadingAlert(val, alertId));
     setAlert('restoreCompleted', {
       id: alertId,
-      onClose: closeAlert,
+      onClose() {
+        closeAlert(alertId);
+      },
     });
   } catch (err) {
     errorAlert(err.name);
-    closeAlert();
+    closeAlert(alertId);
   }
   await ESPTool.disconnect(esploader);
+
+  logger.warn(translate('gui.logs.disconnected', 'Device disconnected'));
+  setAppState('device', null);
 };
 
-const uploadFirmware = async (cacheName) => {
-  if (alertId) return;
-
+const uploadFirmware = async (device, cacheName) => {
   let esploader;
   try {
-    esploader = await ESPTool.connect(deviceFilters, 460800);
+    if (device) {
+      esploader = await ESPTool.reconnect(device, 460800);
+    } else {
+      esploader = await ESPTool.connect(deviceFilters, 460800);
+    }
   } catch (err) {
     errorAlert(err.name);
   }
@@ -131,11 +134,11 @@ const uploadFirmware = async (cacheName) => {
 export function FirmwareSection({ disabled, itemClassName }) {
   const { appState } = useAppContext();
 
+  const device = useComputed(() => appState.value?.device);
+
   const readyForUpdate = useSignal(false);
 
   const firmwareJson = useSignal(null);
-
-  useEffect(() => (alertId = null), []);
 
   useEffect(async () => {
     readyForUpdate.value = false;
@@ -151,9 +154,9 @@ export function FirmwareSection({ disabled, itemClassName }) {
   return (
     <MenuSection>
       <MenuItem
-        disabled={disabled || alertId || appState.value?.device || !readyForUpdate.value}
+        disabled={disabled || device.value?.type === 'ble' || !readyForUpdate.value}
         className={classNames(itemClassName, styles.blankCheckItem)}
-        onClick={useCallback(() => uploadFirmware('iotbitFirmware'), [])}
+        onClick={useCallback(() => uploadFirmware(device.value, 'iotbitFirmware'), [])}
       >
         {readyForUpdate.value ? (
           <Text

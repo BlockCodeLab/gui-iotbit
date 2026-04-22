@@ -27,7 +27,7 @@ export default () => ({
       mpy(block) {
         const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
         const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
-        const code = `(${str1} + ${str2})`;
+        const code = `(str(${str1}) + str(${str2}))`;
         return [code, this.ORDER_ADDITION];
       },
     },
@@ -49,7 +49,7 @@ export default () => ({
       mpy(block) {
         const letterIndex = this.getAdjusted(block, 'LETTER'); // 将位置值换成下标值
         const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
-        const code = `${str}[${letterIndex}]`;
+        const code = `str(${str})[${letterIndex}]`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
@@ -76,7 +76,7 @@ export default () => ({
         const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
         const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
         const str3 = this.valueToCode(block, 'STRING3', this.ORDER_NONE);
-        const code = `${str2}.replace(${str1}, ${str3})\n`;
+        const code = `str(${str2}).replace(str(${str1}), ${str3})\n`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
@@ -103,7 +103,7 @@ export default () => ({
         const from = this.getAdjusted(block, 'FROM');
         const to = this.valueToCode(block, 'TO', this.ORDER_NONE);
         const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
-        const code = `${str}[${from}:${to}]`;
+        const code = `str(${str})[${from}:${to}]`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
@@ -125,7 +125,7 @@ export default () => ({
       mpy(block) {
         const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
         const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
-        const code = `(${str2}.find(${str1}) + 1)\n`;
+        const code = `(str(${str2}).find(str(${str1})) + 1)\n`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
@@ -148,7 +148,7 @@ export default () => ({
       mpy(block) {
         const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
         const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
-        const code = `(${str2} in ${str1})`;
+        const code = `(str(${str2}) in str(${str1}))`;
         return [code, this.ORDER_EQUALITY];
       },
     },
@@ -179,7 +179,7 @@ export default () => ({
         const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
         const with_ = block.getFieldValue('WITH') || 'START';
         const method = with_ === 'START' ? 'startswith' : 'endswith';
-        const code = `${str1}.${method}(${str2})`;
+        const code = `str(${str1}).${method}(str(${str2}))`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
@@ -201,7 +201,7 @@ export default () => ({
       mpy(block) {
         const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
         const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
-        const code = `${str1}.lower() == ${str2}.lower()`;
+        const code = `str(${str1}).lower() == str(${str2}).lower()`;
         return [code, this.ORDER_EQUALITY];
       },
     },
@@ -227,7 +227,7 @@ export default () => ({
         const with_ = block.getFieldValue('WITH') || 'LOWER';
         const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
         const method = with_ === 'LOWER' ? 'lower' : 'upper';
-        const code = `${str}.${method}()\n`;
+        const code = `str(${str}).${method}()\n`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
@@ -244,7 +244,7 @@ export default () => ({
       },
       mpy(block) {
         const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
-        const code = `${str}.strip()\n`;
+        const code = `str(${str}).strip()\n`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
