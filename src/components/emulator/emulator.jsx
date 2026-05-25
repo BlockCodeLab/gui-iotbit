@@ -39,7 +39,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
       const code = `((/*${file.value.name}*/) => {\n${file.value.script}})();`;
       runtime.launch(`${code}\n\nruntime.start();`);
     }
-  }, [appState.value?.running]);
+  }, [runtime, appState.value?.running]);
 
   // 绑定模拟器运行时
   const handleRuntime = useCallback(
