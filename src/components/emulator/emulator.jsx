@@ -222,7 +222,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
   return (
     <Emulator
       id="iotbit-emulator"
-      zoom={appState.value?.stageSize !== StageConfig.Large ? 0.8 : 1}
+      zoom={appState.value?.stageSize !== StageConfig.Large ? 0.8 : 1.3}
       width={StageConfig.Width}
       height={StageConfig.Height}
       onRuntime={handleRuntime}

@@ -4,6 +4,7 @@ import { useAppContext, useProjectContext, setMeta } from '@blockcode/core';
 import { MicroPythonGenerator, BlocksEditor } from '@blockcode/blocks';
 import { IotBitGenerator, IotBitEmulatorGenerator, buildBlocks } from '../../blocks/blocks';
 import { getBoardPins } from '../../blocks/pins';
+import { Sidedock } from '../sidedock/sidedock';
 import { extensionTags } from './extension-tags';
 
 // 过滤字符
@@ -46,12 +47,21 @@ export function IotBitBlocksEditor() {
     }
   }, []);
 
+  const handleCodePreviewChange = useCallback(({ visible }) => {
+    if (visible) {
+      document.getElementById('emulator-sidedock').parentElement.style.display = 'none';
+    } else {
+      document.getElementById('emulator-sidedock').parentElement.style.display = 'block';
+    }
+  }, []);
+
   return (
     <BlocksEditor
-      // enableCodePreview
+      enableCodePreview
       enableProcedureExecute
       enableProcedureReturns
       disableSensingBlocks
+      defaultCodePreviewVisible={false}
       disableGenerateCode={tabIndex.value !== 0}
       extensionTags={extensionTags}
       generator={generator}
@@ -59,6 +69,7 @@ export function IotBitBlocksEditor() {
       onBuildinExtensions={buildBlocks}
       onDefinitions={handleDefinitions}
       onExtensionsFilter={handleExtensionsFilter}
+      onCodePreviewChange={handleCodePreviewChange}
     />
   );
 }

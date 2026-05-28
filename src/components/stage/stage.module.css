@@ -4,8 +4,8 @@
 
 .stage {
   z-index: 10;
-  width: calc(360px + 2px);
-  height: calc(300px + 2px);
+  width: calc(468px + 2px);
+  height: calc(390px + 2px);
   /*border: 1px solid var(--ui-black-transparent);*/
   /*border-radius: var(--space);*/
   position: relative;

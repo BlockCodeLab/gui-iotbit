@@ -14,12 +14,15 @@ export function Sidedock() {
 
   useEffect(() => {
     setAppState({
-      stageSize: window.innerWidth < 1200 ? StageConfig.Small : StageConfig.Large,
+      stageSize: StageConfig.Large,
     });
   }, []);
 
   return (
-    <div className={styles.sidedockWrapper}>
+    <div
+      id="emulator-sidedock"
+      className={styles.sidedockWrapper}
+    >
       <Stage
         className={styles.stageWrapper}
         runtime={runtime.value}

@@ -13,7 +13,7 @@
   flex-direction: row;
   flex-grow: 1;
   margin-top: var(--space);
-  width: calc(360px + 2px);
+  width: calc(468px + 3px);
 }
 
 .selector-wrapper.small {
