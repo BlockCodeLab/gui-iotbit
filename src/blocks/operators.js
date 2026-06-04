@@ -95,7 +95,7 @@ export default () => ({
       output: 'boolean',
       inputs: {
         NUM1: {
-          type: 'number',
+          type: 'string',
           defaultValue: 0,
         },
         SYMBOL: {
@@ -109,7 +109,7 @@ export default () => ({
           ],
         },
         NUM2: {
-          type: 'number',
+          type: 'string',
           defaultValue: 0,
         },
       },

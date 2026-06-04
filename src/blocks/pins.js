@@ -224,6 +224,24 @@ export default () => {
         },
       },
       {
+        // 数字引脚是否为低电平？
+        id: 'digitalLow',
+        text: translate('esp32.blocks.isDigitalLow', 'pin %1 is low?'),
+        output: 'boolean',
+        inputs: {
+          PIN: {
+            menu: boardPins.all,
+          },
+        },
+        mpy(block) {
+          const pin = block.getFieldValue('PIN') || 0;
+          const pinName = `pin_${pin}`;
+          this.definitions_['import_pin'] = 'from machine import Pin';
+          this.definitions_[pinName] = `${pinName} = Pin(${pin}, Pin.IN)`;
+          return [`(${pinName}.value() == 0)`, this.ORDER_RELATIONAL];
+        },
+      },
+      {
         // 模拟引脚值
         id: 'analog',
         text: translate('esp32.blocks.analogValue', 'pin %1 analog value'),

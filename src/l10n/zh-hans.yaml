@@ -28,14 +28,14 @@ esp32.blocks.dataConvert.float: 浮点数
 esp32.blocks.dataConvert.string: 字符串
 esp32.blocks.dataConvert.list: 列表
 esp32.blocks.dataConvert.bytes: 字节数组
-esp32.blocks.dataLengthOf: "%1 长度"
+esp32.blocks.dataLengthOf: '%1 长度'
 esp32.blocks.dataConstrain: 约束 %1 在 %2 和 %3 之间
 esp32.blocks.dataMap: 映射 %1 从 %2 - %3 到 %4 - %5
 esp32.blocks.whenstart: 当 {name} 启动时
-esp32.blocks.timerset: "定时器 #%1 每间隔 %2 毫秒执行"
-esp32.blocks.timeroff: "关闭定时器 #%1"
-esp32.blocks.operatorLarger: "%1 和 %2 之中最大"
-esp32.blocks.operatorSmaller: "%1 和 %2 之中最小"
+esp32.blocks.timerset: '定时器 #%1 每间隔 %2 毫秒执行'
+esp32.blocks.timeroff: '关闭定时器 #%1'
+esp32.blocks.operatorLarger: '%1 和 %2 之中最大'
+esp32.blocks.operatorSmaller: '%1 和 %2 之中最小'
 esp32.blocks.pin: 引脚
 esp32.blocks.setmode: 将引脚 %1 设为 %2 模式
 esp32.blocks.inputMode: 输入
@@ -49,6 +49,7 @@ esp32.blocks.setpwmfreq: 将引脚 %1 PWM 频率设为 %2
 esp32.blocks.setpwm: 将引脚 %1 PWM 设为 %2
 esp32.blocks.setanalog: 将引脚 %1 模拟值设为 %2
 esp32.blocks.isDigitalHigh: 引脚 %1 是高电平？
+esp32.blocks.isDigitalLow: 引脚 %1 是低电平？
 esp32.blocks.analogValue: 引脚 %1 模拟值
 esp32.blocks.attachinterrupt: 将引脚 %1 中断模式设为 %2
 esp32.blocks.interruptRising: 电平上升
@@ -76,13 +77,13 @@ esp32.blocks.serialReadParseFloat: 浮点数
 esp32.blocks.serialRead: 读取 1 个字节
 esp32.blocks.serialReadBytes: 读取 %1 个字节
 esp32.blocks.text: 文本
-esp32.blocks.textEquals: "%1 和 %2 相同（忽视大小写）？"
+esp32.blocks.textEquals: '%1 和 %2 相同（忽视大小写）？'
 esp32.blocks.textRemove: 删除 %3 从第 %1 个到第 %2 个字符
 esp32.blocks.textReplace: 将 %2 中的 %1 替换为 %3
 esp32.blocks.textReplaceLetter: 将 %2 中的第 %1 个字符替换为 %3
 esp32.blocks.textSubstring: 截取 %1 从第 %2 个到第 %3 个字符
 esp32.blocks.textFind: 在 %2 中查找 %1 的位置
-esp32.blocks.textWith: "%1 %2 %3?"
+esp32.blocks.textWith: '%1 %2 %3?'
 esp32.blocks.textStartsWith: 开始于
 esp32.blocks.textEndsWith: 结束于
 esp32.blocks.textCase: 将 %2 字母转为 %1
@@ -91,7 +92,7 @@ esp32.blocks.textUpperCase: 大写
 esp32.blocks.textTrim: 清除 %1 前后空白字符
 esp32.blocks.textConvert: 将 %1 转为 %2
 esp32.blocks.textConvertFrom: 将 %1 转为文本
-esp32.blocks.connectWifi: "连接 Wi-Fi 网络 SSID: %1 密码: %2"
+esp32.blocks.connectWifi: '连接 Wi-Fi 网络 SSID: %1 密码: %2'
 esp32.blocks.disconnectWifi: 断开 Wi-Fi 网络
 esp32.blocks.networkCofing: 本地 %1
 esp32.blocks.networkCofingIp: IP
@@ -104,7 +105,7 @@ esp32.blocks.wifiItemRssi: RSSI
 esp32.blocks.wifiItemSecurity: 加密类型
 esp32.blocks.wifiItemMac: MAC 地址
 esp32.blocks.wifiCounts: 可用 Wi-Fi 数量
-esp32.blocks.startap: "开启热点 SSID: %1"
+esp32.blocks.startap: '开启热点 SSID: %1'
 esp32.blocks.stopap: 关闭热点
 esp32.blocks.espnowBroadcast: ESP-Now 广播 %1
 esp32.blocks.espnowSend: ESP-Now 发送 %1 给 %2

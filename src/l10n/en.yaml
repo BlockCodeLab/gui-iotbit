@@ -32,8 +32,8 @@ esp32.blocks.dataLengthOf: length of %1
 esp32.blocks.dataConstrain: constrain %1 between %2 to %3
 esp32.blocks.dataMap: map %1 from %2 - %3 to %4 - %5
 esp32.blocks.whenstart: when {name} start
-esp32.blocks.timerset: "trigger timer #%1 per %2 milliseconds"
-esp32.blocks.timeroff: "stop timer #%1"
+esp32.blocks.timerset: 'trigger timer #%1 per %2 milliseconds'
+esp32.blocks.timeroff: 'stop timer #%1'
 esp32.blocks.operatorLarger: larger of %1 and %2
 esp32.blocks.operatorSmaller: smaller of %1 and %2
 esp32.blocks.pin: Pins
@@ -49,6 +49,7 @@ esp32.blocks.setpwmfreq: set pin %1 pwm frequency to %2 Hz
 esp32.blocks.setpwm: set pin %1 pwm to %2
 esp32.blocks.setanalog: set pin %1 analog to %2
 esp32.blocks.isDigitalHigh: pin %1 is high?
+esp32.blocks.isDigitalLow: pin %1 is low?
 esp32.blocks.analogValue: pin %1 analog value
 esp32.blocks.attachinterrupt: attach pin %1 interrupt to %2
 esp32.blocks.interruptRising: rising
@@ -76,13 +77,13 @@ esp32.blocks.serialReadParseFloat: float
 esp32.blocks.serialRead: read a byte
 esp32.blocks.serialReadBytes: read %1 bytes
 esp32.blocks.text: Text
-esp32.blocks.textEquals: "%1 equals %2 (not case-sensitive)?"
+esp32.blocks.textEquals: '%1 equals %2 (not case-sensitive)?'
 esp32.blocks.textRemove: remove letters from %1 to %2 of %3
 esp32.blocks.textReplace: replace %1 of %2 with %3
 esp32.blocks.textReplaceLetter: replace letter %1 of %2 with %3
 esp32.blocks.textSubstring: substring of %1 from %2 to %3
 esp32.blocks.textFind: find %1 of %2 place
-esp32.blocks.textWith: "%1 %2 with %3?"
+esp32.blocks.textWith: '%1 %2 with %3?'
 esp32.blocks.textStartsWith: starts
 esp32.blocks.textEndsWith: ends
 esp32.blocks.textCase: get %1 of %2
@@ -91,25 +92,25 @@ esp32.blocks.textUpperCase: upper-case
 esp32.blocks.textTrim: remove %1 leading and trailing whitespace
 esp32.blocks.textConvert: convert %1 to %2
 esp32.blocks.textConvertFrom: convert %1 to String
-esp32.blocks.connectWifi: "connect wi-fi ssid: %1 password: %2"
+esp32.blocks.connectWifi: 'connect wi-fi ssid: %1 password: %2'
 esp32.blocks.disconnectWifi: disconnect wi-fi
 esp32.blocks.networkCofing: local %1
 esp32.blocks.networkCofingIp: ip
 esp32.blocks.networkCofingMac: mac address
 esp32.blocks.isWifiConnected: wi-fi is connected?
 esp32.blocks.wifiScan: start scan wi-fi
-esp32.blocks.wifiItem: "%2 of item %1 of available wi-fi"
+esp32.blocks.wifiItem: '%2 of item %1 of available wi-fi'
 esp32.blocks.wifiItemSsid: ssid
 esp32.blocks.wifiItemRssi: rssi
 esp32.blocks.wifiItemSecurity: security
 esp32.blocks.wifiItemMac: mac address
 esp32.blocks.wifiCounts: available wi-fi counts
-esp32.blocks.startap: "start ap ssid: %1"
+esp32.blocks.startap: 'start ap ssid: %1'
 esp32.blocks.stopap: stop ap
 esp32.blocks.espnowBroadcast: broadcast %1 via esp-now
 esp32.blocks.espnowSend: send %1 to %2 via esp-now
 esp32.blocks.espnowRecv: wait for esp-now incoming
-esp32.blocks.espnowMsg: "%1 of incoming"
+esp32.blocks.espnowMsg: '%1 of incoming'
 esp32.blocks.espnowMsgText: text
 esp32.blocks.espnowMsgBytes: bytes
 esp32.blocks.espnowMsgMac: mac address
