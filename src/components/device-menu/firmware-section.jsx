@@ -1,8 +1,8 @@
 import { useEffect, useCallback } from 'preact/hooks';
 import { useSignal, useComputed } from '@preact/signals';
-import { nanoid, classNames, sleep, Base64Utils, getBinaryCache, setBinaryCache } from '@blockcode/utils';
+import { nanoid, classNames, sleep, sleepMs, Base64Utils, getBinaryCache, setBinaryCache } from '@blockcode/utils';
 import { useAppContext, setAlert, delAlert, setAppState, logger, translate } from '@blockcode/core';
-import { ESPTool } from '@blockcode/board';
+import { ESPTool, MPYBoard } from '@blockcode/board';
 import { firmware } from '../../../package.json';
 import deviceFilters from './device-filters.yaml';
 
@@ -90,7 +90,7 @@ const uploadData = async (esploader, data) => {
 
   try {
     await ESPTool.writeFlash(esploader, data, true, (val) => uploadingAlert(val, alertId));
-    setAlert('restoreCompleted', {
+    setAlert('restoreCompletedNotReset', {
       id: alertId,
       onClose() {
         closeAlert(alertId);
@@ -102,33 +102,8 @@ const uploadData = async (esploader, data) => {
   }
   await ESPTool.disconnect(esploader);
 
-  logger.warn(translate('gui.logs.disconnected', 'Device disconnected'));
-  setAppState('device', null);
-};
-
-const uploadFirmware = async (device, cacheName) => {
-  let esploader;
-  try {
-    if (device) {
-      esploader = await ESPTool.reconnect(device, 460800);
-    } else {
-      esploader = await ESPTool.connect(deviceFilters, 460800);
-    }
-  } catch (err) {
-    errorAlert(err.name);
-  }
-  if (!esploader) return;
-
-  // 从缓存中升级到最新固件
-  const data = await getBinaryCache(cacheName);
-  if (data) {
-    uploadData(esploader, [
-      {
-        data: data.binaryString,
-        address: 0x1000,
-      },
-    ]);
-  }
+  // logger.warn(translate('gui.logs.disconnected', 'Device disconnected'));
+  // setAppState('device', null);
 };
 
 export function FirmwareSection({ disabled, itemClassName }) {
@@ -139,6 +114,66 @@ export function FirmwareSection({ disabled, itemClassName }) {
   const readyForUpdate = useSignal(false);
 
   const firmwareJson = useSignal(null);
+
+  const connectDevice = useCallback(async (newDevice) => {
+    if (newDevice === device.value) return;
+    await device.value?.disconnect();
+    await sleepMs(500);
+    const handleConnect = () => connectDevice(newDevice);
+    const handleDisconnect = (err) => {
+      if (err) {
+        errorAlert(err, deviceAlertId.value);
+        logger.warn(translate('gui.logs.disconnected', 'Device disconnected') + ': ' + err.message);
+      }
+      setAppState('device', null);
+      setAppState('deviceAlertId', null);
+      newDevice.off('connect', handleConnect);
+      newDevice.off('disconnect', handleDisconnect);
+    };
+    newDevice.on('connect', handleConnect);
+    newDevice.on('disconnect', handleDisconnect);
+    setAppState('device', newDevice);
+  }, []);
+
+  const uploadFirmware = useCallback(async (cacheName) => {
+    let esploader;
+    try {
+      if (device.value) {
+        esploader = await ESPTool.reconnect(device.value, 460800);
+      } else {
+        esploader = await ESPTool.connect(deviceFilters, 460800);
+      }
+    } catch (err) {
+      errorAlert(err.name);
+    }
+    if (!esploader) return;
+
+    // 从缓存中升级到最新固件
+    const data = await getBinaryCache(cacheName);
+    if (data) {
+      await uploadData(esploader, [
+        {
+          data: data.binaryString,
+          address: 0x1000,
+        },
+      ]);
+    }
+
+    let currentDevice = device.value;
+    if (!currentDevice) {
+      currentDevice = MPYBoard.fromPort(esploader.transport.device);
+    }
+    await currentDevice.connect({
+      baudRate: 115200,
+    });
+    await connectDevice(currentDevice);
+    setAppState('device', currentDevice);
+    // reset
+    await sleepMs(500);
+    await currentDevice.setSignals({ dataTerminalReady: false, requestToSend: true });
+    await sleepMs(100);
+    await currentDevice.setSignals({ dataTerminalReady: true });
+  }, []);
 
   useEffect(async () => {
     readyForUpdate.value = false;
@@ -156,7 +191,7 @@ export function FirmwareSection({ disabled, itemClassName }) {
       <MenuItem
         disabled={disabled || device.value?.type === 'ble' || !readyForUpdate.value}
         className={classNames(itemClassName, styles.blankCheckItem)}
-        onClick={useCallback(() => uploadFirmware(device.value, 'iotbitFirmware'), [])}
+        onClick={useCallback(() => uploadFirmware('iotbitFirmware'), [])}
       >
         {readyForUpdate.value ? (
           <Text
