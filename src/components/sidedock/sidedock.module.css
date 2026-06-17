@@ -11,11 +11,19 @@
 .selector-wrapper {
   display: flex;
   flex-direction: row;
-  flex-grow: 1;
+  flex: 1;
   margin-top: var(--space);
-  width: calc(468px + 3px);
+  width: calc(468px + 2px);
 }
 
 .selector-wrapper.small {
-  width: calc(288px + 2px);
+  width: calc(360px + 2px);
+}
+
+.panel-box-wrapper {
+  margin-top: var(--space);
+  border-radius: var(--space) var(--space) 0 0;
+  border: 1px solid var(--ui-black-transparent);
+  border-bottom: 0;
+  overflow: hidden;
 }

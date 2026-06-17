@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 import { classNames } from '@blockcode/utils';
 import { useAppContext, setAppState } from '@blockcode/core';
+import { PanelBox } from '@blockcode/code';
 import { StageConfig } from '../emulator/emulator-config';
 
 import { Stage } from '../stage/stage';
@@ -31,9 +32,15 @@ export function Sidedock() {
 
       <div
         className={classNames(styles.selectorWrapper, {
-          [styles.small]: appState.value?.stageSize !== StageConfig.Large,
+          [styles.small]: appState.value?.stageSize === StageConfig.Small,
         })}
       ></div>
+
+      {appState.value?.panelBoxId && (
+        <div className={styles.panelBoxWrapper}>
+          <PanelBox compactMode={appState.value?.stageSize === StageConfig.Small} />
+        </div>
+      )}
     </div>
   );
 }

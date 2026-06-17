@@ -62,7 +62,7 @@ export function Toolbar() {
               value: StageConfig.Large,
             },
           ]}
-          value={appState.value?.stageSize ?? StageConfig.Small}
+          value={appState.value?.stageSize ?? StageConfig.Large}
           onChange={handleChangeStageSize}
         />
       </div>

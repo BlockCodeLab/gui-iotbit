@@ -45,7 +45,6 @@ export function IotBitEmulator({ runtime, onRuntime }) {
   const handleRuntime = useCallback(
     async (stage) => {
       const runtime = new IotBitRuntime(stage);
-      onRuntime?.(runtime);
 
       const res = {
         iotbit: await runtime.loadImage(iotbitImage),
@@ -212,8 +211,9 @@ export function IotBitEmulator({ runtime, onRuntime }) {
         }),
       );
 
+      onRuntime?.(runtime);
       return () => {
-        onRuntime(null);
+        onRuntime?.(null);
       };
     },
     [onRuntime],
@@ -222,7 +222,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
   return (
     <Emulator
       id="iotbit-emulator"
-      zoom={appState.value?.stageSize !== StageConfig.Large ? 0.8 : 1.3}
+      zoom={appState.value?.stageSize === StageConfig.Small ? 1 : 1.3}
       width={StageConfig.Width}
       height={StageConfig.Height}
       onRuntime={handleRuntime}

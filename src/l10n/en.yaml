@@ -4,6 +4,8 @@ iotbit.emu.greenFlag: Go
 iotbit.emu.stop: Stop
 iotbit.emu.smallStage: Switch to small stage
 iotbit.emu.largeStage: Switch to large stage
+iotbit.emu.previewCode: Preview Code
+iotbit.emu.enable: Enable Emulator
 
 esp32.extension.tags.controllers: Controllers
 esp32.extension.tags.sensors: Sensors
@@ -190,6 +192,7 @@ iotbit.blocks.displayText: display text %1 at x:%2 y:%3
 iotbit.blocks.displayTextLine: display text %1 at line %2
 iotbit.blocks.displayImage: display %1
 iotbit.blocks.displayClear: clear display
+iotbit.blocks.updateDisplay: update display
 iotbit.blocks.displayPixel: pixel x:%1 y:%2
 iotbit.blocks.displayLine: line from x1:%1 y1:%2 to x2:%3 y2:%4
 iotbit.blocks.displayEllipse: ellipse with x-radius:%1 and y-radius:%2 at x:%3 y:%4

@@ -73,3 +73,16 @@
 .group-button-toggled-off {
   filter: saturate(0);
 }
+
+.code-preview-button {
+  position: absolute;
+  top: 0;
+  right: var(--space);
+  transform: translateY(-100%);
+}
+
+.code-preview-button button {
+  margin-bottom: calc(var(--space) - 2px);
+  padding: 0 var(--space);
+  height: 34px;
+}

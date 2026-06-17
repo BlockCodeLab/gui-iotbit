@@ -4,6 +4,8 @@ iotbit.emu.greenFlag: 運行
 iotbit.emu.stop: 停止
 iotbit.emu.smallStage: 縮小舞臺
 iotbit.emu.largeStage: 放大舞臺
+iotbit.emu.previewCode: 預覽代碼
+iotbit.emu.enable: 開啟模擬器
 
 esp32.extension.tags.controllers: 輸入模組
 esp32.extension.tags.sensors: 傳感器
@@ -169,7 +171,7 @@ iotbit.blocks.rotation: 旋轉%1
 iotbit.blocks.rotationPitch: 俯仰
 iotbit.blocks.rotationRoll: 橫滾
 iotbit.blocks.rotationYaw: 偏航
-iotbit.blocks.gesture: "%1 手勢？"
+iotbit.blocks.gesture: '%1 手勢？'
 iotbit.blocks.gestureShake: 震動
 iotbit.blocks.gestureLedsUp: LED 朝上
 iotbit.blocks.gestureLedsDown: LED 朝下
@@ -190,6 +192,7 @@ iotbit.blocks.displayText: 在 x:%2 y:%3 顯示 %1
 iotbit.blocks.displayTextLine: 在第%2行顯示%1
 iotbit.blocks.displayImage: 顯示%1
 iotbit.blocks.displayClear: 清除屏幕
+iotbit.blocks.updateDisplay: 刷新顯示
 iotbit.blocks.displayPixel: 在 x:%1 y:%2 畫點
 iotbit.blocks.displayLine: 從 x1:%1 y1:%2 到 x2:%3 y2:%4 的畫線
 iotbit.blocks.displayEllipse: 在 x:%3 y:%4 畫橫半徑:%1 縱半徑:%2 的橢圓

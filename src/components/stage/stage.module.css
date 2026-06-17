@@ -14,6 +14,6 @@
 }
 
 .small-stage {
-  width: calc(288px + 2px);
-  height: calc(240px + 2px);
+  width: calc(360px + 2px);
+  height: calc(300px + 2px);
 }

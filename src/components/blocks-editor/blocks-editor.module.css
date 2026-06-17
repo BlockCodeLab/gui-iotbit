@@ -1,0 +1,29 @@
+.emulator-button {
+  position: absolute;
+  top: 0;
+  right: var(--space);
+  transform: translateY(-100%);
+}
+
+.emulator-button button {
+  margin-bottom: calc(var(--space) - 2px);
+  padding: 0 var(--space);
+  height: 34px;
+}
+
+.emulator-button img {
+  margin-right: 2px;
+}
+
+.preview-code-button {
+  transform: translateX(50%) translateY(-100%);
+  z-index: var(--z-index-stage-question);
+}
+
+.preview-code-button.small {
+  right: -189px; /* 362 + 16 / 2 */
+}
+
+.preview-code-button.large {
+  right: -243px; /* 470 + 16 / 2 */
+}

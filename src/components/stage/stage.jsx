@@ -15,7 +15,7 @@ export function Stage({ runtime, onRuntime }) {
 
       <div
         className={classNames(styles.stage, {
-          [styles.smallStage]: appState.value?.stageSize !== StageConfig.Large,
+          [styles.smallStage]: appState.value?.stageSize === StageConfig.Small,
         })}
       >
         <IotBitEmulator

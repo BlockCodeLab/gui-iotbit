@@ -1,11 +1,16 @@
 import { basename, extname } from 'node:path';
-import { useCallback, useEffect } from 'preact/hooks';
-import { useAppContext, useProjectContext, setMeta } from '@blockcode/core';
+import { useRef, useCallback, useEffect } from 'preact/hooks';
+import { useSignal } from '@preact/signals';
+import { classNames } from '@blockcode/utils';
+import { useAppContext, useProjectContext, setMeta, Button, Text } from '@blockcode/core';
 import { MicroPythonGenerator, BlocksEditor } from '@blockcode/blocks';
 import { IotBitGenerator, IotBitEmulatorGenerator, buildBlocks } from '../../blocks/blocks';
 import { getBoardPins } from '../../blocks/pins';
-import { Sidedock } from '../sidedock/sidedock';
 import { extensionTags } from './extension-tags';
+import styles from './blocks-editor.module.css';
+
+import previewCodeIcon from './icon-code.svg';
+import emulatorIcon from './icon-device.svg';
 
 // 过滤字符
 const escape = (name) => name.replaceAll(/[^a-z0-9]/gi, '_').replace(/^_/, '');
@@ -16,7 +21,11 @@ const emulator = new IotBitEmulatorGenerator();
 const handleExtensionsFilter = () => [['device', '!scratch'], 'data'];
 
 export function IotBitBlocksEditor() {
-  const { splashVisible, tabIndex } = useAppContext();
+  const editorRef = useRef(null);
+
+  const previewCode = useSignal(false);
+
+  const { splashVisible, tabIndex, appState } = useAppContext();
 
   const { meta } = useProjectContext();
 
@@ -48,6 +57,7 @@ export function IotBitBlocksEditor() {
   }, []);
 
   const handleCodePreviewChange = useCallback(({ visible }) => {
+    previewCode.value = visible;
     if (visible) {
       document.getElementById('emulator-sidedock').parentElement.style.display = 'none';
     } else {
@@ -56,20 +66,55 @@ export function IotBitBlocksEditor() {
   }, []);
 
   return (
-    <BlocksEditor
-      enableCodePreview
-      enableProcedureExecute
-      enableProcedureReturns
-      disableSensingBlocks
-      defaultCodePreviewVisible={false}
-      disableGenerateCode={tabIndex.value !== 0}
-      extensionTags={extensionTags}
-      generator={generator}
-      emulator={emulator}
-      onBuildinExtensions={buildBlocks}
-      onDefinitions={handleDefinitions}
-      onExtensionsFilter={handleExtensionsFilter}
-      onCodePreviewChange={handleCodePreviewChange}
-    />
+    <>
+      <BlocksEditor
+        enableCodePreview
+        enableProcedureExecute
+        enableProcedureReturns
+        disableSensingBlocks
+        editorRef={editorRef}
+        defaultCodePreviewVisible={false}
+        disableGenerateCode={tabIndex.value !== 0}
+        extensionTags={extensionTags}
+        generator={generator}
+        emulator={emulator}
+        onBuildinExtensions={buildBlocks}
+        onDefinitions={handleDefinitions}
+        onExtensionsFilter={handleExtensionsFilter}
+        onCodePreviewChange={handleCodePreviewChange}
+      />
+      <div
+        className={classNames(styles.emulatorButton, {
+          [styles.previewCodeButton]: !previewCode.value,
+          [styles[appState.value?.stageSize]]: !previewCode.value,
+        })}
+      >
+        <Button onClick={editorRef.current?.toggleCodePreview}>
+          {previewCode.value ? (
+            <>
+              <img
+                className={styles.icon}
+                src={emulatorIcon}
+              />
+              <Text
+                id="iotbit.emu.enable"
+                defaultMessage="Enable Emulator"
+              />
+            </>
+          ) : (
+            <>
+              <img
+                className={styles.icon}
+                src={previewCodeIcon}
+              />
+              <Text
+                id="iotbit.emu.previewCode"
+                defaultMessage="Preview Code"
+              />
+            </>
+          )}
+        </Button>
+      </div>
+    </>
   );
 }
