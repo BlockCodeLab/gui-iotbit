@@ -84,6 +84,32 @@ export default () => ({
     },
     '---',
     {
+      id: 'displayClear',
+      text: translate('iotbit.blocks.displayClear', 'clear display'),
+      mpy(block) {
+        const code = 'display.fill(0)\n';
+        return code;
+      },
+      emu(block) {
+        const code = `runtime.clearScreen();\n`;
+        return code;
+      },
+    },
+    {
+      id: 'updateDisplay',
+      text: (
+        <Text
+          id="iotbit.blocks.updateDisplay"
+          defaultMessage="update display"
+        />
+      ),
+      mpy(block) {
+        const code = 'display.show()\n';
+        return code;
+      },
+    },
+    '---',
+    {
       id: 'displayText',
       text: translate('iotbit.blocks.displayText', 'display text %1 at x:%2 y:%3'),
       inputs: {
@@ -101,24 +127,19 @@ export default () => ({
         },
       },
       mpy(block) {
-        const text = this.valueToCode(block, 'TEXT', this.ORDER_NONE);
         const x = this.valueToCode(block, 'X', this.ORDER_NONE);
         const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
+        let text = this.valueToCode(block, 'TEXT', this.ORDER_NONE);
 
-        let code = `display.write(f"{${text}}", ${x}, ${y})\n`;
-
-        const nextBlock = block.getNextBlock();
-        if (nextBlock && nextBlock.type.search(/_display[\w]+$/) !== -1) {
-          return code;
-        }
-        code += 'display.show()\n';
+        if (!/^["']|["']$/.test(text)) text = `str(${text})`;
+        const code = `display.write(${text}, ${x}, ${y})\n`;
         return code;
       },
       emu(block) {
         const text = this.valueToCode(block, 'TEXT', this.ORDER_NONE) || '""';
         const x = this.valueToCode(block, 'X', this.ORDER_NONE);
         const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
-        const code = `runtime.drawText(\`\$\{${text}\}\`, ${x}, ${y});\n`;
+        const code = `runtime.drawText(\`$\{${text}}\`, ${x}, ${y});\n`;
         return code;
       },
     },
@@ -135,40 +156,17 @@ export default () => ({
         },
       },
       mpy(block) {
-        const text = this.valueToCode(block, 'TEXT', this.ORDER_NONE);
         const line = parseInt(block.getFieldValue('LINE')) - 1;
+        let text = this.valueToCode(block, 'TEXT', this.ORDER_NONE);
 
-        let code = `display.write(f"{${text}}", 2, ${line * 13}, wrap=True)\n`;
-
-        const nextBlock = block.getNextBlock();
-        if (nextBlock && nextBlock.type.search(/_display[\w]+$/) !== -1) {
-          return code;
-        }
-        code += 'display.show()\n';
+        if (!/^["']|["']$/.test(text)) text = `str(${text})`;
+        const code = `display.write(${text}, 2, ${line * 13}, wrap=True)\n`;
         return code;
       },
       emu(block) {
         const text = this.valueToCode(block, 'TEXT', this.ORDER_NONE) || '""';
         const line = parseInt(block.getFieldValue('LINE')) - 1;
-        const code = `runtime.drawTextLine(\`\$\{${text}\}\`, ${line});\n`;
-        return code;
-      },
-    },
-    {
-      id: 'displayClear',
-      text: translate('iotbit.blocks.displayClear', 'clear display'),
-      mpy(block) {
-        let code = 'display.fill(0)\n';
-
-        const nextBlock = block.getNextBlock();
-        if (nextBlock && nextBlock.type.search(/_display[\w]+$/) !== -1) {
-          return code;
-        }
-        code += 'display.show()\n';
-        return code;
-      },
-      emu(block) {
-        const code = `runtime.clearScreen();\n`;
+        const code = `runtime.drawTextLine(\`$\{${text}}\`, ${line});\n`;
         return code;
       },
     },
@@ -190,13 +188,7 @@ export default () => ({
         const x = this.valueToCode(block, 'X', this.ORDER_NONE);
         const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
 
-        let code = `display.pixel(${x}, ${y}, 1)\n`;
-
-        const nextBlock = block.getNextBlock();
-        if (nextBlock && nextBlock.type.search(/_display[\w]+$/) !== -1) {
-          return code;
-        }
-        code += 'display.show()\n';
+        const code = `display.pixel(${x}, ${y}, 1)\n`;
         return code;
       },
       emu(block) {
@@ -233,13 +225,7 @@ export default () => ({
         const x2 = this.valueToCode(block, 'X2', this.ORDER_NONE);
         const y2 = this.valueToCode(block, 'Y2', this.ORDER_NONE);
 
-        let code = `display.line(${x1}, ${y1}, ${x2}, ${y2})\n`;
-
-        const nextBlock = block.getNextBlock();
-        if (nextBlock && nextBlock.type.search(/_display[\w]+$/) !== -1) {
-          return code;
-        }
-        code += 'display.show()\n';
+        const code = `display.line(${x1}, ${y1}, ${x2}, ${y2})\n`;
         return code;
       },
       emu(block) {
@@ -278,13 +264,7 @@ export default () => ({
         const x = this.valueToCode(block, 'X', this.ORDER_NONE);
         const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
 
-        let code = `display.ellipse(${x}, ${y}, ${rx}, ${ry})\n`;
-
-        const nextBlock = block.getNextBlock();
-        if (nextBlock && nextBlock.type.search(/_display[\w]+$/) !== -1) {
-          return code;
-        }
-        code += 'display.show()\n';
+        const code = `display.ellipse(${x}, ${y}, ${rx}, ${ry})\n`;
         return code;
       },
       emu(block) {
@@ -323,13 +303,7 @@ export default () => ({
         const x = this.valueToCode(block, 'X', this.ORDER_NONE);
         const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
 
-        let code = `display.rect(${x}, ${y}, ${width}, ${height})\n`;
-
-        const nextBlock = block.getNextBlock();
-        if (nextBlock && nextBlock.type.search(/_display[\w]+$/) !== -1) {
-          return code;
-        }
-        code += 'display.show()\n';
+        const code = `display.rect(${x}, ${y}, ${width}, ${height})\n`;
         return code;
       },
       emu(block) {
@@ -368,13 +342,7 @@ export default () => ({
         const x = this.valueToCode(block, 'X', this.ORDER_NONE);
         const y = this.valueToCode(block, 'Y', this.ORDER_NONE);
 
-        let code = `display.fill_rect(${x}, ${y}, ${width}, ${height})\n`;
-
-        const nextBlock = block.getNextBlock();
-        if (nextBlock && nextBlock.type.search(/_display[\w]+$/) !== -1) {
-          return code;
-        }
-        code += 'display.show()\n';
+        const code = `display.fill_rect(${x}, ${y}, ${width}, ${height})\n`;
         return code;
       },
       emu(block) {

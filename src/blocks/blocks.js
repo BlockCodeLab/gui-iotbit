@@ -8,7 +8,6 @@ import getSensingBlocks from './sensing';
 import getOperatorsBlocks from './operators';
 import getDataBlocks from './data';
 import getMyBlocks from './procedures';
-import getTerminalBlocks from './terminal';
 import getTextBlocks from './text';
 
 export { IotBitGenerator, IotBitEmulatorGenerator } from './generator';
@@ -23,7 +22,6 @@ export function buildBlocks() {
   const sensingBlocks = getSensingBlocks();
   const operatorsBlocks = getOperatorsBlocks();
   const textBlocks = getTextBlocks();
-  const terminalBlocks = getTerminalBlocks();
   const dataBlocks = getDataBlocks();
   const myBlocks = getMyBlocks();
 
@@ -37,7 +35,6 @@ export function buildBlocks() {
     sensingBlocks,
     operatorsBlocks,
     textBlocks,
-    terminalBlocks,
     dataBlocks,
     myBlocks,
   ];
