@@ -33,6 +33,7 @@ esp32.blocks.dataConvert.bytes: bytes
 esp32.blocks.dataLengthOf: length of %1
 esp32.blocks.dataConstrain: constrain %1 between %2 to %3
 esp32.blocks.dataMap: map %1 from %2 - %3 to %4 - %5
+esp32.blocks.colorRGB: color R:[R] G:[G] B:[B]
 esp32.blocks.whenstart: when {name} start
 esp32.blocks.timerset: 'trigger timer #%1 per %2 milliseconds'
 esp32.blocks.timeroff: 'stop timer #%1'

@@ -489,5 +489,89 @@ export default () => ({
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
+    '---',
+    {
+      id: 'colorRGB',
+      text: translate('esp32.blocks.colorRGB', 'color R:[R] G:[G] B:[B]'),
+      output: 'color',
+      inputs: {
+        R: {
+          shadow: 'slider255r',
+          defaultValue: 255,
+        },
+        G: {
+          shadow: 'slider255g',
+          defaultValue: 0,
+        },
+        B: {
+          shadow: 'slider255b',
+          defaultValue: 0,
+        },
+      },
+      mpy(block) {
+        const r = this.valueToCode(block, 'R', this.ORDER_NONE);
+        const g = this.valueToCode(block, 'G', this.ORDER_NONE);
+        const b = this.valueToCode(block, 'B', this.ORDER_NONE);
+        const code = `(${r},${g},${b})`;
+        return [code];
+      },
+    },
+    {
+      // 0-255 滑块
+      id: 'slider255r',
+      shadow: true,
+      output: 'integer',
+      inputs: {
+        R: {
+          type: 'slider',
+          min: 0,
+          max: 255,
+          step: 1,
+          defaultValue: 128,
+        },
+      },
+      mpy(block) {
+        const value = block.getFieldValue('R') || 0;
+        return [value, this.ORDER_ATOMIC];
+      },
+    },
+    {
+      // 0-255 滑块
+      id: 'slider255g',
+      shadow: true,
+      output: 'integer',
+      inputs: {
+        G: {
+          type: 'slider',
+          min: 0,
+          max: 255,
+          step: 1,
+          defaultValue: 128,
+        },
+      },
+      mpy(block) {
+        const value = block.getFieldValue('G') || 0;
+        return [value, this.ORDER_ATOMIC];
+      },
+    },
+    {
+      // 0-255 滑块
+      id: 'slider255b',
+      shadow: true,
+      output: 'integer',
+      inputs: {
+        B: {
+          type: 'slider',
+          min: 0,
+          max: 255,
+          step: 1,
+          defaultValue: 128,
+        },
+      },
+      mpy(block) {
+        const value = block.getFieldValue('B') || 0;
+        return [value, this.ORDER_ATOMIC];
+      },
+    },
   ],
 });

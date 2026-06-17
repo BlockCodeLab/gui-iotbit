@@ -33,6 +33,7 @@ esp32.blocks.dataConvert.bytes: 字節數組
 esp32.blocks.dataLengthOf: '%1 長度'
 esp32.blocks.dataConstrain: 約束 %1 在 %2 和 %3 之間
 esp32.blocks.dataMap: 映射 %1 從 %2 - %3 到 %4 - %5
+esp32.blocks.colorRGB: 顏色 R:[R] G:[G] B:[B]
 esp32.blocks.whenstart: 當 {name} 開始
 esp32.blocks.timerset: '定時器 #%1 每間隔 %2 毫秒執行'
 esp32.blocks.timeroff: '關閉定時器 #%1'

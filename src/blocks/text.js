@@ -252,6 +252,9 @@ export default () => ({
     {
       id: 'print',
       text: translate('esp32.blocks.terminalPrint', 'print %1'),
+      themeColor: themeColors.blocks.debug.primary,
+      inputColor: themeColors.blocks.debug.secondary,
+      otherColor: themeColors.blocks.debug.tertiary,
       inputs: {
         STRING: {
           type: 'string',
