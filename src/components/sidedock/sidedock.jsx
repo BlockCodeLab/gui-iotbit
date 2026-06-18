@@ -9,7 +9,7 @@ import { Stage } from '../stage/stage';
 import styles from './sidedock.module.css';
 
 export function Sidedock() {
-  const { appState } = useAppContext();
+  const { tabIndex, appState } = useAppContext();
 
   const runtime = useSignal(null);
 
@@ -36,7 +36,7 @@ export function Sidedock() {
         })}
       ></div>
 
-      {appState.value?.panelBoxId && (
+      {appState.value?.panelBoxId && tabIndex.value !== 1 && (
         <div className={styles.panelBoxWrapper}>
           <PanelBox compactMode={appState.value?.stageSize === StageConfig.Small} />
         </div>
