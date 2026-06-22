@@ -107,6 +107,10 @@ export default () => ({
         const code = 'display.show()\n';
         return code;
       },
+      emu(block) {
+        const code = `runtime.updateScreen();\n`;
+        return code;
+      },
     },
     '---',
     {

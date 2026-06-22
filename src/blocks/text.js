@@ -30,6 +30,12 @@ export default () => ({
         const code = `(str(${str1}) + str(${str2}))`;
         return [code, this.ORDER_ADDITION];
       },
+      emu(block) {
+        const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
+        const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
+        const code = `(String(${str1}) + String(${str2}))`;
+        return [code];
+      },
     },
     {
       // 字符
@@ -51,6 +57,12 @@ export default () => ({
         const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
         const code = `str(${str})[${letterIndex}]`;
         return [code, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const letterIndex = this.getAdjusted(block, 'LETTER'); // 将位置值换成下标值
+        const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
+        const code = `String(${str})[${letterIndex}]`;
+        return [code];
       },
     },
     {
@@ -268,7 +280,7 @@ export default () => ({
       },
       emu(block) {
         const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
-        const code = `console.log(${str})\n`;
+        const code = `console.log(${str});\n`;
         return code;
       },
     },

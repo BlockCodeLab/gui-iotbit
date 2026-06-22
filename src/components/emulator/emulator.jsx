@@ -45,6 +45,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
   const handleRuntime = useCallback(
     async (stage) => {
       const runtime = new IotBitRuntime(stage);
+      onRuntime?.(runtime);
 
       const res = {
         iotbit: await runtime.loadImage(iotbitImage),
@@ -130,8 +131,29 @@ export function IotBitEmulator({ runtime, onRuntime }) {
           }
         });
 
-        button.on('pointerdown', () => {
-          button.setAttrs({
+        button.on('pointerdown', ({ evt, target }) => {
+          if (evt.shiftKey) {
+            runtime.setData(`button-a`, true);
+            runtime.setData(`button-b`, true);
+            runtime.setData(`button-ab`, true);
+            runtime.querySelector('#button-a')?.setAttrs({
+              image: res.buttonClick,
+              width: res.buttonClick.width,
+              height: res.buttonClick.height,
+              offsetX: res.buttonClick.width / 2,
+              offsetY: res.buttonClick.height / 2,
+            });
+            runtime.querySelector('#button-b')?.setAttrs({
+              image: res.buttonClick,
+              width: res.buttonClick.width,
+              height: res.buttonClick.height,
+              offsetX: res.buttonClick.width / 2,
+              offsetY: res.buttonClick.height / 2,
+            });
+            return;
+          }
+          runtime.setData(target.id(), true);
+          target.setAttrs({
             image: res.buttonClick,
             width: res.buttonClick.width,
             height: res.buttonClick.height,
@@ -141,7 +163,17 @@ export function IotBitEmulator({ runtime, onRuntime }) {
         });
 
         button.on('pointerup', () => {
-          button.setAttrs({
+          runtime.setData(`button-a`, false);
+          runtime.setData(`button-b`, false);
+          runtime.setData(`button-ab`, false);
+          runtime.querySelector('#button-a')?.setAttrs({
+            image: res.button,
+            width: res.button.width,
+            height: res.button.height,
+            offsetX: res.button.width / 2,
+            offsetY: res.button.height / 2,
+          });
+          runtime.querySelector('#button-b')?.setAttrs({
             image: res.button,
             width: res.button.width,
             height: res.button.height,
@@ -155,7 +187,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
       ['0', '1', '2', '3v', 'gnd'].forEach((id, i) => {
         const resName = i > 0 && i < 4 ? 'pin' : `pin${id.toUpperCase()}`;
         const pin = new Konva.Image({
-          id: 'pin-' + id,
+          id: 'P' + id,
           name: id,
           x: -123 + i * 61.5 + (i === 0 ? 6 : i === 4 ? -7 : i === 3 ? 0.2 : 0),
           y: -88,
@@ -172,11 +204,12 @@ export function IotBitEmulator({ runtime, onRuntime }) {
         if (i < 3) {
           // 引脚触发
           pin.on('pointerclick', ({ target }) => {
-            runtime.call(`touched:P${target.name()}`);
+            runtime.call(`touched:${target.id()}`);
           });
 
-          pin.on('pointerdown', () => {
-            pin.setAttrs({
+          pin.on('pointerdown', ({ target }) => {
+            runtime.setData(target.name(), 1023);
+            target.setAttrs({
               image: res[`${resName}Click`],
               width: res[`${resName}Click`].width,
               height: res[`${resName}Click`].height,
@@ -185,8 +218,9 @@ export function IotBitEmulator({ runtime, onRuntime }) {
             });
           });
 
-          pin.on('pointerup', () => {
-            pin.setAttrs({
+          pin.on('pointerup', ({ target }) => {
+            runtime.setData(target.name(), 0);
+            target.setAttrs({
               image: res[resName],
               width: res[resName].width,
               height: res[resName].height,
@@ -211,7 +245,6 @@ export function IotBitEmulator({ runtime, onRuntime }) {
         }),
       );
 
-      onRuntime?.(runtime);
       return () => {
         onRuntime?.(null);
       };

@@ -1,81 +1,82 @@
 import { translate, themeColors } from '@blockcode/core';
 
 const PINS = [
-  ['P0', '33'],
-  ['P1', '32'],
-  ['P2', '35'],
-  ['P3', '34'],
-  ['P4', '39'],
-  ['P5', '0'],
-  ['P6', '16'],
-  ['P7', '17'],
-  ['P8', '26'],
-  ['P9', '25'],
-  ['P10', '36'],
-  ['P11', '2'],
-  // ['P12', ''],
-  ['P13', '18'],
-  ['P14', '19'],
-  ['P15', '21'],
-  ['P16', '5'],
-  ['P19', '22'],
-  ['P20', '23'],
-  ['P23', '27'],
-  ['P24', '14'],
-  ['P25', '12'],
-  ['P26', '13'],
-  ['P27', '15'],
-  ['P28', '4'],
+  ['P0', 'P0'],
+  ['P1', 'P1'],
+  ['P2', 'P2'],
+  ['P3', 'P3'],
+  ['P4', 'P4'],
+  ['P5', 'P5'],
+  ['P6', 'P6'],
+  ['P7', 'P7'],
+  ['P8', 'P8'],
+  ['P9', 'P9'],
+  ['P10', 'P10'],
+  ['P11', 'P11'],
+  // ['P12', 'P12'],
+  ['P13', 'P13'],
+  ['P14', 'P14'],
+  ['P15', 'P15'],
+  ['P16', 'P16'],
+  ['P19', 'P19'],
+  ['P20', 'P20'],
+  ['P23', 'P23'],
+  ['P24', 'P24'],
+  ['P25', 'P25'],
+  ['P26', 'P26'],
+  ['P27', 'P27'],
+  ['P28', 'P28'],
 ];
 const OUT_PINS = [
-  ['P0', '33'],
-  ['P1', '32'],
-  // ['P2', '35'],
-  // ['P3', '34'],
-  // ['P4', '39'],
-  ['P5', '0'],
-  ['P6', '16'],
-  ['P7', '17'],
-  ['P8', '26'],
-  ['P9', '25'],
-  // ['P10', '36'],
-  ['P11', '2'],
-  // ['P12', ''],
-  ['P13', '18'],
-  ['P14', '19'],
-  ['P15', '21'],
-  ['P16', '5'],
-  ['P19', '22'],
-  ['P20', '23'],
-  ['P23', '27'],
-  ['P24', '14'],
-  ['P25', '12'],
-  ['P26', '13'],
-  ['P27', '15'],
-  ['P28', '4'],
+  ['P0', 'P0'],
+  ['P1', 'P1'],
+  // ['P2', 'P2'],
+  // ['P3', 'P3'],
+  // ['P4', 'P4'],
+  ['P5', 'P5'],
+  ['P6', 'P6'],
+  ['P7', 'P7'],
+  ['P8', 'P8'],
+  ['P9', 'P9'],
+  // ['P10', 'P10'],
+  ['P11', 'P11'],
+  // ['P12', 'P12'],
+  ['P13', 'P13'],
+  ['P14', 'P14'],
+  ['P15', 'P15'],
+  ['P16', 'P16'],
+  ['P19', 'P19'],
+  ['P20', 'P20'],
+  ['P23', 'P23'],
+  ['P24', 'P24'],
+  ['P25', 'P25'],
+  ['P26', 'P26'],
+  ['P27', 'P27'],
+  ['P28', 'P28'],
 ];
 const ADC_PINS = [
-  ['P0', '33'],
-  ['P1', '32'],
-  ['P2', '35'],
-  ['P3', '34'],
-  ['P4', '39'],
-  ['P5', '0'],
-  ['P8', '26'],
-  ['P9', '25'],
-  ['P10', '36'],
-  ['P11', '2'],
-  ['P23', '27'],
-  ['P24', '14'],
-  ['P25', '12'],
-  ['P26', '13'],
-  ['P27', '15'],
-  ['P28', '4'],
+  ['P0', 'P0'],
+  ['P1', 'P1'],
+  ['P2', 'P2'],
+  ['P3', 'P3'],
+  ['P4', 'P4'],
+  ['P5', 'P5'],
+  ['P8', 'P8'],
+  ['P9', 'P9'],
+  ['P10', 'P10'],
+  ['P11', 'P11'],
+  ['P23', 'P23'],
+  ['P24', 'P24'],
+  ['P25', 'P25'],
+  ['P26', 'P26'],
+  ['P27', 'P27'],
+  ['P28', 'P28'],
 ];
 const DAC_PINS = [
-  ['P8', '26'],
-  ['P9', '25'],
+  ['P8', 'P8'],
+  ['P9', 'P9'],
 ];
+const I2C_CHANS = [{ SCL: 'P19', SDA: 'P20' }];
 
 export const getBoardPins = () => ({
   all: PINS,
@@ -84,6 +85,7 @@ export const getBoardPins = () => ({
   adc: ADC_PINS,
   dac: DAC_PINS,
   pwm: OUT_PINS,
+  i2c: I2C_CHANS,
 });
 
 export default () => {
@@ -114,20 +116,19 @@ export default () => {
           },
         },
         mpy(block) {
-          const pin = block.getFieldValue('PIN') || 0;
-          const pinName = `pin_${pin}`;
+          const pinName = block.getFieldValue('PIN');
           const mode = block.getFieldValue('MODE') || 'OUTPUT';
           this.definitions_['import_pin'] = 'from machine import Pin';
 
           let code = '';
           if (mode === 'INPUT') {
-            code = `${pinName} = Pin(${pin}, Pin.IN)`;
+            code = `${pinName}.init(Pin.IN)`;
           } else if (mode === 'INPUT_PULLUP') {
-            code = `${pinName} = Pin(${pin}, Pin.IN, Pin.PULL_UP)`;
+            code = `${pinName}.init(Pin.IN, Pin.PULL_UP)`;
           } else if (mode === 'INPUT_PULLDOWN') {
-            code = `${pinName} = Pin(${pin}, Pin.IN, Pin.PULL_DOWN)`;
+            code = `${pinName}.init(Pin.IN, Pin.PULL_DOWN)`;
           } else {
-            code = `${pinName} = Pin(${pin}, Pin.OUT)`;
+            code = `${pinName}.init(Pin.OUT)`;
           }
           this.definitions_[pinName] = code;
 
@@ -154,17 +155,22 @@ export default () => {
           },
         },
         mpy(block) {
-          const pin = block.getFieldValue('PIN') || 0;
-          const pinName = `pin_${pin}`;
+          const pinName = block.getFieldValue('PIN');
           const value = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
           this.definitions_['import_pin'] = 'from machine import Pin';
-          this.definitions_[pinName] = this.definitions_[pinName] ?? `${pinName} = Pin(${pin}, Pin.OUT)`;
+          this.definitions_[pinName] = `${pinName}.init(Pin.OUT)`;
           const code = `${pinName}.value(${value})\n`;
+          return code;
+        },
+        emu(block) {
+          const pinName = block.getFieldValue('PIN');
+          const value = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
+          const code = `runtime.setData(${pinName}, ${value ? true : false});\n`;
           return code;
         },
       },
       {
-        // 模拟 引脚设为
+        // 模拟引脚设为
         id: 'setDAC',
         text: translate('esp32.blocks.setanalog', 'set pin %1 analog to %2'),
         inputs: {
@@ -176,13 +182,17 @@ export default () => {
           },
         },
         mpy(block) {
-          const pin = block.getFieldValue('PIN') || 0;
-          const pinName = `pin_${pin}`;
+          const pinName = block.getFieldValue('PIN');
           const value = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
-          this.definitions_['import_pin'] = 'from machine import Pin';
           this.definitions_['import_dac'] = 'from machine import DAC';
-          this.definitions_[pinName] = `${pinName} = DAC(Pin(${pin}))`;
-          const code = `${pinName}.write(${value})\n`;
+          this.definitions_[`D${pinName}`] = `D${pinName} = DAC(${pinName})`;
+          const code = `D${pinName}.write(${value})\n`;
+          return code;
+        },
+        emu(block) {
+          const pinName = block.getFieldValue('PIN');
+          const value = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
+          const code = `runtime.setData(${pinName}, ${value});\n`;
           return code;
         },
       },
@@ -204,6 +214,10 @@ export default () => {
           const value = block.getFieldValue('VALUE') || 0;
           return [value, this.ORDER_ATOMIC];
         },
+        emu(block) {
+          const value = block.getFieldValue('VALUE') || 0;
+          return [value, this.ORDER_ATOMIC];
+        },
       },
       {
         // 数字引脚是否为高电平？
@@ -216,11 +230,16 @@ export default () => {
           },
         },
         mpy(block) {
-          const pin = block.getFieldValue('PIN') || 0;
-          const pinName = `pin_${pin}`;
+          const pinName = block.getFieldValue('PIN');
           this.definitions_['import_pin'] = 'from machine import Pin';
-          this.definitions_[pinName] = `${pinName} = Pin(${pin}, Pin.IN)`;
-          return [`(${pinName}.value() == 1)`, this.ORDER_RELATIONAL];
+          this.definitions_[pinName] = `${pinName}.init(Pin.IN)`;
+          const code = `(${pinName}.value() == 1)`;
+          return [code, this.ORDER_RELATIONAL];
+        },
+        emu(block) {
+          const pinName = block.getFieldValue('PIN');
+          const code = `(runtime.getData(${pinName}, 0) === 1023)\n`;
+          return [code];
         },
       },
       {
@@ -234,11 +253,16 @@ export default () => {
           },
         },
         mpy(block) {
-          const pin = block.getFieldValue('PIN') || 0;
-          const pinName = `pin_${pin}`;
+          const pinName = block.getFieldValue('PIN');
           this.definitions_['import_pin'] = 'from machine import Pin';
-          this.definitions_[pinName] = `${pinName} = Pin(${pin}, Pin.IN)`;
-          return [`(${pinName}.value() == 0)`, this.ORDER_RELATIONAL];
+          this.definitions_[pinName] = `${pinName}.init(Pin.IN)`;
+          const code = `(${pinName}.value() == 0)`;
+          return [code, this.ORDER_RELATIONAL];
+        },
+        emu(block) {
+          const pinName = block.getFieldValue('PIN');
+          const code = `(runtime.getData(${pinName}, 0) < 1023)\n`;
+          return [code];
         },
       },
       {
@@ -252,14 +276,18 @@ export default () => {
           },
         },
         mpy(block) {
-          const pin = block.getFieldValue('PIN') || 0;
-          const pinName = `pin_${pin}`;
-          this.definitions_['import_pin'] = 'from machine import Pin';
+          const pinName = block.getFieldValue('PIN');
           this.definitions_['import_adc'] = 'from machine import ADC';
-          this.definitions_[pinName] = `${pinName} = ADC(Pin(${pin}))`;
-          this.definitions_[`${pinName}_atten`] = `${pinName}.atten(ADC.ATTN_11DB)`;
-          this.definitions_[`${pinName}_width`] = `${pinName}.width(ADC.WIDTH_10BIT)`;
-          return [`${pinName}.read()`, this.ORD_FUNCTION_CALL];
+          this.definitions_[`A${pinName}`] = `A${pinName} = ADC(${pinName})`;
+          this.definitions_[`A${pinName}_atten`] = `A${pinName}.atten(ADC.ATTN_11DB)`;
+          this.definitions_[`A${pinName}_width`] = `A${pinName}.width(ADC.WIDTH_10BIT)`;
+          const code = `A${pinName}.read()`;
+          return [code, this.ORDER_FUNCTION_CALL];
+        },
+        emu(block) {
+          const pinName = block.getFieldValue('PIN');
+          const code = `runtime.getData(${pinName}, 0)\n`;
+          return [code];
         },
       },
       '---',
@@ -277,13 +305,11 @@ export default () => {
           },
         },
         mpy(block) {
-          const pin = block.getFieldValue('PIN') || 0;
-          const pinName = `pin_${pin}`;
+          const pinName = block.getFieldValue('PIN');
           const freq = this.valueToCode(block, 'FREQ', this.ORDER_NONE);
-          this.definitions_['import_pin'] = 'from machine import Pin';
           this.definitions_['import_pwm'] = 'from machine import PWM';
-          this.definitions_[pinName] = `${pinName} = PWM(Pin(${pin}), freq=1000)`;
-          const code = `${pinName}.freq(${freq})\n`;
+          this.definitions_[`W${pinName}`] = `W${pinName} = PWM(${pinName}, freq=1000)`;
+          const code = `W${pinName}.freq(${freq})\n`;
           return code;
         },
       },
@@ -300,13 +326,11 @@ export default () => {
           },
         },
         mpy(block) {
-          const pin = block.getFieldValue('PIN') || 0;
-          const pinName = `pin_${pin}`;
+          const pinName = block.getFieldValue('PIN');
           const value = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
-          this.definitions_['import_pin'] = 'from machine import Pin';
           this.definitions_['import_pwm'] = 'from machine import PWM';
-          this.definitions_[pinName] = `${pinName} = PWM(Pin(${pin}), freq=1000)`;
-          const code = `${pinName}.duty(${value})\n`;
+          this.definitions_[`W${pinName}`] = `W${pinName} = PWM(${pinName}, freq=1000)`;
+          const code = `W${pinName}.duty(${value})\n`;
           return code;
         },
       },
@@ -350,12 +374,11 @@ export default () => {
           },
         },
         mpy(block) {
-          const pin = block.getFieldValue('PIN') || 0;
-          const pinName = `pin_${pin}`;
+          const pinName = block.getFieldValue('PIN');
           const flagName = this.createName('event_flag');
           const interrupt = block.getFieldValue('INTERRUPT') || 'RISING';
           this.definitions_['import_pin'] = 'from machine import Pin';
-          this.definitions_[pinName] = this.definitions_[pinName] ?? `${pinName} = Pin(${pin}, Pin.IN)`;
+          this.definitions_[pinName] = `${pinName}.init(Pin.IN)`;
           this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()`;
 
           // 定义中断回调函数
@@ -392,8 +415,8 @@ export default () => {
           },
         },
         mpy(block) {
-          const pin = block.getFieldValue('PIN') || 0;
-          return `pin_${pin}.irq(handler=None)\n`;
+          const pinName = block.getFieldValue('PIN');
+          return `${pinName}.irq(handler=None)\n`;
         },
       },
     ],

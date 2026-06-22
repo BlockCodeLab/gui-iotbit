@@ -9,6 +9,12 @@ const getScreenX = (x) => x - 64;
 const getScreenY = (y) => 64 - y;
 
 export class IotBitRuntime extends Runtime {
+  _offlineScreen = [];
+
+  get times() {
+    return this._times ? Date.now() - this._times : 0;
+  }
+
   loadImage(url) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -31,11 +37,17 @@ export class IotBitRuntime extends Runtime {
     this.paintLayer.destroyChildren();
   }
 
+  updateScreen() {
+    this.paintLayer.add(...this._offlineScreen);
+    this._offlineScreen.length = 0;
+  }
+
   setLed(index, color, brightness) {
     const led = this.spritesLayer.findOne('#led-' + index);
     if (led) {
       led.fill(color);
-      led.opacity(brightness / 10);
+      if (brightness === 0) led.opacity(0.1);
+      else led.opacity((brightness / 10) * 0.7 + 0.3);
     }
   }
 
@@ -46,7 +58,7 @@ export class IotBitRuntime extends Runtime {
   }
 
   drawText(text, x, y) {
-    this.paintLayer.add(
+    this._offlineScreen.push(
       new Konva.Text({
         text,
         x: getScreenX(x),
@@ -60,7 +72,7 @@ export class IotBitRuntime extends Runtime {
   }
 
   drawTextLine(text, line) {
-    this.paintLayer.add(
+    this._offlineScreen.push(
       new Konva.Text({
         text,
         x: getScreenX(2),
@@ -79,7 +91,7 @@ export class IotBitRuntime extends Runtime {
   }
 
   drawLine(x1, y1, x2, y2) {
-    this.paintLayer.add(
+    this._offlineScreen.push(
       new Konva.Line({
         points: [getScreenX(x1), getScreenY(y1), getScreenX(x2), getScreenY(y2)],
         stroke: 'white',
@@ -89,7 +101,7 @@ export class IotBitRuntime extends Runtime {
   }
 
   drawEllipse(x, y, radiusX, radiusY) {
-    this.paintLayer.add(
+    this._offlineScreen.push(
       new Konva.Ellipse({
         radiusX,
         radiusY,
@@ -103,7 +115,7 @@ export class IotBitRuntime extends Runtime {
   }
 
   drawRect(x, y, width, height) {
-    this.paintLayer.add(
+    this._offlineScreen.push(
       new Konva.Rect({
         width,
         height,
@@ -117,7 +129,7 @@ export class IotBitRuntime extends Runtime {
   }
 
   fillRect(x, y, width, height) {
-    this.paintLayer.add(
+    this._offlineScreen.push(
       new Konva.Rect({
         width,
         height,

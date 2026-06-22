@@ -27,6 +27,11 @@ export default () => ({
         const code = `button_${key}.is_pressed()`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const key = block.getFieldValue('KEY_OPTION');
+        const code = `runtime.getData('button-${key}', false)`;
+        return [code];
+      },
     },
     '---',
     {
@@ -44,6 +49,10 @@ export default () => ({
         const code = `compass.get_${option}()`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const code = '0';
+        return [code];
+      },
     },
     {
       id: 'compassHeading',
@@ -53,6 +62,10 @@ export default () => ({
         this.definitions_['compass_calibrate'] = 'if not compass.is_calibrated(): compass.calibrate(display)';
         const code = 'compass.get_heading()';
         return [code, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const code = `runtime.getData('heading', 0)`;
+        return [code];
       },
     },
     {
@@ -77,6 +90,11 @@ export default () => ({
         const option = block.getFieldValue('XYZ_OPTION');
         const code = `accelerometer.get_${option}()`;
         return [code, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const option = block.getFieldValue('XYZ_OPTION');
+        const code = `runtime.getData('accelerometer-${option}', 0)`;
+        return [code];
       },
     },
     {
@@ -131,6 +149,11 @@ export default () => ({
         const code = `gyroscope.get_${option}()`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const option = block.getFieldValue('ROTATE_OPTION');
+        const code = `runtime.getData('gyroscope-${option}', 0)`;
+        return [code];
+      },
     },
     // {
     //   id: 'gesture',
@@ -164,6 +187,10 @@ export default () => ({
         const code = 'light.get_brightness()';
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const code = `runtime.getData('brightness', 0)`;
+        return [code];
+      },
     },
     {
       id: 'loudness',
@@ -172,6 +199,10 @@ export default () => ({
       mpy(block) {
         const code = 'microphone.get_loudness()';
         return [code, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const code = `runtime.getData('loudness', 0)`;
+        return [code];
       },
     },
     {
@@ -183,6 +214,10 @@ export default () => ({
         const code = 'round((esp32.raw_temperature() - 32) * 5 / 9, 3)';
         // const code = 'accelerometer.get_temperature()';
         return [code, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const code = `runtime.getData('temperature', 0)`;
+        return [code];
       },
     },
     '---',
@@ -206,6 +241,14 @@ export default () => ({
           code = `(${code} / 1000)`;
         }
         return [code, this.ORDER_ATOMIC];
+      },
+      emu(block) {
+        const unit = block.getFieldValue('UNIT');
+        let code = 'runtime.times';
+        if (unit === 'SEC') {
+          code = `(${code} / 1000)`;
+        }
+        return [code];
       },
     },
   ],
