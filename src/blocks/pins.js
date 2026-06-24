@@ -162,12 +162,6 @@ export default () => {
           const code = `${pinName}.value(${value})\n`;
           return code;
         },
-        emu(block) {
-          const pinName = block.getFieldValue('PIN');
-          const value = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
-          const code = `runtime.setData(${pinName}, ${value ? true : false});\n`;
-          return code;
-        },
       },
       {
         // 模拟引脚设为
@@ -187,12 +181,6 @@ export default () => {
           this.definitions_['import_dac'] = 'from machine import DAC';
           this.definitions_[`D${pinName}`] = `D${pinName} = DAC(${pinName})`;
           const code = `D${pinName}.write(${value})\n`;
-          return code;
-        },
-        emu(block) {
-          const pinName = block.getFieldValue('PIN');
-          const value = this.valueToCode(block, 'VALUE', this.ORDER_NONE);
-          const code = `runtime.setData(${pinName}, ${value});\n`;
           return code;
         },
       },
@@ -238,7 +226,7 @@ export default () => {
         },
         emu(block) {
           const pinName = block.getFieldValue('PIN');
-          const code = `(runtime.getData(${pinName}, 0) === 1023)\n`;
+          const code = `(runtime.getData("${pinName}", 0) > 459)`;
           return [code];
         },
       },
@@ -261,7 +249,7 @@ export default () => {
         },
         emu(block) {
           const pinName = block.getFieldValue('PIN');
-          const code = `(runtime.getData(${pinName}, 0) < 1023)\n`;
+          const code = `(runtime.getData("${pinName}", 0) < 460)`;
           return [code];
         },
       },
@@ -286,7 +274,7 @@ export default () => {
         },
         emu(block) {
           const pinName = block.getFieldValue('PIN');
-          const code = `runtime.getData(${pinName}, 0)\n`;
+          const code = `runtime.getData("${pinName}", 0)`;
           return [code];
         },
       },

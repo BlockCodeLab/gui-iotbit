@@ -1,0 +1,70 @@
+.picker-tooltip {
+  background: var(--ui-white);
+  color: var(--text-primary);
+  padding: calc(var(--space) / 2);
+}
+
+.dial-wrapper {
+  margin: 1rem;
+  user-select: none;
+  position: relative;
+}
+
+.dial-gauge,
+.dial-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+}
+
+.dial-handle {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  margin-left: calc(40px / -2);
+  margin-top: calc(40px / -2);
+}
+
+.dial-gauge-path {
+  fill: var(--theme-transparent);
+  stroke: var(--theme-primary);
+  stroke-width: 1px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.button {
+  width: calc(2rem + 2px);
+  height: calc(2rem + 2px);
+  padding: 0.375rem !important;
+}
+
+.button-icon {
+  margin: auto;
+}
+
+.group-button-first {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.group-button-middle {
+  border-radius: 0;
+  border-left: 0;
+}
+
+.group-button-last {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.group-button-toggled-off {
+  filter: saturate(0);
+}

@@ -8,20 +8,23 @@
   display: flex;
 }
 
-.selector-wrapper {
-  display: flex;
+.data-wrapper {
+  width: calc(468px + 2px);
+  padding: 0 var(--space);
   flex-direction: row;
   flex: 1;
-  margin-top: var(--space);
-  width: calc(468px + 2px);
+  display: flex;
+  border: 1px solid var(--ui-black-transparent);
+  border-radius: var(--space);
+  background: var(--ui-white);
+  margin-bottom: var(--space);
 }
 
-.selector-wrapper.small {
+.data-wrapper.small {
   width: calc(360px + 2px);
 }
 
 .panel-box-wrapper {
-  margin-top: var(--space);
   border-radius: var(--space) var(--space) 0 0;
   border: 1px solid var(--ui-black-transparent);
   border-bottom: 0;

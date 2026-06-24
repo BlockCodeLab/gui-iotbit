@@ -62,6 +62,20 @@ export default () => ({
         const code = `(${num1} ${symbol} ${num2})`;
         return [code, orders[symbol]];
       },
+      emu(block) {
+        const num1 = this.valueToCode(block, 'NUM1', this.ORDER_NONE);
+        const num2 = this.valueToCode(block, 'NUM2', this.ORDER_NONE);
+        const symbol = block.getFieldValue('SYMBOL') || '+';
+
+        const orders = {
+          '+': this.ORDER_ADDITION,
+          '-': this.ORDER_SUBTRACTION,
+          '*': this.ORDER_MULTIPLICATION,
+          '/': this.ORDER_DIVISION,
+        };
+        const code = `(${num1} ${symbol} ${num2})`;
+        return [code, orders[symbol]];
+      },
     },
     '---',
     {
@@ -84,6 +98,12 @@ export default () => ({
         const from = this.valueToCode(block, 'FROM', this.ORDER_NONE);
         const to = this.valueToCode(block, 'TO', this.ORDER_NONE);
         const code = `random.randint(${from}, ${to})`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const from = this.valueToCode(block, 'FROM', this.ORDER_NONE);
+        const to = this.valueToCode(block, 'TO', this.ORDER_NONE);
+        const code = `Math.round(${from}+Math.random()*${to})`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
@@ -129,6 +149,22 @@ export default () => ({
         const code = `(${num1} ${symbol} ${num2})`;
         return [code, orders[symbol]];
       },
+      emu(block) {
+        const num1 = this.valueToCode(block, 'NUM1', this.ORDER_NONE);
+        const num2 = this.valueToCode(block, 'NUM2', this.ORDER_NONE);
+        const symbol = block.getFieldValue('SYMBOL') || '>';
+
+        const orders = {
+          '>': this.ORDER_RELATIONAL,
+          '<': this.ORDER_RELATIONAL,
+          '==': this.ORDER_EQUALITY,
+          '>=': this.ORDER_RELATIONAL,
+          '<=': this.ORDER_RELATIONAL,
+          '!=': this.ORDER_EQUALITY,
+        };
+        const code = `(${num1} ${symbol} ${num2})`;
+        return [code, orders[symbol]];
+      },
     },
     '---',
     {
@@ -148,6 +184,12 @@ export default () => ({
         const operand1 = this.valueToCode(block, 'OPERAND1', this.ORDER_NONE);
         const operand2 = this.valueToCode(block, 'OPERAND2', this.ORDER_NONE);
         const code = `(${operand1} and ${operand2})`;
+        return [code, this.ORDER_LOGICAL_AND];
+      },
+      emu(block) {
+        const operand1 = this.valueToCode(block, 'OPERAND1', this.ORDER_NONE);
+        const operand2 = this.valueToCode(block, 'OPERAND2', this.ORDER_NONE);
+        const code = `(${operand1} && ${operand2})`;
         return [code, this.ORDER_LOGICAL_AND];
       },
     },
@@ -170,6 +212,12 @@ export default () => ({
         const code = `(${operand1} or ${operand2})`;
         return [code, this.ORDER_LOGICAL_OR];
       },
+      emu(block) {
+        const operand1 = this.valueToCode(block, 'OPERAND1', this.ORDER_NONE);
+        const operand2 = this.valueToCode(block, 'OPERAND2', this.ORDER_NONE);
+        const code = `(${operand1} || ${operand2})`;
+        return [code, this.ORDER_LOGICAL_OR];
+      },
     },
     {
       // 非
@@ -184,6 +232,11 @@ export default () => ({
       mpy(block) {
         const operand = this.valueToCode(block, 'OPERAND', this.ORDER_NONE) || 'True';
         const code = `(not ${operand})`;
+        return [code, this.ORDER_LOGICAL_NOT];
+      },
+      emu(block) {
+        const operand = this.valueToCode(block, 'OPERAND', this.ORDER_NONE) || 'True';
+        const code = `(!${operand})`;
         return [code, this.ORDER_LOGICAL_NOT];
       },
     },
@@ -227,6 +280,21 @@ export default () => ({
         const code = `(${num1} ${symbol} ${num2})`;
         return [code, orders[symbol]];
       },
+      emu(block) {
+        const num1 = this.valueToCode(block, 'NUM1', this.ORDER_NONE);
+        const num2 = this.valueToCode(block, 'NUM2', this.ORDER_NONE);
+        const symbol = block.getFieldValue('SYMBOL') || '&';
+
+        const orders = {
+          '&': this.ORDER_BITWISE_AND,
+          '|': this.ORDER_BITWISE_OR,
+          '^': this.ORDER_BITWISE_XOR,
+          '<<': this.ORDER_BITWISE_SHIFT,
+          '>>': this.ORDER_BITWISE_SHIFT,
+        };
+        const code = `(${num1} ${symbol} ${num2})`;
+        return [code, orders[symbol]];
+      },
     },
     {
       // 位运算非
@@ -240,6 +308,11 @@ export default () => ({
         },
       },
       mpy(block) {
+        const num = this.valueToCode(block, 'NUM', this.ORDER_NONE);
+        const code = `(~${num})`;
+        return [code, this.ORDER_BITWISE_NOT];
+      },
+      emu(block) {
         const num = this.valueToCode(block, 'NUM', this.ORDER_NONE);
         const code = `(~${num})`;
         return [code, this.ORDER_BITWISE_NOT];
@@ -267,6 +340,12 @@ export default () => ({
         const code = `max(${num1}, ${num2})`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const num1 = this.valueToCode(block, 'NUM1', this.ORDER_NONE);
+        const num2 = this.valueToCode(block, 'NUM2', this.ORDER_NONE);
+        const code = `Math.max(${num1}, ${num2})`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
     },
     {
       // 最小值
@@ -287,6 +366,12 @@ export default () => ({
         const num1 = this.valueToCode(block, 'NUM1', this.ORDER_NONE);
         const num2 = this.valueToCode(block, 'NUM2', this.ORDER_NONE);
         const code = `min(${num1}, ${num2})`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const num1 = this.valueToCode(block, 'NUM1', this.ORDER_NONE);
+        const num2 = this.valueToCode(block, 'NUM2', this.ORDER_NONE);
+        const code = `Math.min(${num1}, ${num2})`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
@@ -311,6 +396,12 @@ export default () => ({
         const code = `(${num1} % ${num2})`;
         return [code, this.ORDER_MODULUS];
       },
+      emu(block) {
+        const num1 = this.valueToCode(block, 'NUM1', this.ORDER_NONE);
+        const num2 = this.valueToCode(block, 'NUM2', this.ORDER_NONE);
+        const code = `(${num1} % ${num2})`;
+        return [code, this.ORDER_MODULUS];
+      },
     },
     {
       // 四舍五入
@@ -329,6 +420,11 @@ export default () => ({
         const code = `round(${num})`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const num = this.valueToCode(block, 'NUM', this.ORDER_NONE);
+        const code = `Math.round(${num})`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
     },
     '---',
     {
@@ -339,19 +435,19 @@ export default () => ({
       inputs: {
         OPERATOR: {
           menu: [
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_ABS, 'math.fabs'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_FLOOR, 'math.floor'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_CEILING, 'math.ceil'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_SQRT, 'math.sqrt'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_SIN, 'math.sin'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_COS, 'math.cos'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_TAN, 'math.tan'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_ASIN, 'math.asin'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_ACOS, 'math.acos'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_ATAN, 'math.atan'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_LN, 'math.log'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_LOG, 'math.log10'],
-            [ScratchBlocks.Msg.OPERATORS_MATHOP_EEXP, 'math.exp'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_ABS, 'abs'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_FLOOR, 'floor'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_CEILING, 'ceil'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_SQRT, 'sqrt'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_SIN, 'sin'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_COS, 'cos'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_TAN, 'tan'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_ASIN, 'asin'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_ACOS, 'acos'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_ATAN, 'atan'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_LN, 'log'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_LOG, 'log10'],
+            [ScratchBlocks.Msg.OPERATORS_MATHOP_EEXP, 'exp'],
             [ScratchBlocks.Msg.OPERATORS_MATHOP_10EXP, 'pow10'],
           ],
         },
@@ -366,10 +462,26 @@ export default () => ({
         const num = this.valueToCode(block, 'NUM', this.ORDER_NONE);
 
         let code = '';
-        if (operator === 'pow10') {
+        if (operator === 'abs') {
+          code += `math.fabs(${num})`;
+        } else if (operator === 'pow10') {
           code += `math.pow(10, ${num})`;
         } else {
-          code += `${operator}(${num})`;
+          code += `math.${operator}(${num})`;
+        }
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const operator = block.getFieldValue('OPERATOR') || 'abs';
+        const num = this.valueToCode(block, 'NUM', this.ORDER_NONE);
+
+        let code = '';
+        if (operator === 'abs') {
+          code += `Math.abs(${num})`;
+        } else if (operator === 'pow10') {
+          code += `Math.pow(10, ${num})`;
+        } else {
+          code += `Math.${operator}(${num})`;
         }
         return [code, this.ORDER_FUNCTION_CALL];
       },
@@ -399,6 +511,12 @@ export default () => ({
         const from = this.valueToCode(block, 'FROM', this.ORDER_NONE);
         const to = this.valueToCode(block, 'TO', this.ORDER_NONE);
         return [`min(max(${data}, ${from}), ${to})`, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const data = this.valueToCode(block, 'DATA', this.ORDER_NONE);
+        const from = this.valueToCode(block, 'FROM', this.ORDER_NONE);
+        const to = this.valueToCode(block, 'TO', this.ORDER_NONE);
+        return [`Math.min(Math.max(${data}, ${from}), ${to})`, this.ORDER_FUNCTION_CALL];
       },
     },
     {
@@ -434,7 +552,16 @@ export default () => ({
         const fromhigh = this.valueToCode(block, 'FROMHIGH', this.ORDER_NONE);
         const tolow = this.valueToCode(block, 'TOLOW', this.ORDER_NONE);
         const tohigh = this.valueToCode(block, 'TOHIGHT', this.ORDER_NONE);
-        const code = `(${data} - ${fromlow}) * (${tohigh} - ${tolow}) // (${fromhigh} - ${fromlow}) + ${tolow}`;
+        const code = `((${data} - ${fromlow}) * (${tohigh} - ${tolow}) // (${fromhigh} - ${fromlow}) + ${tolow})`;
+        return [code, this.ORDER_ATOMIC];
+      },
+      emu(block) {
+        const data = this.valueToCode(block, 'DATA', this.ORDER_NONE);
+        const fromlow = this.valueToCode(block, 'FROMLOW', this.ORDER_NONE);
+        const fromhigh = this.valueToCode(block, 'FROMHIGH', this.ORDER_NONE);
+        const tolow = this.valueToCode(block, 'TOLOW', this.ORDER_NONE);
+        const tohigh = this.valueToCode(block, 'TOHIGHT', this.ORDER_NONE);
+        const code = `Math.floor((${data} - ${fromlow}) * (${tohigh} - ${tolow}) / (${fromhigh} - ${fromlow}) + ${tolow})`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
@@ -447,12 +574,16 @@ export default () => ({
       inputs: {
         DATA: {
           type: 'string',
-          defaultValue: 'esp32',
+          defaultValue: 'iot:bit',
         },
       },
       mpy(block) {
         const data = this.valueToCode(block, 'DATA', this.ORDER_NONE);
         return [`len(${data})`, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const data = this.valueToCode(block, 'DATA', this.ORDER_NONE);
+        return [`(${data}.length ?? String(${data}).length)`, this.ORDER_ATOMIC];
       },
     },
     '---',
@@ -488,6 +619,25 @@ export default () => ({
         const code = `${type}(${data})`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const data = this.valueToCode(block, 'DATA', this.ORDER_NONE);
+        let type = block.getFieldValue('TYPE') || 'int';
+
+        if (type === 'int') {
+          type = 'parseInt';
+        } else if (type === 'float') {
+          type = 'parseFloat';
+        } else if (type === 'str') {
+          type = 'String';
+        } else if (type === 'list') {
+          type = 'Array.from';
+        } else if (type === 'to_bytes') {
+          type = 'Uint8Array.fromHex';
+        }
+
+        const code = `${type}(${data})`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
     },
     '---',
     {
@@ -515,6 +665,13 @@ export default () => ({
         const code = `(${r},${g},${b})`;
         return [code];
       },
+      emu(block) {
+        const r = this.valueToCode(block, 'R', this.ORDER_NONE);
+        const g = this.valueToCode(block, 'G', this.ORDER_NONE);
+        const b = this.valueToCode(block, 'B', this.ORDER_NONE);
+        const code = `('#'+parseInt(((${r}&0xff)<<16)|((${g}&0xff)<<8)|(${b}&0xff)).toString(16).padStart(6,'0'))`;
+        return [code];
+      },
     },
     {
       // 0-255 滑块
@@ -531,6 +688,10 @@ export default () => ({
         },
       },
       mpy(block) {
+        const value = block.getFieldValue('R') || 0;
+        return [value, this.ORDER_ATOMIC];
+      },
+      emu(block) {
         const value = block.getFieldValue('R') || 0;
         return [value, this.ORDER_ATOMIC];
       },
@@ -553,6 +714,10 @@ export default () => ({
         const value = block.getFieldValue('G') || 0;
         return [value, this.ORDER_ATOMIC];
       },
+      emu(block) {
+        const value = block.getFieldValue('G') || 0;
+        return [value, this.ORDER_ATOMIC];
+      },
     },
     {
       // 0-255 滑块
@@ -569,6 +734,10 @@ export default () => ({
         },
       },
       mpy(block) {
+        const value = block.getFieldValue('B') || 0;
+        return [value, this.ORDER_ATOMIC];
+      },
+      emu(block) {
         const value = block.getFieldValue('B') || 0;
         return [value, this.ORDER_ATOMIC];
       },

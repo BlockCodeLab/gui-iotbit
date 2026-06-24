@@ -6,6 +6,7 @@ import { PanelBox } from '@blockcode/code';
 import { StageConfig } from '../emulator/emulator-config';
 
 import { Stage } from '../stage/stage';
+import { EmuData } from '../emu-data/emu-data';
 import styles from './sidedock.module.css';
 
 export function Sidedock() {
@@ -15,7 +16,7 @@ export function Sidedock() {
 
   useEffect(() => {
     setAppState({
-      stageSize: StageConfig.Large,
+      stageSize: window.innerWidth < 1200 ? StageConfig.Small : StageConfig.Large,
     });
   }, []);
 
@@ -31,10 +32,12 @@ export function Sidedock() {
       />
 
       <div
-        className={classNames(styles.selectorWrapper, {
+        className={classNames(styles.dataWrapper, {
           [styles.small]: appState.value?.stageSize === StageConfig.Small,
         })}
-      ></div>
+      >
+        <EmuData runtime={runtime} />
+      </div>
 
       {appState.value?.panelBoxId && tabIndex.value !== 1 && (
         <div className={styles.panelBoxWrapper}>

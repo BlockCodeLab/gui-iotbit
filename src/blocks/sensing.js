@@ -210,9 +210,9 @@ export default () => ({
       text: translate('esp32.blocks.temperature', 'temperature'),
       output: 'number',
       mpy(block) {
-        this.definitions_['import_esp32'] = 'import esp32';
-        const code = 'round((esp32.raw_temperature() - 32) * 5 / 9, 3)';
-        // const code = 'accelerometer.get_temperature()';
+        // this.definitions_['import_esp32'] = 'import esp32';
+        // const code = 'round((esp32.raw_temperature() - 32) * 5 / 9, 3)';
+        const code = 'accelerometer.get_temperature()';
         return [code, this.ORDER_FUNCTION_CALL];
       },
       emu(block) {

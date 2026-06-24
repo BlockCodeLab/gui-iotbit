@@ -49,6 +49,10 @@ export default () => ({
         }
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const code = '127.0.0.1';
+        return [code];
+      },
     },
     {
       id: 'isconnected',
@@ -58,6 +62,9 @@ export default () => ({
         this.definitions_['import_network'] = 'import network';
         this.definitions_['wlan'] = 'wlan = network.WLAN(); wlan.active(True)';
         return ['wlan.isconnected()', this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        return [true];
       },
     },
     '---',

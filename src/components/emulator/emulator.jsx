@@ -47,21 +47,10 @@ export function IotBitEmulator({ runtime, onRuntime }) {
       const runtime = new IotBitRuntime(stage);
       onRuntime?.(runtime);
 
-      const res = {
-        iotbit: await runtime.loadImage(iotbitImage),
-        display: await runtime.loadImage(displayImage),
-        button: await runtime.loadImage(buttonImage),
-        buttonClick: await runtime.loadImage(buttonClickImage),
-        pin: await runtime.loadImage(pinImage),
-        pinClick: await runtime.loadImage(pinClickImage),
-        pin0: await runtime.loadImage(pin0Image),
-        pin0Click: await runtime.loadImage(pin0ClickImage),
-        pinGND: await runtime.loadImage(pinGNDImage),
-        pinGNDClick: await runtime.loadImage(pinGNDClickImage),
-        pinName: await runtime.loadImage(pinNameImage),
-      };
+      const res = {};
 
       // 创建硬件模拟
+      res.iotbit = await runtime.loadImage(iotbitImage);
       runtime.backdropLayer.add(
         new Konva.Image({
           id: 'iotbit',
@@ -77,6 +66,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
       );
 
       // 屏幕（遮罩）
+      res.display = await runtime.loadImage(displayImage);
       runtime.boardLayer.add(
         new Konva.Image({
           id: 'display',
@@ -107,6 +97,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
       });
 
       // 按钮
+      res.button = await runtime.loadImage(buttonImage);
       ['a', 'b'].forEach((id, i) => {
         const button = new Konva.Image({
           id: 'button-' + id,
@@ -182,8 +173,12 @@ export function IotBitEmulator({ runtime, onRuntime }) {
           });
         });
       });
+      res.buttonClick = await runtime.loadImage(buttonClickImage);
 
       // 引脚
+      res.pin = await runtime.loadImage(pinImage);
+      res.pin0 = await runtime.loadImage(pin0Image);
+      res.pinGND = await runtime.loadImage(pinGNDImage);
       ['0', '1', '2', '3v', 'gnd'].forEach((id, i) => {
         const resName = i > 0 && i < 4 ? 'pin' : `pin${id.toUpperCase()}`;
         const pin = new Konva.Image({
@@ -230,7 +225,11 @@ export function IotBitEmulator({ runtime, onRuntime }) {
           });
         }
       });
+      res.pinClick = await runtime.loadImage(pinClickImage);
+      res.pin0Click = await runtime.loadImage(pin0ClickImage);
+      res.pinGNDClick = await runtime.loadImage(pinGNDClickImage);
 
+      res.pinName = await runtime.loadImage(pinNameImage);
       runtime.boardLayer.add(
         new Konva.Image({
           id: 'pin-name',
@@ -242,6 +241,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
           height: res.pinName.height,
           offsetX: res.pinName.width / 2,
           offsetY: res.pinName.height / 2,
+          listening: false,
         }),
       );
 

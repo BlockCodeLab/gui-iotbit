@@ -6,6 +6,17 @@ iotbit.emu.smallStage: 缩小舞台
 iotbit.emu.largeStage: 放大舞台
 iotbit.emu.previewCode: 预览代码
 iotbit.emu.enable: 开启模拟器
+iotbit.emu.compass: 指南针（北）
+iotbit.emu.accelerometer: 加速度计
+iotbit.emu.rotation: 旋转
+iotbit.emu.pitch: 俯仰
+iotbit.emu.roll: 横滚
+iotbit.emu.yaw: 偏航
+iotbit.emu.brightness: 亮度
+iotbit.emu.loudness: 响度
+iotbit.emu.temperature: 温度
+iotbit.emu.pins: 引脚
+iotbit.emu.analogPins: 模拟引脚
 
 esp32.extension.tags.controllers: 输入模块
 esp32.extension.tags.sensors: 传感器

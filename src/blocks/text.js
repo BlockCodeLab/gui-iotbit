@@ -91,6 +91,13 @@ export default () => ({
         const code = `str(${str2}).replace(str(${str1}), ${str3})\n`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
+        const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
+        const str3 = this.valueToCode(block, 'STRING3', this.ORDER_NONE);
+        const code = `String(${str2}).replace(String(${str1}), ${str3})\n`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
     },
     {
       // 截取
@@ -118,6 +125,13 @@ export default () => ({
         const code = `str(${str})[${from}:${to}]`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const from = this.getAdjusted(block, 'FROM');
+        const to = this.valueToCode(block, 'TO', this.ORDER_NONE);
+        const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
+        const code = `String(${str}).slice(${from}, ${to})`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
     },
     {
       // 查找
@@ -138,6 +152,12 @@ export default () => ({
         const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
         const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
         const code = `(str(${str2}).find(str(${str1})) + 1)\n`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
+        const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
+        const code = `(String(${str2}).indexOf(String(${str1}))+1)\n`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
@@ -162,6 +182,12 @@ export default () => ({
         const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
         const code = `(str(${str2}) in str(${str1}))`;
         return [code, this.ORDER_EQUALITY];
+      },
+      emu(block) {
+        const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
+        const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
+        const code = `String(${str2}).includes(String(${str1}))\n`;
+        return [code, this.ORDER_FUNCTION_CALL];
       },
     },
     {
@@ -194,6 +220,14 @@ export default () => ({
         const code = `str(${str1}).${method}(str(${str2}))`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
+        const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
+        const with_ = block.getFieldValue('WITH') || 'START';
+        const method = with_ === 'START' ? 'startsWith' : 'endsWith';
+        const code = `String(${str1}).${method}(String(${str2}))`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
     },
     {
       // 相同
@@ -207,13 +241,19 @@ export default () => ({
         },
         STRING2: {
           type: 'string',
-          defaultValue: 'iotbit',
+          defaultValue: 'IOTBIT',
         },
       },
       mpy(block) {
         const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
         const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
-        const code = `str(${str1}).lower() == str(${str2}).lower()`;
+        const code = `(str(${str1}).lower() == str(${str2}).lower())`;
+        return [code, this.ORDER_EQUALITY];
+      },
+      emu(block) {
+        const str1 = this.valueToCode(block, 'STRING1', this.ORDER_NONE);
+        const str2 = this.valueToCode(block, 'STRING2', this.ORDER_NONE);
+        const code = `(String(${str1}).toLowerCase() == String(${str2}).toLowerCase())`;
         return [code, this.ORDER_EQUALITY];
       },
     },
@@ -242,6 +282,13 @@ export default () => ({
         const code = `str(${str}).${method}()\n`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
+      emu(block) {
+        const with_ = block.getFieldValue('WITH') || 'LOWER';
+        const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
+        const method = with_ === 'LOWER' ? 'toLowerCase' : 'toUpperCase';
+        const code = `String(${str}).${method}()\n`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
     },
     {
       // 清除空白
@@ -257,6 +304,11 @@ export default () => ({
       mpy(block) {
         const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
         const code = `str(${str}).strip()\n`;
+        return [code, this.ORDER_FUNCTION_CALL];
+      },
+      emu(block) {
+        const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
+        const code = `String(${str}).trim()\n`;
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },

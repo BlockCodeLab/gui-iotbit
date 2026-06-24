@@ -6,6 +6,17 @@ iotbit.emu.smallStage: Switch to small stage
 iotbit.emu.largeStage: Switch to large stage
 iotbit.emu.previewCode: Preview Code
 iotbit.emu.enable: Enable Emulator
+iotbit.emu.compass: Compass
+iotbit.emu.accelerometer: Accelerometer
+iotbit.emu.rotation: Rotation
+iotbit.emu.pitch: Pitch
+iotbit.emu.roll: Roll
+iotbit.emu.yaw: Yaw
+iotbit.emu.brightness: Brightness
+iotbit.emu.loudness: Loudness
+iotbit.emu.temperature: Temperature
+iotbit.emu.pins: Pins
+iotbit.emu.analogPins: Analog Pins
 
 esp32.extension.tags.controllers: Controllers
 esp32.extension.tags.sensors: Sensors
