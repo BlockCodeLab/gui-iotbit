@@ -1,5 +1,4 @@
 import { useCallback } from 'preact/hooks';
-
 import { Tooltip } from '@blockcode/core';
 import styles from './direction-picker.module.css';
 
@@ -52,35 +51,33 @@ export function DirectionPicker({ direction, children, onChange }) {
       placement="top"
       className={styles.pickerTooltip}
       content={
-        <>
-          <div className={styles.dialWrapper}>
-            <img
-              draggable={false}
-              src={dialIcon}
+        <div className={styles.dialWrapper}>
+          <img
+            draggable={false}
+            src={dialIcon}
+          />
+          <svg
+            className={styles.dialGauge}
+            width={RADIUS * 2}
+            height={RADIUS * 2}
+          >
+            <path
+              className={styles.dialGaugePath}
+              d={createGaugePath(direction)}
             />
-            <svg
-              className={styles.dialGauge}
-              width={RADIUS * 2}
-              height={RADIUS * 2}
-            >
-              <path
-                className={styles.dialGaugePath}
-                d={createGaugePath(direction)}
-              />
-            </svg>
-            <img
-              draggable={false}
-              className={styles.dialHandle}
-              src={handleIcon}
-              style={{
-                top: `${RADIUS - RADIUS * Math.cos(direction * (Math.PI / 180))}px`,
-                left: `${RADIUS + RADIUS * Math.sin(direction * (Math.PI / 180))}px`,
-                transform: `rotate(${direction}deg)`,
-              }}
-              onPointerDown={handleDirectionMouseDown}
-            />
-          </div>
-        </>
+          </svg>
+          <img
+            draggable={false}
+            className={styles.dialHandle}
+            src={handleIcon}
+            style={{
+              top: `${RADIUS - RADIUS * Math.cos(direction * (Math.PI / 180))}px`,
+              left: `${RADIUS + RADIUS * Math.sin(direction * (Math.PI / 180))}px`,
+              transform: `rotate(${direction}deg)`,
+            }}
+            onPointerDown={handleDirectionMouseDown}
+          />
+        </div>
       }
     >
       {children}

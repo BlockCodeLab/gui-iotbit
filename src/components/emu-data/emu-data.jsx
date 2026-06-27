@@ -3,6 +3,7 @@ import { useSignal, useSignalEffect } from '@preact/signals';
 import { MathUtils } from '@blockcode/utils';
 import { useAppContext, Text, Label, ToggleButtons, BufferedInput } from '@blockcode/core';
 import { DirectionPicker } from '../direction-picker/direction-picker';
+import { SliderPicker } from '../slider-picker/slider-picker';
 import { StageConfig } from '../emulator/emulator-config';
 import { getBoardPins } from '../../blocks/pins';
 
@@ -61,45 +62,105 @@ export function EmuData({ runtime }) {
         secondary
         text="X"
       >
-        <BufferedInput
-          small
-          type="number"
-          className={styles.marginRight}
+        <SliderPicker
+          min={-2000}
+          max={2000}
           value={accelerometer.value[0]}
-          onSubmit={useCallback(
-            (val) => (accelerometer.value = [val, accelerometer.value[1], accelerometer.value[2]]),
-            [runtime],
+          onChange={useCallback(
+            (val) =>
+              (accelerometer.value = [
+                MathUtils.clamp(Math.round(val), -2000, 2000),
+                accelerometer.value[1],
+                accelerometer.value[2],
+              ]),
+            [],
           )}
-        />
+        >
+          <BufferedInput
+            small
+            type="number"
+            className={styles.marginRight}
+            value={accelerometer.value[0]}
+            onSubmit={useCallback(
+              (val) =>
+                (accelerometer.value = [
+                  MathUtils.clamp(Math.round(val), -2000, 2000),
+                  accelerometer.value[1],
+                  accelerometer.value[2],
+                ]),
+              [],
+            )}
+          />
+        </SliderPicker>
       </Label>
       <Label
         secondary
         text="Y"
       >
-        <BufferedInput
-          small
-          type="number"
-          className={styles.marginRight}
+        <SliderPicker
+          min={-2000}
+          max={2000}
           value={accelerometer.value[1]}
-          onSubmit={useCallback(
-            (val) => (accelerometer.value = [accelerometer.value[0], val, accelerometer.value[2]]),
+          onChange={useCallback(
+            (val) =>
+              (accelerometer.value = [
+                accelerometer.value[0],
+                MathUtils.clamp(Math.round(val), -2000, 2000),
+                accelerometer.value[2],
+              ]),
             [],
           )}
-        />
+        >
+          <BufferedInput
+            small
+            type="number"
+            className={styles.marginRight}
+            value={accelerometer.value[1]}
+            onSubmit={useCallback(
+              (val) =>
+                (accelerometer.value = [
+                  accelerometer.value[0],
+                  MathUtils.clamp(Math.round(val), -2000, 2000),
+                  accelerometer.value[2],
+                ]),
+              [],
+            )}
+          />
+        </SliderPicker>
       </Label>
       <Label
         secondary
         text="Z"
       >
-        <BufferedInput
-          small
-          type="number"
+        <SliderPicker
+          min={-2000}
+          max={2000}
           value={accelerometer.value[2]}
-          onSubmit={useCallback(
-            (val) => (accelerometer.value = [accelerometer.value[0], accelerometer.value[1], val]),
+          onChange={useCallback(
+            (val) =>
+              (accelerometer.value = [
+                accelerometer.value[0],
+                accelerometer.value[1],
+                MathUtils.clamp(Math.round(val), -2000, 2000),
+              ]),
             [],
           )}
-        />
+        >
+          <BufferedInput
+            small
+            type="number"
+            value={accelerometer.value[2]}
+            onSubmit={useCallback(
+              (val) =>
+                (accelerometer.value = [
+                  accelerometer.value[0],
+                  accelerometer.value[1],
+                  MathUtils.clamp(Math.round(val), -2000, 2000),
+                ]),
+              [],
+            )}
+          />
+        </SliderPicker>
       </Label>
     </div>
   );
@@ -114,12 +175,19 @@ export function EmuData({ runtime }) {
         />
       }
     >
-      <BufferedInput
-        small
-        type="number"
+      <SliderPicker
+        min={-10}
+        max={60}
         value={temperature.value}
-        onSubmit={useCallback((val) => (temperature.value = MathUtils.clamp(Math.round(val), -10, 60)), [runtime])}
-      />
+        onChange={(val) => (temperature.value = MathUtils.clamp(Math.round(val), -10, 60))}
+      >
+        <BufferedInput
+          small
+          type="number"
+          value={temperature.value}
+          onSubmit={useCallback((val) => (temperature.value = MathUtils.clamp(Math.round(val), -10, 60)), [])}
+        />
+      </SliderPicker>
     </Label>
   );
 
@@ -136,13 +204,19 @@ export function EmuData({ runtime }) {
             />
           }
         >
-          <BufferedInput
-            small
-            type="number"
-            className={styles.marginRight}
+          <SliderPicker
+            max={1023}
             value={brightness.value}
-            onSubmit={useCallback((val) => (brightness.value = MathUtils.clamp(Math.round(val), 0, 1023)), [runtime])}
-          />
+            onChange={useCallback((val) => (brightness.value = MathUtils.clamp(Math.round(val), 0, 1023)), [])}
+          >
+            <BufferedInput
+              small
+              type="number"
+              className={styles.marginRight}
+              value={brightness.value}
+              onSubmit={useCallback((val) => (brightness.value = MathUtils.clamp(Math.round(val), 0, 1023)), [])}
+            />
+          </SliderPicker>
         </Label>
 
         <Label
@@ -155,13 +229,19 @@ export function EmuData({ runtime }) {
             />
           }
         >
-          <BufferedInput
-            small
-            type="number"
-            className={styles.marginRight}
+          <SliderPicker
+            max={1023}
             value={loudness.value}
-            onSubmit={useCallback((val) => (loudness.value = MathUtils.clamp(Math.round(val), 0, 1023)), [runtime])}
-          />
+            onChange={useCallback((val) => (loudness.value = MathUtils.clamp(Math.round(val), 0, 1023)), [])}
+          >
+            <BufferedInput
+              small
+              type="number"
+              className={styles.marginRight}
+              value={loudness.value}
+              onSubmit={useCallback((val) => (loudness.value = MathUtils.clamp(Math.round(val), 0, 1023)), [])}
+            />
+          </SliderPicker>
         </Label>
 
         {appState.value?.stageSize === StageConfig.Large && temperatureLabel}
@@ -180,14 +260,14 @@ export function EmuData({ runtime }) {
         >
           <DirectionPicker
             direction={heading.value}
-            onChange={useCallback((val) => (heading.value = MathUtils.clamp(Math.round(val), 0, 360)), [runtime])}
+            onChange={useCallback((val) => (heading.value = MathUtils.clamp(Math.round(val), 0, 360)), [])}
           >
             <BufferedInput
               small
               type="number"
               className={styles.marginRight}
               value={heading.value}
-              onSubmit={useCallback((val) => (heading.value = MathUtils.clamp(Math.round(val), 0, 360)), [runtime])}
+              onSubmit={useCallback((val) => (heading.value = MathUtils.clamp(Math.round(val), 0, 360)), [])}
             />
           </DirectionPicker>
         </Label>
@@ -217,12 +297,11 @@ export function EmuData({ runtime }) {
               />
             }
           >
-            <BufferedInput
-              small
-              type="number"
-              className={styles.marginRight}
+            <SliderPicker
+              min={-90}
+              max={90}
               value={gyroscope.value[0]}
-              onSubmit={useCallback(
+              onChange={useCallback(
                 (val) =>
                   (gyroscope.value = [
                     MathUtils.clamp(Math.round(val), -90, 90),
@@ -231,7 +310,23 @@ export function EmuData({ runtime }) {
                   ]),
                 [],
               )}
-            />
+            >
+              <BufferedInput
+                small
+                type="number"
+                className={styles.marginRight}
+                value={gyroscope.value[0]}
+                onSubmit={useCallback(
+                  (val) =>
+                    (gyroscope.value = [
+                      MathUtils.clamp(Math.round(val), -90, 90),
+                      gyroscope.value[1],
+                      gyroscope.value[2],
+                    ]),
+                  [],
+                )}
+              />
+            </SliderPicker>
           </Label>
 
           <Label
@@ -243,12 +338,11 @@ export function EmuData({ runtime }) {
               />
             }
           >
-            <BufferedInput
-              small
-              type="number"
-              className={styles.marginRight}
+            <SliderPicker
+              min={-180}
+              max={180}
               value={gyroscope.value[1]}
-              onSubmit={useCallback(
+              onChange={useCallback(
                 (val) =>
                   (gyroscope.value = [
                     gyroscope.value[0],
@@ -257,7 +351,23 @@ export function EmuData({ runtime }) {
                   ]),
                 [],
               )}
-            />
+            >
+              <BufferedInput
+                small
+                type="number"
+                className={styles.marginRight}
+                value={gyroscope.value[1]}
+                onSubmit={useCallback(
+                  (val) =>
+                    (gyroscope.value = [
+                      gyroscope.value[0],
+                      MathUtils.clamp(Math.round(val), -180, 180),
+                      gyroscope.value[2],
+                    ]),
+                  [],
+                )}
+              />
+            </SliderPicker>
           </Label>
 
           <Label
@@ -269,11 +379,11 @@ export function EmuData({ runtime }) {
               />
             }
           >
-            <BufferedInput
-              small
-              type="number"
+            <SliderPicker
+              min={-180}
+              max={180}
               value={gyroscope.value[2]}
-              onSubmit={useCallback(
+              onChange={useCallback(
                 (val) =>
                   (gyroscope.value = [
                     gyroscope.value[0],
@@ -282,7 +392,22 @@ export function EmuData({ runtime }) {
                   ]),
                 [],
               )}
-            />
+            >
+              <BufferedInput
+                small
+                type="number"
+                value={gyroscope.value[2]}
+                onSubmit={useCallback(
+                  (val) =>
+                    (gyroscope.value = [
+                      gyroscope.value[0],
+                      gyroscope.value[1],
+                      MathUtils.clamp(Math.round(val), -180, 180),
+                    ]),
+                  [],
+                )}
+              />
+            </SliderPicker>
           </Label>
         </div>
       </div>
@@ -318,14 +443,22 @@ export function EmuData({ runtime }) {
                     secondary
                     text={pinName}
                   >
-                    <BufferedInput
-                      small
-                      type="number"
+                    <SliderPicker
+                      max={1023}
                       value={pins.value[pin] ?? 0}
-                      onSubmit={(val) =>
+                      onChange={(val) =>
                         (pins.value = { ...pins.value, [pin]: MathUtils.clamp(Math.round(val), 0, 1023) })
                       }
-                    />
+                    >
+                      <BufferedInput
+                        small
+                        type="number"
+                        value={pins.value[pin] ?? 0}
+                        onSubmit={(val) =>
+                          (pins.value = { ...pins.value, [pin]: MathUtils.clamp(Math.round(val), 0, 1023) })
+                        }
+                      />
+                    </SliderPicker>
                   </Label>
                 ))
               : boardPins.all.map(([pinName, pin]) => (
