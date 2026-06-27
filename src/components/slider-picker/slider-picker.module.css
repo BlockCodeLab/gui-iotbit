@@ -1,0 +1,14 @@
+.picker-tooltip {
+  background: var(--ui-white);
+  color: var(--text-primary);
+  padding: var(--space);
+}
+
+.slider {
+  --trackColor: var(--theme-transparent);
+}
+
+.slider::-webkit-slider-thumb {
+  background: var(--theme-primary) !important;
+  box-shadow: 0 0 0 4px var(--theme-light-transparent);
+}
