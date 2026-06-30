@@ -65,18 +65,22 @@ const ADC_PINS = [
   ['P9', 'P9'],
   ['P10', 'P10'],
   ['P11', 'P11'],
-  ['P23', 'P23'],
-  ['P24', 'P24'],
-  ['P25', 'P25'],
-  ['P26', 'P26'],
-  ['P27', 'P27'],
-  ['P28', 'P28'],
 ];
 const DAC_PINS = [
   ['P8', 'P8'],
   ['P9', 'P9'],
 ];
 const I2C_CHANS = [{ SCL: 'P19', SDA: 'P20' }];
+const TOUCH_PINS = [
+  ['P0', 'touch_0'],
+  ['P1', 'touch_1'],
+  ['P', 'touch_p'],
+  ['Y', 'touch_y'],
+  ['T', 'touch_t'],
+  ['H', 'touch_h'],
+  ['O', 'touch_o'],
+  ['N', 'touch_n'],
+];
 
 export const getBoardPins = () => ({
   all: PINS,
@@ -86,6 +90,7 @@ export const getBoardPins = () => ({
   dac: DAC_PINS,
   pwm: OUT_PINS,
   i2c: I2C_CHANS,
+  touch: TOUCH_PINS,
 });
 
 export default () => {

@@ -182,7 +182,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
       ['0', '1', '2', '3v', 'gnd'].forEach((id, i) => {
         const resName = i > 0 && i < 4 ? 'pin' : `pin${id.toUpperCase()}`;
         const pin = new Konva.Image({
-          id: 'P' + id,
+          id: 'touch_' + id,
           name: id,
           x: -123 + i * 61.5 + (i === 0 ? 6 : i === 4 ? -7 : i === 3 ? 0.2 : 0),
           y: -88,
@@ -195,15 +195,17 @@ export function IotBitEmulator({ runtime, onRuntime }) {
         });
         runtime.spritesLayer.add(pin);
 
-        // 0, 1, 2 可以控制
-        if (i < 3) {
+        // 0, 1 可以触摸控制
+        if (i < 2) {
           // 引脚触发
-          pin.on('pointerclick', ({ target }) => {
-            runtime.call(`touched:${target.id()}`);
-          });
-
+          let touched = false;
           pin.on('pointerdown', ({ target }) => {
-            runtime.setData(target.name(), 1023);
+            runtime.setData('P' + target.name(), 1023);
+            runtime.setData(target.id(), 10);
+            if (!touched) {
+              touched = true;
+              runtime.call(`touched:${target.id()}`);
+            }
             target.setAttrs({
               image: res[`${resName}Click`],
               width: res[`${resName}Click`].width,
@@ -214,7 +216,9 @@ export function IotBitEmulator({ runtime, onRuntime }) {
           });
 
           pin.on('pointerup', ({ target }) => {
-            runtime.setData(target.name(), 0);
+            runtime.setData('P' + target.name(), 0);
+            runtime.setData(target.id(), 700);
+            touched = false;
             target.setAttrs({
               image: res[resName],
               width: res[resName].width,

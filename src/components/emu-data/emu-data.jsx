@@ -1,7 +1,7 @@
 import { useCallback } from 'preact/hooks';
 import { useSignal, useSignalEffect } from '@preact/signals';
 import { MathUtils } from '@blockcode/utils';
-import { useAppContext, Text, Label, ToggleButtons, BufferedInput } from '@blockcode/core';
+import { useAppContext, Text, Label, ToggleButtons, BufferedInput, Button } from '@blockcode/core';
 import { DirectionPicker } from '../direction-picker/direction-picker';
 import { SliderPicker } from '../slider-picker/slider-picker';
 import { StageConfig } from '../emulator/emulator-config';
@@ -23,6 +23,7 @@ export function EmuData({ runtime }) {
   const accelerometer = useSignal([0, 0, 1]);
   const gyroscope = useSignal([0, 0, 0]);
   const analogPins = useSignal(false);
+  const touchPins = useSignal(false);
   const pins = useSignal({});
 
   useSignalEffect(() => {
@@ -415,8 +416,8 @@ export function EmuData({ runtime }) {
       <div className={appState.value?.stageSize === StageConfig.Large ? styles.rowPinsLarge : styles.rowPinsSmall}>
         <div className={styles.pinsType}>
           <div
-            className={analogPins.value ? styles.pinsTypeItem : styles.pinsTypeItemActive}
-            onClick={useCallback(() => (analogPins.value = false), [])}
+            className={analogPins.value || touchPins.value ? styles.pinsTypeItem : styles.pinsTypeItemActive}
+            onClick={useCallback(() => (analogPins.value = touchPins.value = false), [])}
           >
             <Text
               id="iotbit.emu.pins"
@@ -425,11 +426,20 @@ export function EmuData({ runtime }) {
           </div>
           <div
             className={analogPins.value ? styles.pinsTypeItemActive : styles.pinsTypeItem}
-            onClick={useCallback(() => (analogPins.value = true), [])}
+            onClick={useCallback(() => ((analogPins.value = true), (touchPins.value = false)), [])}
           >
             <Text
               id="iotbit.emu.analogPins"
               defaultMessage="Analog Pins"
+            />
+          </div>
+          <div
+            className={touchPins.value ? styles.pinsTypeItemActive : styles.pinsTypeItem}
+            onClick={useCallback(() => ((touchPins.value = true), (analogPins.value = false)), [])}
+          >
+            <Text
+              id="iotbit.emu.touchPins"
+              defaultMessage="Touch Pins"
             />
           </div>
           <div className={styles.pinsTypeBlank}></div>
@@ -437,64 +447,79 @@ export function EmuData({ runtime }) {
 
         <div className={styles.pinsWrapper}>
           <div className={styles.pins}>
-            {analogPins.value
-              ? boardPins.adc.map(([pinName, pin]) => (
-                  <Label
-                    secondary
-                    text={pinName}
-                  >
-                    <SliderPicker
-                      max={1023}
-                      value={pins.value[pin] ?? 0}
-                      onChange={(val) =>
-                        (pins.value = { ...pins.value, [pin]: MathUtils.clamp(Math.round(val), 0, 1023) })
+            {touchPins.value
+              ? boardPins.touch.map(([pinName, pin]) => (
+                  <Button
+                    onMouseUp={() => (pins.value = { ...pins.value, [pin]: 700 })}
+                    onMouseDown={() => {
+                      if (pins.value[pin] > 10) {
+                        runtime.value.call(`touched:${pin}`);
                       }
+                      pins.value = { ...pins.value, [pin]: 10 };
+                    }}
+                  >
+                    {pinName}
+                  </Button>
+                ))
+              : analogPins.value
+                ? boardPins.adc.map(([pinName, pin], index) => (
+                    <Label
+                      secondary
+                      text={pinName}
                     >
-                      <BufferedInput
-                        small
-                        type="number"
+                      <SliderPicker
+                        max={1023}
+                        placement={index % 3 === 0 ? 'bottom-start' : index % 3 === 1 ? 'bottom' : 'bottom-end'}
                         value={pins.value[pin] ?? 0}
-                        onSubmit={(val) =>
+                        onChange={(val) =>
                           (pins.value = { ...pins.value, [pin]: MathUtils.clamp(Math.round(val), 0, 1023) })
                         }
+                      >
+                        <BufferedInput
+                          small
+                          type="number"
+                          value={pins.value[pin] ?? 0}
+                          onSubmit={(val) =>
+                            (pins.value = { ...pins.value, [pin]: MathUtils.clamp(Math.round(val), 0, 1023) })
+                          }
+                        />
+                      </SliderPicker>
+                    </Label>
+                  ))
+                : boardPins.all.map(([pinName, pin]) => (
+                    <Label
+                      secondary
+                      text={pinName}
+                    >
+                      <ToggleButtons
+                        rounded
+                        items={[
+                          {
+                            icon: num0icon,
+                            title: (
+                              <Text
+                                id="esp32.blocks.digitalLow"
+                                defaultMessage="low"
+                              />
+                            ),
+                            value: false,
+                          },
+                          {
+                            icon: num1icon,
+                            title: (
+                              <Text
+                                id="esp32.blocks.digitalHigh"
+                                defaultMessage="high"
+                              />
+                            ),
+                            value: true,
+                          },
+                        ]}
+                        value={pins.value[pin] > 459}
+                        onChange={(val) => (pins.value = { ...pins.value, [pin]: val ? 1023 : 0 })}
                       />
-                    </SliderPicker>
-                  </Label>
-                ))
-              : boardPins.all.map(([pinName, pin]) => (
-                  <Label
-                    secondary
-                    text={pinName}
-                  >
-                    <ToggleButtons
-                      rounded
-                      items={[
-                        {
-                          icon: num0icon,
-                          title: (
-                            <Text
-                              id="esp32.blocks.digitalLow"
-                              defaultMessage="low"
-                            />
-                          ),
-                          value: false,
-                        },
-                        {
-                          icon: num1icon,
-                          title: (
-                            <Text
-                              id="esp32.blocks.digitalHigh"
-                              defaultMessage="high"
-                            />
-                          ),
-                          value: true,
-                        },
-                      ]}
-                      value={pins.value[pin] > 459}
-                      onChange={(val) => (pins.value = { ...pins.value, [pin]: val ? 1023 : 0 })}
-                    />
-                  </Label>
-                ))}
+                    </Label>
+                  ))}
           </div>
         </div>
       </div>

@@ -6,6 +6,18 @@ iotbit.emu.smallStage: 縮小舞臺
 iotbit.emu.largeStage: 放大舞臺
 iotbit.emu.previewCode: 預覽代碼
 iotbit.emu.enable: 開啟模擬器
+iotbit.emu.compass: 指南針（北）
+iotbit.emu.accelerometer: 加速度計
+iotbit.emu.rotation: 旋轉
+iotbit.emu.pitch: 俯仰
+iotbit.emu.roll: 橫滾
+iotbit.emu.yaw: 偏航
+iotbit.emu.brightness: 亮度
+iotbit.emu.loudness: 響度
+iotbit.emu.temperature: 溫度
+iotbit.emu.pins: 引腳
+iotbit.emu.analogPins: 模擬引腳
+iotbit.emu.touchPins: 觸摸引腳
 
 esp32.extension.tags.controllers: 輸入模組
 esp32.extension.tags.sensors: 傳感器
@@ -135,7 +147,7 @@ esp32.blocks.terminalPrint: 打印 %1
 esp32.blocks.temperature: 温度
 
 iotbit.blocks.whenstart: 當 %1 開始運行
-iotbit.blocks.pinTouched: 當 %1 被觸摸
+iotbit.blocks.pinTouched: 當 %1 被觸摸低於閾值 %2
 iotbit.blocks.playNote: 演奏音符 %1 %2 拍
 iotbit.blocks.playMusic: 播放 %1
 iotbit.blocks.playMusicDone: 播放 %1 直到結束

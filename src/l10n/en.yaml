@@ -17,6 +17,7 @@ iotbit.emu.loudness: Loudness
 iotbit.emu.temperature: Temperature
 iotbit.emu.pins: Pins
 iotbit.emu.analogPins: Analog Pins
+iotbit.emu.touchPins: Touch Pins
 
 esp32.extension.tags.controllers: Controllers
 esp32.extension.tags.sensors: Sensors
@@ -146,7 +147,7 @@ esp32.blocks.terminalPrint: print %1
 esp32.blocks.temperature: temperature
 
 iotbit.blocks.whenstart: when %1 start
-iotbit.blocks.pinTouched: when %1 touched
+iotbit.blocks.pinTouched: when %1 touched below threshold %2
 iotbit.blocks.playNote: play note %1 for %2 beats
 iotbit.blocks.playMusic: start sound %1
 iotbit.blocks.playMusicDone: play sound %1 until done

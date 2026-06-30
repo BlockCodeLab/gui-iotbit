@@ -17,6 +17,7 @@ iotbit.emu.loudness: 响度
 iotbit.emu.temperature: 温度
 iotbit.emu.pins: 引脚
 iotbit.emu.analogPins: 模拟引脚
+iotbit.emu.touchPins: 触摸引脚
 
 esp32.extension.tags.controllers: 输入模块
 esp32.extension.tags.sensors: 传感器
@@ -146,7 +147,7 @@ esp32.blocks.terminalPrint: 打印 %1
 esp32.blocks.temperature: 温度
 
 iotbit.blocks.whenstart: 当 %1 系统启动
-iotbit.blocks.pinTouched: 当 %1 被触摸
+iotbit.blocks.pinTouched: 当 %1 被触摸低于阈值 %2
 iotbit.blocks.playNote: 演奏音符 %1 %2 拍
 iotbit.blocks.playMusic: 播放 %1
 iotbit.blocks.playMusicDone: 播放 %1 等待播完

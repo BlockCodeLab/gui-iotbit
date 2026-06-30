@@ -3,7 +3,7 @@ import { classNames } from '@blockcode/utils';
 import { Tooltip } from '@blockcode/core';
 import styles from './slider-picker.module.css';
 
-export function SliderPicker({ min, max, step, value, children, onChange }) {
+export function SliderPicker({ min, max, step, value, children, placement, onChange }) {
   const handleChange = useCallback((e) => {
     onChange?.(e.target.value);
   }, []);
@@ -11,7 +11,7 @@ export function SliderPicker({ min, max, step, value, children, onChange }) {
   return (
     <Tooltip
       clickable
-      placement="bottom"
+      placement={placement ?? 'bottom'}
       className={styles.pickerTooltip}
       content={
         <div className="scratchSliderDiv">

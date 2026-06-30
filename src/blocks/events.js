@@ -1,8 +1,11 @@
 import { translate, themeColors } from '@blockcode/core';
 import { ScratchBlocks } from '@blockcode/blocks';
+import { getBoardPins } from './pins';
 import deviceIcon from '../components/device-menu/icon-device.svg';
 
 const timerIds = ['1', '2', '3', '4'];
+
+const boardPins = getBoardPins();
 
 export default () => ({
   id: 'event',
@@ -84,33 +87,38 @@ export default () => ({
     {
       // 引脚被触摸
       id: 'whenpintouched',
-      text: translate('iotbit.blocks.pinTouched', 'when %1 touched'),
+      text: translate('iotbit.blocks.pinTouched', 'when %1 touched below threshold %2'),
       hat: true,
       inputs: {
         PIN_OPTION: {
           type: 'string',
-          defaultValue: 'P0',
-          menu: ['P0', 'P1', 'P2'],
+          defaultValue: 'touch_0',
+          menu: boardPins.touch,
+        },
+        THRESHOLD: {
+          type: 'positive_integer',
+          defaultValue: 100,
         },
       },
       mpy(block) {
         const pin = block.getFieldValue('PIN_OPTION');
-        const flagName = this.createName('event_flag');
-        this.definitions_['import_pin'] = 'from machine import Pin';
-        this.definitions_[pin] = `${pin}.init(Pin.IN)`;
-        this.definitions_[flagName] = `${flagName} = asyncio.ThreadSafeFlag()`;
+        const threshold = this.valueToCode(block, 'THRESHOLD', this.ORDER_NONE);
 
         let branchCode = this.statementToCode(block) || this.PASS;
         let code = '';
-        code += 'while True:\n';
-        code += `  await ${flagName}.wait()\n`;
+        code += `touched = False\n`;
+        code += `while True:\n`;
+        code += `  if touched or ${pin}.read() > ${threshold}:\n`;
+        code += `    touched = ${pin}.read() <= ${threshold}\n`;
+        code += `    await asyncio.sleep_ms(10)\n`;
+        code += `    continue\n`;
+        code += `  touched = True\n`;
         code += branchCode;
 
         branchCode = this.prefixLines(code, this.INDENT);
         branchCode = this.addEventTrap(branchCode, 'pin_touched');
         code = '@_tasks__.append\n';
         code += branchCode;
-        code += `${pin}.irq(trigger=Pin.IRQ_RISING, handler=lambda _: ${flagName}.set())\n`;
         return code;
       },
       emu(block) {
