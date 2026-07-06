@@ -13,9 +13,9 @@ import styles from './device-menu.module.css';
 const errorAlert = (err, id) => {
   if (err.name === 'NotFoundError') return;
   if (err.name === 'NetworkError') {
-    setAlert('connectionBusy', { id }, 1000);
+    setAlert('connectionBusy', { id }, 2000);
   } else {
-    setAlert('connectionError', { id }, 1000);
+    setAlert('connectionError', { id }, 2000);
   }
 };
 

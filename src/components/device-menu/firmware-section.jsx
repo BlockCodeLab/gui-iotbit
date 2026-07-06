@@ -23,8 +23,12 @@ const closeAlert = (id) => {
 };
 
 const errorAlert = (err) => {
-  if (err === 'NotFoundError') return;
-  setAlert('connectionError', 1000);
+  if (err.name === 'NotFoundError') return;
+  if (err.name === 'NetworkError') {
+    setAlert('connectionBusy', { id }, 2000);
+  } else {
+    setAlert('connectionError', { id }, 2000);
+  }
 };
 
 // 下载固件
