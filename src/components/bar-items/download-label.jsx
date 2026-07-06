@@ -12,7 +12,6 @@ import {
   Dropdown,
 } from '@blockcode/core';
 import { MPYUtils } from '@blockcode/board';
-import { ESP32Boards } from '../../lib/boards';
 import { downloadProgram } from '../../lib/download-program';
 import styles from './download-label.module.css';
 import downloadIcon from './icon-download.svg';
@@ -96,7 +95,7 @@ export function DownloadLabel({ className, menuClassName, itemClassName }) {
     }
   }, []);
 
-  return meta.value.boardType !== ESP32Boards.ESP32_IOT_BOARD || device.value ? (
+  return device.value ? (
     <label
       disabled={deviceAlertId.value}
       className={className}
@@ -127,6 +126,7 @@ export function DownloadLabel({ className, menuClassName, itemClassName }) {
           onClick: handleConnectUSB,
         },
         {
+          disabled: true,
           label: (
             <Text
               id="gui.menubar.device.connectBle"
