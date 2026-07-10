@@ -43,9 +43,13 @@ export function IotBitBlocksEditor() {
       // 导入使用的扩展
       for (const id in resources) {
         for (const extModule of resources[id]) {
-          if (!extModule.common) {
+          if (extModule.header) {
             const libId = basename(extModule.name, extname(extModule.name));
-            define(`import_${id}_${libId}`, `from ${escape(id)} import ${libId}`);
+            if (extModule.common) {
+              define(`import_${libId}`, `import ${libId}`);
+            } else {
+              define(`import_${id}_${libId}`, `from ${escape(id)} import ${libId}`);
+            }
           }
         }
       }

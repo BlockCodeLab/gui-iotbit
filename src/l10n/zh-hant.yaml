@@ -19,15 +19,6 @@ iotbit.emu.pins: 引腳
 iotbit.emu.analogPins: 模擬引腳
 iotbit.emu.touchPins: 觸摸引腳
 
-esp32.extension.tags.controllers: 輸入模組
-esp32.extension.tags.sensors: 傳感器
-esp32.extension.tags.actuators: 執行器
-esp32.extension.tags.displays: 顯示模組
-esp32.extension.tags.modules: 智能模組
-esp32.extension.tags.communication: 通訊
-esp32.extension.tags.data: 數據
-esp32.extension.tags.kits: 套件
-
 esp32.blocks.wait: 等待 %1 毫秒
 esp32.blocks.break: 跳出重複
 esp32.blocks.continue: 跳到下一次

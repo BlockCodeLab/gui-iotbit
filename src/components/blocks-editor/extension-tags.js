@@ -5,7 +5,7 @@ export const extensionTags = [
     tag: 'controller',
     label: (
       <Text
-        id="esp32.extension.tags.controllers"
+        id="blocks.extension.tags.controllers"
         defaultMessage="Controllers"
       />
     ),
@@ -14,7 +14,7 @@ export const extensionTags = [
     tag: 'sensor',
     label: (
       <Text
-        id="esp32.extension.tags.sensors"
+        id="blocks.extension.tags.sensors"
         defaultMessage="Sensors"
       />
     ),
@@ -23,7 +23,7 @@ export const extensionTags = [
     tag: 'actuator',
     label: (
       <Text
-        id="esp32.extension.tags.actuators"
+        id="blocks.extension.tags.actuators"
         defaultMessage="Actuators"
       />
     ),
@@ -32,7 +32,7 @@ export const extensionTags = [
     tag: 'display',
     label: (
       <Text
-        id="esp32.extension.tags.displays"
+        id="blocks.extension.tags.displays"
         defaultMessage="Displays"
       />
     ),
@@ -41,7 +41,7 @@ export const extensionTags = [
     tag: 'module',
     label: (
       <Text
-        id="esp32.extension.tags.modules"
+        id="blocks.extension.tags.modules"
         defaultMessage="Modules"
       />
     ),
@@ -50,7 +50,7 @@ export const extensionTags = [
     tag: 'communication',
     label: (
       <Text
-        id="esp32.extension.tags.communication"
+        id="blocks.extension.tags.communication"
         defaultMessage="Communication"
       />
     ),
@@ -59,7 +59,7 @@ export const extensionTags = [
     tag: 'data',
     label: (
       <Text
-        id="esp32.extension.tags.data"
+        id="blocks.extension.tags.data"
         defaultMessage="Data"
       />
     ),
@@ -68,7 +68,7 @@ export const extensionTags = [
     tag: 'kit',
     label: (
       <Text
-        id="esp32.extension.tags.kits"
+        id="blocks.extension.tags.kits"
         defaultMessage="Kits"
       />
     ),
