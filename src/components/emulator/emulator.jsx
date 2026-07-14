@@ -103,7 +103,7 @@ export function IotBitEmulator({ runtime, onRuntime }) {
           id: 'button-' + id,
           name: id,
           x: -105 + i * 210,
-          y: 7,
+          y: 0,
           scaleY: runtime.stage.scaleY(),
           image: res.button,
           width: res.button.width,
