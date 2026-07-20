@@ -12,6 +12,9 @@
       "import": "./dist/info.js"
     }
   },
+  "scripts": {
+    "docs": "bun x serve docs -p 8000"
+  },
   "dependencies": {
     "@preact/signals": "^2.8.1",
     "preact": "^10.28.4"
