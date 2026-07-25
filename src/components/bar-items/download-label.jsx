@@ -6,6 +6,7 @@ import {
   useProjectContext,
   setAppState,
   setAlert,
+  delAlert,
   translate,
   logger,
   Text,
@@ -19,12 +20,14 @@ import downloadIcon from './icon-download.svg';
 import deviceFilters from '../device-menu/device-filters.yaml';
 
 const errorAlert = (err, id) => {
-  if (err.name === 'NotFoundError') return;
-  if (err.name === 'NetworkError') {
+  if (err.name === 'NotFoundError') {
+    delAlert(id);
+  } else if (err.name === 'NetworkError') {
     setAlert('connectionBusy', { id }, 2000);
   } else {
     setAlert('connectionError', { id }, 2000);
   }
+  setAppState('deviceAlertId', null);
 };
 
 export function DownloadLabel({ className, menuClassName, itemClassName }) {
@@ -34,6 +37,8 @@ export function DownloadLabel({ className, menuClassName, itemClassName }) {
 
   const device = useComputed(() => appState.value?.device);
 
+  const lastBLEDevice = useComputed(() => appState.value?.lastBLEDevice);
+
   const deviceAlertId = useComputed(() => appState.value?.deviceAlertId);
 
   const handleDownload = useCallback(async () => {
@@ -41,59 +46,76 @@ export function DownloadLabel({ className, menuClassName, itemClassName }) {
     if (deviceAlertId.value) return;
 
     const alertId = nanoid();
-    setAppState('deviceAlertId', alertId);
+    setAppState({
+      deviceAlertId: alertId,
+      lastBLEDevice: device.value.type === 'ble' ? device.value : null,
+    });
     await downloadProgram(alertId, device.value, file.value, assets.value);
 
     setAppState('deviceAlertId', null);
   }, []);
 
   const connectDevice = useCallback(async (newDevice) => {
-    if (newDevice === device.value) return;
-    await device.value?.disconnect();
-    await sleepMs(500);
+    if (newDevice === device.value && newDevice.type !== 'ble') return;
+    if (newDevice.type !== 'ble') {
+      await device.value?.disconnect();
+      await sleepMs(500);
+    }
     const handleConnect = () => connectDevice(newDevice);
     const handleDisconnect = (err) => {
       if (err) {
         errorAlert(err, deviceAlertId.value);
         logger.warn(translate('gui.logs.disconnected', 'Device disconnected') + ': ' + err.message);
+        setAppState('lastBLEDevice', null);
       }
-      setAppState('device', null);
-      setAppState('deviceAlertId', null);
+      setAppState({
+        device: null,
+        deviceAlertId: null,
+      });
       newDevice.off('connect', handleConnect);
       newDevice.off('disconnect', handleDisconnect);
     };
     newDevice.on('connect', handleConnect);
     newDevice.on('disconnect', handleDisconnect);
-    setAppState('device', newDevice);
-    await sleepMs(500);
-    handleDownload();
+    setAppState({
+      device: newDevice,
+      deviceAlertId: null,
+    });
   }, []);
 
   const handleConnectUSB = useCallback(async () => {
     if (deviceAlertId.value) return;
+    const alertId = setAlert('connecting');
+    setAppState('deviceAlertId', alertId);
     try {
       const newDevice = await MPYUtils.connect(deviceFilters, {
         baudRate: 115200,
       });
-      connectDevice(newDevice);
-      setAlert('connected', 1000);
+      await connectDevice(newDevice);
+      setAlert('connected', { id: alertId }, 1000);
       logger.success(translate('gui.logs.connectedType', 'Device connected with {type}', { type: 'USB' }));
     } catch (err) {
-      errorAlert(err, deviceAlertId.value);
+      errorAlert(err, alertId);
     }
+    await sleepMs(500);
+    handleDownload();
   }, []);
 
   const handleConnectBLE = useCallback(async () => {
     if (deviceAlertId.value) return;
+    const alertId = setAlert('connecting');
+    setAppState('deviceAlertId', alertId);
     try {
       const newDevice = await MPYUtils.connectBLE();
-      connectDevice(newDevice);
-      setAlert('connected', 1000);
+      await connectDevice(newDevice);
+      setAlert('connected', { id: alertId }, 1000);
       logger.success(translate('gui.logs.connectedType', 'Device connected with {type}', { type: 'BLE' }));
-      return newDevice;
+      setAppState('lastBLEDevice', null);
     } catch (err) {
-      errorAlert(err, deviceAlertId.value);
+      errorAlert(err, alertId);
     }
+    await sleepMs(500);
+    handleDownload();
   }, []);
 
   return meta.value.boardType !== ESP32Boards.ESP32_IOT_BOARD || device.value ? (
