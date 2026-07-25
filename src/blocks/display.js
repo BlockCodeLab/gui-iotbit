@@ -87,7 +87,7 @@ export default () => ({
       id: 'displayClear',
       text: translate('iotbit.blocks.displayClear', 'clear display'),
       mpy(block) {
-        const code = 'display.fill(0)\n';
+        const code = 'display.clear()\n';
         return code;
       },
       emu(block) {
@@ -97,6 +97,7 @@ export default () => ({
     },
     {
       id: 'updateDisplay',
+      hidden: true, // （移除）
       text: (
         <Text
           id="iotbit.blocks.updateDisplay"

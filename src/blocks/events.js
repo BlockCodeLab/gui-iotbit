@@ -31,6 +31,7 @@ export default () => ({
         let code = '';
         code += '@_tasks__.append\n';
         code += branchCode;
+        code += '  await asyncio.sleep_ms(50)\n'; // 避免程序启动到结束耗时未达自动刷屏单帧间隔，导致屏幕未更新显示内容
         return code;
       },
       emu(block) {

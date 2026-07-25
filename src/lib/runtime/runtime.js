@@ -15,6 +15,17 @@ export class IotBitRuntime extends Runtime {
     return this._times ? Date.now() - this._times : 0;
   }
 
+  launch(code) {
+    super.launch(code);
+    this._task = setInterval(() => this.updateScreen(), 1000 / 20);
+  }
+
+  stop() {
+    clearInterval(this._task);
+    this.paintLayer.destroyChildren();
+    super.stop();
+  }
+
   loadImage(url) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -34,12 +45,12 @@ export class IotBitRuntime extends Runtime {
   }
 
   clearScreen() {
-    this.paintLayer.destroyChildren();
+    this._offlineScreen.length = 0;
   }
 
   updateScreen() {
+    this.paintLayer.destroyChildren();
     this.paintLayer.add(...this._offlineScreen);
-    this._offlineScreen.length = 0;
   }
 
   setLed(index, color, brightness) {
