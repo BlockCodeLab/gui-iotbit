@@ -130,12 +130,13 @@ const uploadFirmware = async (device, needReset, firmwareName, address = 0) => {
   if (firmwareName) {
     const data = await getBinaryCache(`${firmwareName}Firmware`);
     if (data) {
-      return await uploadData(esploader, needReset, [
+      await uploadData(esploader, needReset, [
         {
           address,
           data: data.binaryString,
         },
       ]);
+      return esploader;
     }
   }
 
@@ -157,7 +158,7 @@ const uploadFirmware = async (device, needReset, firmwareName, address = 0) => {
             data: Base64Utils.arrayBufferToBinaryString(e.target.result),
           },
         ]);
-        resolve();
+        resolve(esploader);
       });
     });
   });
@@ -244,11 +245,11 @@ export function FirmwareSection({ disabled, itemClassName }) {
   const handleUploadFirmware = useCallback(async () => {
     if (disabled || device.value?.type === 'ble') return;
     let address = 0;
-    if (meta.value.boardType === ESP32Boards.ESP32) {
+    if ([ESP32Boards.ESP32, ESP32Boards.ESP32_IOT_BOARD].includes(meta.value.boardType)) {
       address = 0x1000;
     }
-    const needReset = meta.value.boardType !== ESP32Boards.ESP32_IOT_BOARD;
-    await uploadFirmware(device.value, needReset, firmwareName, address);
+    const needReset = [ESP32Boards.ESP32, ESP32Boards.ESP32S3].includes(meta.value.boardType);
+    const esploader = await uploadFirmware(device.value, needReset, firmwareName, address);
 
     if (needReset) return;
 
