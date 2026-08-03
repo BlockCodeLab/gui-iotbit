@@ -1,6 +1,6 @@
 {
   "name": "@blockcode/gui-esp32",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "private": "true",
   "type": "module",
   "module": "dist/index.js",
@@ -22,10 +22,10 @@
   },
   "firmwares": {
     "iotboard": {
-      "download": "https://firmware.blockcode.fun/iotboard"
+      "download": "https://firmware.blockcode.fun/iot_board"
     },
     "esp32s3cam": {
-      "download": "https://firmware.blockcode.fun/esp32s3cam"
+      "download": "https://firmware.blockcode.fun/esp32s3_cam"
     }
   }
 }
