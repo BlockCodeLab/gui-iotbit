@@ -118,7 +118,7 @@ export function DownloadLabel({ className, menuClassName, itemClassName }) {
     handleDownload();
   }, []);
 
-  return meta.value.boardType !== ESP32Boards.ESP32_IOT_BOARD || device.value ? (
+  return ![ESP32Boards.ESP32_IOT_BOARD, ESP32Boards.ESP32S3_CAM].includes(meta.value.boardType) || device.value ? (
     <label
       disabled={deviceAlertId.value}
       className={className}

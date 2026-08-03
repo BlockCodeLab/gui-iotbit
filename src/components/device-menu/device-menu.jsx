@@ -195,7 +195,7 @@ export function DeviceMenu({ itemClassName }) {
               }
               onClick={handleConnectUSB}
             />
-            {meta.value.boardType === ESP32Boards.ESP32_IOT_BOARD && (
+            {[ESP32Boards.ESP32_IOT_BOARD, ESP32Boards.ESP32S3_CAM].includes(meta.value.boardType) && (
               <MenuItem
                 className={classNames(itemClassName, styles.blankCheckItem)}
                 label={

@@ -26,9 +26,9 @@ const closeAlert = (id) => {
 const errorAlert = (err) => {
   if (err.name === 'NotFoundError') return;
   if (err.name === 'NetworkError') {
-    setAlert('connectionBusy', { id }, 2000);
+    setAlert('connectionBusy', 2000);
   } else {
-    setAlert('connectionError', { id }, 2000);
+    setAlert('connectionError', 2000);
   }
 };
 
@@ -216,7 +216,7 @@ export function FirmwareSection({ disabled, itemClassName }) {
     const handleConnect = () => connectDevice(newDevice);
     const handleDisconnect = (err) => {
       if (err) {
-        errorAlert(err, deviceAlertId.value);
+        errorAlert(err);
         logger.warn(translate('gui.logs.disconnected', 'Device disconnected') + ': ' + err.message);
       }
       setAppState('device', null);
