@@ -18,12 +18,13 @@ def to_bytes(val):
   return bytes(b"")
 `;
 
-export default () => ({
+export default (i) => ({
   id: 'operator',
   name: '%{BKY_CATEGORY_OPERATORS}',
   themeColor: themeColors.blocks.operators.primary,
   inputColor: themeColors.blocks.operators.secondary,
   otherColor: themeColors.blocks.operators.tertiary,
+  order: i,
   blocks: [
     {
       // 运算

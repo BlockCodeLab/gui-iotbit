@@ -62,21 +62,16 @@ esp32.blocks.detachinterrupt: 取消引腳 %1 中斷
 esp32.blocks.network: 網絡
 esp32.blocks.protocols: 協議
 esp32.blocks.serial: 串口
-esp32.blocks.serialBaudrate: 將波特率設為 %1
-esp32.blocks.serialTimeout: 將通訊超時設為 %1 毫秒
-esp32.blocks.serialPrint: 用 %2 模式打印 %1
+esp32.blocks.serialBaudrate: 初始串口 %1 引腳 RX:%2 TX:%3 波特率 %4
+esp32.blocks.serialPrint: 向串口 %1 用 %2 模式發送 %3
 esp32.blocks.serialPrintWarp: 換行
 esp32.blocks.serialPrintNoWarp: 不換行
 esp32.blocks.serialPrintHEX: 16進制
-esp32.blocks.serialAvailable: 存在可讀取數據?
-esp32.blocks.serialAvailableLength: 可讀取數據長度
-esp32.blocks.serialReadString: 讀取文本
-esp32.blocks.serialReadStringUntil: 讀取文本直到 %1
-esp32.blocks.serialReadParse: 讀取 %1
-esp32.blocks.serialReadParseInteger: 整數
-esp32.blocks.serialReadParseFloat: 浮點數
-esp32.blocks.serialRead: 讀取 1 個字節
-esp32.blocks.serialReadBytes: 讀取 %1 個字節
+esp32.blocks.serialAvailable: 串口 %1 存在可讀取數據?
+esp32.blocks.serialReadString: 串口 %1 讀取文本
+esp32.blocks.serialReadStringLine: 串口 %1 讀取一行文本
+esp32.blocks.serialReadBytes: 串口 %1 讀取 %2 字符
+esp32.blocks.terminalPrint: '%2 打印 %1'
 esp32.blocks.text: 文本
 esp32.blocks.textEquals: '%1 和 %2 相同（忽視大小寫）？'
 esp32.blocks.textRemove: 刪除 %3 從第 %1 個到第 %2 個字符
@@ -117,21 +112,8 @@ esp32.blocks.espnowMsgBytes: 字節數組
 esp32.blocks.espnowMsgMac: MAC 地址
 esp32.blocks.espnowRepeat: 等待 ESP-Now 收到消息
 esp32.blocks.espnowWhen: 當 ESP-Now 收到 %1
-esp32.blocks.spiInit: 初始化SPI %1 頻率:%2Hz
-esp32.blocks.spiHSPI: HSPI
-esp32.blocks.spiVSPI: VSPI
-esp32.blocks.spiWrite: SPI %1 寫入 %2
-esp32.blocks.spiRead: SPI %1 讀取 %2 位元組
-esp32.blocks.i2cInit: 初始化I2C SDA:%1 SCL:%2 頻率:%3Hz
-esp32.blocks.i2cScan: I2C掃描設備
-esp32.blocks.i2cWrite: I2C寫入到 %1:%2
-esp32.blocks.i2cRead: I2C從 %1 讀取 %2 位元組
-esp32.blocks.i2sInit: 初始化I2S BCK:%1 WS:%2 DATA:%3 速率:%4Hz
-esp32.blocks.i2sPlay: I2S播放 %1
-esp32.blocks.terminal: 終端
-esp32.blocks.terminalPrint: 打印 %1
+esp32.blocks.i2cScan: I2C 引腳 SCL:%1 SDA:%2 地址掃描
 esp32.blocks.temperature: 温度
-
 esp32.blocks.turnon: 開啟
 esp32.blocks.turnoff: 關閉
 esp32.blocks.camera: 攝像頭

@@ -248,24 +248,5 @@ export default (i) => ({
         return [code, this.ORDER_FUNCTION_CALL];
       },
     },
-    '---',
-    {
-      id: 'print',
-      text: translate('esp32.blocks.terminalPrint', 'print %1'),
-      themeColor: themeColors.blocks.debug.primary,
-      inputColor: themeColors.blocks.debug.secondary,
-      otherColor: themeColors.blocks.debug.tertiary,
-      inputs: {
-        STRING: {
-          type: 'string',
-          defaultValue: 'hello',
-        },
-      },
-      mpy(block) {
-        const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
-        const code = `print(str(${str}))\n`;
-        return code;
-      },
-    },
   ],
 });

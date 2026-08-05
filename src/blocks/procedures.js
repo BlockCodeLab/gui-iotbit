@@ -1,6 +1,7 @@
-export default () => ({
+export default (i) => ({
   id: 'procedures',
   skipXML: true,
+  order: i,
   blocks: [
     {
       id: 'definition',

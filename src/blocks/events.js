@@ -1,7 +1,7 @@
 import { translate, themeColors } from '@blockcode/core';
 import { ESP32Boards } from '../lib/boards';
 
-export default (boardType) => {
+export default (boardType, i) => {
   let boardName = translate('esp32.menubar.device.esp32', 'ESP32');
   switch (boardType) {
     case ESP32Boards.ESP32S3:
@@ -29,6 +29,7 @@ export default (boardType) => {
     themeColor: themeColors.blocks.events.primary,
     inputColor: themeColors.blocks.events.secondary,
     otherColor: themeColors.blocks.events.tertiary,
+    order: i,
     blocks: [
       {
         // 开始

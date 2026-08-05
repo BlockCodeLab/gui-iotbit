@@ -1,12 +1,13 @@
 import { translate, themeColors } from '@blockcode/core';
 import { ScratchBlocks } from '@blockcode/blocks';
 
-export default () => ({
+export default (i) => ({
   id: 'control',
   name: '%{BKY_CATEGORY_CONTROL}',
   themeColor: themeColors.blocks.control.primary,
   inputColor: themeColors.blocks.control.secondary,
   otherColor: themeColors.blocks.control.tertiary,
+  order: i,
   blocks: [
     {
       // 等待
