@@ -6,7 +6,7 @@ export default () => ({
   themeColor: themeColors.blocks.looks.primary,
   inputColor: themeColors.blocks.looks.secondary,
   otherColor: themeColors.blocks.looks.tertiary,
-  order: 1,
+  order: 2,
   blocks: [
     {
       id: 'setLeds',

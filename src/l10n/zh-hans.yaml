@@ -67,21 +67,16 @@ esp32.blocks.detachinterrupt: 取消引脚 %1 中断
 esp32.blocks.network: 网络
 esp32.blocks.protocols: 协议
 esp32.blocks.serial: 串口
-esp32.blocks.serialBaudrate: 将波特率设为 %1
-esp32.blocks.serialTimeout: 将通讯超时设为 %1 毫秒
-esp32.blocks.serialPrint: 用 %2 模式发送 %1
+esp32.blocks.serialBaudrate: 初始串口 %1 引脚 RX:%2 TX:%3 波特率 %4
+esp32.blocks.serialPrint: 向串口 %1 用 %2 模式发送 %3
 esp32.blocks.serialPrintWarp: 换行
 esp32.blocks.serialPrintNoWarp: 不换行
 esp32.blocks.serialPrintHEX: 16进制
-esp32.blocks.serialAvailable: 存在可读取数据?
-esp32.blocks.serialAvailableLength: 可读取数据长度
-esp32.blocks.serialReadString: 读取文本
-esp32.blocks.serialReadStringUntil: 读取文本直到 %1
-esp32.blocks.serialReadParse: 读取 %1
-esp32.blocks.serialReadParseInteger: 整数
-esp32.blocks.serialReadParseFloat: 浮点数
-esp32.blocks.serialRead: 读取 1 个字节
-esp32.blocks.serialReadBytes: 读取 %1 个字节
+esp32.blocks.serialAvailable: 串口 %1 存在可读取数据?
+esp32.blocks.serialReadString: 串口 %1 读取文本
+esp32.blocks.serialReadStringLine: 串口 %1 读取一行文本
+esp32.blocks.serialReadBytes: 串口 %1 读取 %2 字符
+esp32.blocks.terminalPrint: '%2 打印 %1'
 esp32.blocks.text: 文本
 esp32.blocks.textEquals: '%1 和 %2 相同（忽视大小写）？'
 esp32.blocks.textRemove: 删除 %3 从第 %1 个到第 %2 个字符
@@ -122,19 +117,7 @@ esp32.blocks.espnowMsgBytes: 字节数组
 esp32.blocks.espnowMsgMac: MAC 地址
 esp32.blocks.espnowRepeat: 等待 ESP-Now 收到消息
 esp32.blocks.espnowWhen: 当 ESP-Now 收到 %1
-esp32.blocks.spiInit: 初始化SPI %1 频率:%2Hz
-esp32.blocks.spiHSPI: HSPI
-esp32.blocks.spiVSPI: VSPI
-esp32.blocks.spiWrite: SPI %1 写入 %2
-esp32.blocks.spiRead: SPI %1 读取 %2 字节
-esp32.blocks.i2cInit: 初始化I2C SDA:%1 SCL:%2 频率:%3Hz
-esp32.blocks.i2cScan: I2C扫描设备
-esp32.blocks.i2cWrite: I2C写入到 %1:%2
-esp32.blocks.i2cRead: I2C从 %1 读取 %2 字节
-esp32.blocks.i2sInit: 初始化I2S BCK:%1 WS:%2 DATA:%3 速率:%4Hz
-esp32.blocks.i2sPlay: I2S播放 %1
-esp32.blocks.terminal: 终端
-esp32.blocks.terminalPrint: 打印 %1
+esp32.blocks.i2cScan: I2C 引脚 SCL:%1 SDA:%2 设备扫描
 esp32.blocks.temperature: 温度
 
 iotbit.blocks.whenstart: 当 %1 系统启动

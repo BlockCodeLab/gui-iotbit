@@ -67,21 +67,16 @@ esp32.blocks.detachinterrupt: detach pin %1 interrupt
 esp32.blocks.network: Network
 esp32.blocks.protocols: Protocols
 esp32.blocks.serial: Serial
-esp32.blocks.serialBaudrate: set baudrate to %1
-esp32.blocks.serialTimeout: set timeout to %1 milliseconds
-esp32.blocks.serialPrint: send %1 with %2
+esp32.blocks.serialBaudrate: set port %1 pins RX:%2 TX:%3 baudrate to %4
+esp32.blocks.serialPrint: port %1 write %2 with %3
 esp32.blocks.serialPrintWarp: warp
 esp32.blocks.serialPrintNoWarp: no-warp
 esp32.blocks.serialPrintHEX: hex
-esp32.blocks.serialAvailable: available data?
-esp32.blocks.serialAvailableLength: available data length
-esp32.blocks.serialReadString: read a string
-esp32.blocks.serialReadStringUntil: read a string until %1
-esp32.blocks.serialReadParse: read a %1 number
-esp32.blocks.serialReadParseInteger: int
-esp32.blocks.serialReadParseFloat: float
-esp32.blocks.serialRead: read a byte
-esp32.blocks.serialReadBytes: read %1 bytes
+esp32.blocks.serialAvailable: port %1 available data?
+esp32.blocks.serialReadString: port %1 read all characters
+esp32.blocks.serialReadStringLine: port %1 read a line
+esp32.blocks.serialReadBytes: port %1 read %2 character
+esp32.blocks.terminalPrint: print %1 with %2
 esp32.blocks.text: Text
 esp32.blocks.textEquals: '%1 equals %2 (not case-sensitive)?'
 esp32.blocks.textRemove: remove letters from %1 to %2 of %3
@@ -122,19 +117,7 @@ esp32.blocks.espnowMsgBytes: bytes
 esp32.blocks.espnowMsgMac: mac address
 esp32.blocks.espnowRepeat: repeat wait for esp-now incoming
 esp32.blocks.espnowWhen: when esp-now receive %1
-esp32.blocks.spiInit: initialize SPI %1 freq:%2Hz
-esp32.blocks.spiHSPI: HSPI
-esp32.blocks.spiVSPI: VSPI
-esp32.blocks.spiWrite: SPI %1 write %2
-esp32.blocks.spiRead: SPI %1 read %2 bytes
-esp32.blocks.i2cInit: initialize I2C SDA:%1 SCL:%2 freq:%3Hz
-esp32.blocks.i2cScan: I2C scan devices
-esp32.blocks.i2cWrite: I2C write to %1:%2
-esp32.blocks.i2cRead: I2C read from %1 :%2 bytes
-esp32.blocks.i2sInit: initialize I2S BCK:%1 WS:%2 DATA:%3 rate:%4Hz
-esp32.blocks.i2sPlay: I2S play %1
-esp32.blocks.terminal: Terminal
-esp32.blocks.terminalPrint: print %1
+esp32.blocks.i2cScan: I2C pins scl:%1 sda:%2 devices scan
 esp32.blocks.temperature: temperature
 
 iotbit.blocks.whenstart: when %1 start

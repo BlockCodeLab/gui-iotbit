@@ -7,6 +7,7 @@ export default () => ({
   themeColor: themeColors.blocks.control.primary,
   inputColor: themeColors.blocks.control.secondary,
   otherColor: themeColors.blocks.control.tertiary,
+  order: 5,
   blocks: [
     {
       // 等待

@@ -7,7 +7,7 @@ export default () => ({
   themeColor: themeColors.blocks.text.primary,
   inputColor: themeColors.blocks.text.secondary,
   otherColor: themeColors.blocks.text.tertiary,
-  order: 8,
+  order: 9,
   blocks: [
     {
       // 连接
@@ -310,30 +310,6 @@ export default () => ({
         const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
         const code = `String(${str}).trim()\n`;
         return [code, this.ORDER_FUNCTION_CALL];
-      },
-    },
-    '---',
-    {
-      id: 'print',
-      text: translate('esp32.blocks.terminalPrint', 'print %1'),
-      themeColor: themeColors.blocks.debug.primary,
-      inputColor: themeColors.blocks.debug.secondary,
-      otherColor: themeColors.blocks.debug.tertiary,
-      inputs: {
-        STRING: {
-          type: 'string',
-          defaultValue: 'hello',
-        },
-      },
-      mpy(block) {
-        const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
-        const code = `print(str(${str}))\n`;
-        return code;
-      },
-      emu(block) {
-        const str = this.valueToCode(block, 'STRING', this.ORDER_NONE);
-        const code = `console.log(${str});\n`;
-        return code;
       },
     },
   ],

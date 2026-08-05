@@ -6,7 +6,7 @@ export default () => ({
   themeColor: themeColors.blocks.sounds.primary,
   inputColor: themeColors.blocks.sounds.secondary,
   otherColor: themeColors.blocks.sounds.tertiary,
-  order: 2,
+  order: 3,
   blocks: [
     {
       id: 'playnote',

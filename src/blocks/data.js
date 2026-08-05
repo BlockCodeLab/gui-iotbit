@@ -1,6 +1,7 @@
 export default () => ({
   id: 'data',
   skipXML: true,
+  order: 10,
   blocks: [
     {
       // 获取变量

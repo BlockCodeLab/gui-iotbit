@@ -9,11 +9,13 @@ import getOperatorsBlocks from './operators';
 import getDataBlocks from './data';
 import getMyBlocks from './procedures';
 import getTextBlocks from './text';
+import getSerialBlocks from './serial';
 
 export { IotBitGenerator, IotBitEmulatorGenerator } from './generator';
 
 export function buildBlocks() {
   const pinsBlocks = getPinsBlocks();
+  const serialBlocks = getSerialBlocks();
   const displayBlocks = getDisplayBlocks();
   const soundBlocks = getSoundBlocks();
   const eventsBlocks = getEventsBlocks();
@@ -27,6 +29,7 @@ export function buildBlocks() {
 
   return [
     pinsBlocks,
+    serialBlocks,
     displayBlocks,
     soundBlocks,
     eventsBlocks,

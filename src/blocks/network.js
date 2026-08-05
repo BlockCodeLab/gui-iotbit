@@ -23,7 +23,7 @@ export default () => ({
   themeColor: '#28A0DC',
   inputColor: '#42A8DB',
   otherColor: '#1386BF',
-  order: 5,
+  order: 6,
   blocks: [
     {
       id: 'ifconfig',

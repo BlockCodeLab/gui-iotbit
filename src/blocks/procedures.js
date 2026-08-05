@@ -1,6 +1,7 @@
 export default () => ({
   id: 'procedures',
   skipXML: true,
+  order: 11,
   blocks: [
     {
       id: 'definition',

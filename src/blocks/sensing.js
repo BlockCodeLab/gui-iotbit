@@ -1,5 +1,8 @@
 import { themeColors, translate } from '@blockcode/core';
 import { ScratchBlocks } from '@blockcode/blocks';
+import { getBoardPins } from './pins';
+
+const pins = getBoardPins();
 
 export default () => ({
   id: 'sensing',
@@ -7,6 +10,7 @@ export default () => ({
   themeColor: themeColors.blocks.sensing.primary,
   inputColor: themeColors.blocks.sensing.secondary,
   otherColor: themeColors.blocks.sensing.tertiary,
+  order: 7,
   blocks: [
     {
       // 按键按下
@@ -249,6 +253,31 @@ export default () => ({
           code = `(${code} / 1000)`;
         }
         return [code];
+      },
+    },
+    '---',
+    {
+      //
+      id: 'i2c',
+      text: translate('esp32.blocks.i2cScan', 'I2C pins scl:%1 sda:%2 devices scan'),
+      inputs: {
+        SCL: {
+          menu: pins.all,
+          defaultValue: pins.i2c[0].SCL,
+        },
+        SDA: {
+          menu: pins.all,
+          defaultValue: pins.i2c[0].SDA,
+        },
+      },
+      mpy(_, args, defs) {
+        const chan = args.SCL === pins.i2c[0].SCL && args.SDA === pins.i2c[0].SDA ? 0 : 1;
+        const i2c = `i2c${chan}_${args.SCL}_${args.SDA}`;
+        defs['import_pin'] = 'from machine import Pin';
+        defs['import_i2c'] = 'from machine import I2C';
+        defs[i2c] = `${i2c} = I2C(${chan}, scl=Pin(${args.SCL}), sda=Pin(${args.SDA}))`;
+        const code = `print(${i2c}.scan())\n`;
+        return code;
       },
     },
   ],

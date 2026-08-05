@@ -24,6 +24,7 @@ export default () => ({
   themeColor: themeColors.blocks.operators.primary,
   inputColor: themeColors.blocks.operators.secondary,
   otherColor: themeColors.blocks.operators.tertiary,
+  order: 8,
   blocks: [
     {
       // 运算

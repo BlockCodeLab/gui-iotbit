@@ -13,6 +13,7 @@ export default () => ({
   themeColor: themeColors.blocks.events.primary,
   inputColor: themeColors.blocks.events.secondary,
   otherColor: themeColors.blocks.events.tertiary,
+  order: 4,
   blocks: [
     {
       // 开始
