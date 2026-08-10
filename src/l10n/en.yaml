@@ -16,8 +16,8 @@ iotbit.emu.brightness: Brightness
 iotbit.emu.loudness: Loudness
 iotbit.emu.temperature: Temperature
 iotbit.emu.pins: Pins
-iotbit.emu.analogPins: Analog Pins
-iotbit.emu.touchPins: Touch Pins
+iotbit.emu.touchPins: Touch
+iotbit.emu.addPin: Add a pin to emulator
 
 esp32.blocks.wait: wait %1 milliseconds
 esp32.blocks.break: break

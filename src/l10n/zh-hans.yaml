@@ -16,8 +16,8 @@ iotbit.emu.brightness: 亮度
 iotbit.emu.loudness: 响度
 iotbit.emu.temperature: 温度
 iotbit.emu.pins: 引脚
-iotbit.emu.analogPins: 模拟引脚
-iotbit.emu.touchPins: 触摸引脚
+iotbit.emu.touchPins: 触摸
+iotbit.emu.addPin: 添加引脚至模拟器
 
 esp32.blocks.wait: 等待 %1 毫秒
 esp32.blocks.break: 跳出重复执行

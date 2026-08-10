@@ -97,9 +97,17 @@
   flex: 1;
   width: 100%;
   position: relative;
+  margin-top: var(--space);
+  display: flex;
+  flex-direction: column;
+}
+
+.pins-list {
+  flex: 1;
+  width: 100%;
+  position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  margin-top: var(--space);
 }
 
 .pins {
@@ -110,10 +118,21 @@
 }
 
 .pins > label {
-  justify-content: flex-end;
-  padding-right: calc(var(--space) * 1.5);
+  padding: 0 calc(var(--space) * 1.5);
   margin: calc(var(--space) / 2) 0;
-  flex: 0 0 33.33%;
+  flex: 0 0 33%;
+  /*justify-content: flex-end;*/
+  /*width: 100%;*/
+  display: flex;
+}
+
+.pins > label.wide {
+  width: 100%;
+  flex: unset;
+}
+
+.label > span {
+  width: 1.5rem;
 }
 
 .pins > button {
@@ -150,4 +169,22 @@
 
 .group-button-toggled-off {
   filter: saturate(0);
+}
+
+.slider-wrapper {
+  margin: 0 var(--space);
+  flex: 1;
+}
+
+.slider {
+  --trackColor: var(--theme-transparent);
+}
+
+.slider::-webkit-slider-thumb {
+  background: var(--theme-primary) !important;
+  box-shadow: 0 0 0 4px var(--theme-light-transparent);
+}
+
+.touch:active {
+  background: var(--theme-light-transparent);
 }
