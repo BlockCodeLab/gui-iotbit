@@ -70,7 +70,7 @@ const DAC_PINS = [
   ['P8', 'P8'],
   ['P9', 'P9'],
 ];
-const I2C_CHANS = [{ SCL: 'P19', SDA: 'P20' }];
+const I2C_CHANS = { channel: 0, scl: 'P19', sda: 'P20' };
 const TOUCH_PINS = [
   ['P0', 'touch_0'],
   ['P1', 'touch_1'],

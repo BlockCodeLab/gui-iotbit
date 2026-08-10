@@ -263,15 +263,15 @@ export default () => ({
       inputs: {
         SCL: {
           menu: pins.all,
-          defaultValue: pins.i2c[0].SCL,
+          defaultValue: pins.i2c.scl,
         },
         SDA: {
           menu: pins.all,
-          defaultValue: pins.i2c[0].SDA,
+          defaultValue: pins.i2c.sda,
         },
       },
       mpy(_, args, defs) {
-        const chan = args.SCL === pins.i2c[0].SCL && args.SDA === pins.i2c[0].SDA ? 0 : 1;
+        const chan = args.SCL === pins.i2c.scl && args.SDA === pins.i2c.sda ? pins.i2c.channel : 1;
         const i2c = `i2c${chan}_${args.SCL}_${args.SDA}`;
         defs['import_pin'] = 'from machine import Pin';
         defs['import_i2c'] = 'from machine import I2C';
