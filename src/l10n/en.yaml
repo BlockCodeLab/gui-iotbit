@@ -1,4 +1,5 @@
 iotbit.menubar.device: iot:bit
+iotbit.menubar.device.manual: iot:bit manual
 
 iotbit.emu.greenFlag: Go
 iotbit.emu.stop: Stop

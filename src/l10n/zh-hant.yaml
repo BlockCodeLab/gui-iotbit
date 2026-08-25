@@ -1,4 +1,5 @@
 iotbit.menubar.device: iot:bit
+iotbit.menubar.device.manual: 物聯板 iot:bit 手冊
 
 iotbit.emu.greenFlag: 運行
 iotbit.emu.stop: 停止

@@ -211,6 +211,19 @@ export function DeviceMenu({ itemClassName }) {
         disabled={deviceAlertId.value}
         itemClassName={itemClassName}
       />
+
+      <MenuSection>
+        <MenuItem
+          className={classNames(itemClassName, styles.blankCheckItem)}
+          label={
+            <Text
+              id="iotbit.menubar.device.manual"
+              defaultMessage="iot:bit manual"
+            />
+          }
+          onClick={useCallback(() => window.open('https://iotbit.blockcode.fun/'), [])}
+        />
+      </MenuSection>
     </>
   );
 }
